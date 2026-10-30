@@ -172,7 +172,7 @@ input[type=range]{width:100%;accent-color:var(--blue);height:30px;cursor:pointer
 .roles a{display:grid;gap:8px;align-content:start;padding:22px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;transition:border-color .15s}
 .roles a:hover{border-color:var(--blue)}
 .roles a p{font-size:15.5px;color:var(--slate)}
-.roles a em{font-style:normal;font-weight:700;font-size:14.5px;color:var(--blue)}
+.roles a em{font-style:normal;font-weight:700;font-size:14.5px;color:var(--blue-dark);border-bottom:1.5px solid currentColor;padding-bottom:1px}
 @media (max-width:900px){.roles .grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.roles .grid{grid-template-columns:1fr}}
 
@@ -349,8 +349,8 @@ footer a:hover{color:var(--blue)}
 
 /* UK cost column: bolder, more punchy */
 .cost .col.uk li.plus{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;color:var(--ink);font-size:16px;padding:4px 0}
-.cost .col.uk li.plus .tag{display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:12.5px;color:#B42318;background:#FEE4E2;border-radius:6px;padding:4px 8px;min-width:52px}
-.cost .col.uk .tot{color:#B42318}
+.cost .col.uk li.plus .tag{display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:12.5px;color:#92400E;background:#FEF3C7;border-radius:6px;padding:4px 8px;min-width:52px}
+.cost .col.uk .tot{color:var(--navy)}
 
 /* Calculator: new breakdown + toggles */
 .calc .opts-tog{display:grid;gap:8px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:10px}
@@ -370,9 +370,9 @@ footer a:hover{color:var(--blue)}
 .risk .prob{font-size:15px;color:var(--slate)}
 .risk .fix{font-size:15px;color:var(--ink);background:var(--soft);padding:12px 14px;border-radius:8px}
 .risk b{color:var(--navy)}
-.risk .prob b{color:#B42318}
+.risk .prob b{color:#92400E}
 .risk .fix b{color:var(--blue)}
-.risk .prob{border-left:3px solid #B42318;background:#FFF5F5;padding:12px 14px;border-radius:8px}
+.risk .prob{border-left:3px solid #D97706;background:#FFFBEB;padding:12px 14px;border-radius:8px}
 @media (max-width:900px){.risks{grid-template-columns:1fr}}
 
 
@@ -381,8 +381,8 @@ footer a:hover{color:var(--blue)}
 .price-cal .lbl{font-size:13px;font-weight:600;color:var(--slate);letter-spacing:.04em;text-transform:uppercase}
 .price-cal .amt{font-family:var(--font);font-weight:800;font-size:clamp(28px,3vw,36px);color:var(--blue);letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums}
 .price-cal .per{font-size:13.5px;color:var(--slate)}
-.price-cal.uk-cal{border-color:#F4B6B6;background:#FFF7F7}
-.price-cal.uk-cal .amt{color:#B42318}
+.price-cal.uk-cal{border-color:var(--line-strong);background:#F8FAFC}
+.price-cal.uk-cal .amt{color:var(--navy)}
 
 
 /* Why Morocco */
@@ -435,7 +435,7 @@ footer a:hover{color:var(--blue)}
 
 
 /* Red Morocco in the opener; bold everything in the opener */
-.morocco-opener .label .mcred{color:#C1272D}
+.morocco-opener .label .mcred{color:var(--navy)}
 .morocco-opener .locator{font-weight:800}
 
 /* ===== Animated Staffora background motifs ===== */
@@ -523,8 +523,9 @@ footer a:hover{color:var(--blue)}
 .hero-content .cta .btn{min-height:52px;padding:14px 28px;font-size:16px;font-weight:700}
 .hero-content .cta .btn-blue{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 10px 30px rgba(8,121,237,.35)}
 .hero-content .cta .btn-blue:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
-.hero-content .cta .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.5);backdrop-filter:blur(6px)}
-.hero-content .cta .btn-ghost:hover{background:rgba(255,255,255,.14);border-color:#fff}
+.hero-content .cta .hero-link{color:#fff;font-weight:600;text-decoration:none;font-size:16px;padding:14px 10px;display:inline-flex;align-items:center;gap:6px;border-bottom:1.5px solid rgba(255,255,255,.4);transition:border-color .2s}
+.hero-content .cta .hero-link:hover{border-bottom-color:#fff}
+.hero-content .cta .hero-link:focus-visible{outline:3px solid var(--cyan);outline-offset:4px;border-radius:4px}
 .hero-content .cta .btn svg{color:currentColor}
 
 /* Top header behaves as a transparent overlay above the video while the hero is in view, then becomes solid on scroll */
@@ -532,8 +533,8 @@ footer a:hover{color:var(--blue)}
 .top:not(.shrunk) .bar{color:#fff}
 .top:not(.shrunk) nav a{color:#fff}
 .top:not(.shrunk) nav a:hover{color:var(--cyan)}
-.top:not(.shrunk) nav a.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue)}
-.top:not(.shrunk) nav a.btn-blue:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
+.top:not(.shrunk) nav a.btn-blue{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55);box-shadow:none}
+.top:not(.shrunk) nav a.btn-blue:hover{background:rgba(255,255,255,.1);border-color:#fff}
 .top:not(.shrunk) .menu-btn{color:#fff}
 .top:not(.shrunk) .logo img{filter:drop-shadow(0 2px 10px rgba(0,0,0,.35)) brightness(0) invert(1)}
 .top.shrunk{background:#fff;border-bottom-color:var(--line);box-shadow:0 4px 18px rgba(6,27,66,.08)}
@@ -555,6 +556,16 @@ body::before{display:none}
 @media (max-width:420px){
   .hero-content .cta .btn{flex:1 1 100%}
 }
+
+/* Trust band directly under the hero */
+.trust-band{background:#061B42;color:rgba(255,255,255,.9);padding-block:clamp(32px,4vw,56px);position:relative;z-index:1}
+.trust-band .wrap{max-width:900px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+.trust-band p{font-size:clamp(16px,1.4vw,19px);line-height:1.55;text-align:center;margin:0;font-weight:500;letter-spacing:-.005em}
+.trust-band strong{color:var(--cyan);font-weight:700}
+
+/* Calculator pin CTA extra prominence */
+.keep + .calc-cta{box-shadow:0 10px 30px rgba(8,121,237,.3);margin-top:4px;animation:nudge 2.4s ease-out 1}
+@keyframes nudge{0%{transform:translateY(0)}30%{transform:translateY(-3px)}60%{transform:translateY(0)}100%{transform:translateY(0)}}
 
 /* Honour reduced motion for the hero video (poster-only) */
 @media (prefers-reduced-motion: reduce){
@@ -671,13 +682,19 @@ body::before{display:none}
   <div class="hero-content">
     <div class="wrap">
       <p class="eyebrow">Fully managed remote staff</p>
-      <h1>Hire better. <span>Spend less.</span></h1>
-      <p class="lead">Hire dedicated, university educated staff <span class="hl">based in Morocco</span>, working your <span class="hl">UK hours</span>. We handle recruitment, equipment, HR and payroll, so you can <span class="hl">focus on your business</span>.</p>
+      <h1>Full time staff from Morocco, <span>working your UK hours.</span></h1>
+      <p class="lead">University educated, fluent in English, working your business day. One monthly fee covers recruitment, equipment, HR, payroll and day to day management, so you only pay for the person at the desk.</p>
       <div class="cta">
         <a class="btn btn-blue" id="heroCta" href="#book">Get my free cost breakdown <svg><use href="#arr"/></svg></a>
-        <a class="btn btn-ghost" href="#how">How it works <svg><use href="#arr"/></svg></a>
+        <a class="hero-link" href="#how">See how it works →</a>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="trust-band" aria-label="What Staffora is">
+  <div class="wrap">
+    <p>Dedicated full time hires, employed through Staffora in Morocco, working alongside your team in the UK. One monthly fee. <strong>Nothing to recruit, equip, pay or manage on your side.</strong></p>
   </div>
 </section>
 
@@ -765,7 +782,7 @@ body::before{display:none}
           <span class="big" id="saveMo">£1,498</span>
           <span class="sub" id="saveYr">that's £17,976 a year (54% less)</span>
         </div>
-        <a class="btn btn-blue" href="#book">Get my free cost breakdown <svg><use href="#arr"/></svg></a>
+        <a class="btn btn-blue calc-cta" href="#book">Lock this in. Send me the full breakdown <svg><use href="#arr"/></svg></a>
       </div>
     </div>
   </div>
