@@ -561,6 +561,52 @@ body::before{display:none}
   .hero-video{background:#061B42 url("") center/cover no-repeat}
 }
 
+/* ===== Section backgrounds: ambient aurora, orbit lines, shimmer ===== */
+.aurora{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora::before,.aurora::after{content:"";position:absolute;border-radius:50%;filter:blur(80px);will-change:transform}
+.aurora::before{top:-20%;left:-10%;width:55%;height:70%;background:radial-gradient(circle,rgba(34,201,243,.42),transparent 65%);animation:aurora-a 26s ease-in-out infinite}
+.aurora::after{bottom:-25%;right:-10%;width:65%;height:75%;background:radial-gradient(circle,rgba(8,121,237,.38),transparent 65%);animation:aurora-b 34s ease-in-out infinite}
+.aurora.soft::before{background:radial-gradient(circle,rgba(34,201,243,.3),transparent 65%)}
+.aurora.soft::after{background:radial-gradient(circle,rgba(8,121,237,.26),transparent 65%)}
+.aurora.cool::before{background:radial-gradient(circle,rgba(234,245,255,.9),transparent 65%);opacity:.6}
+.aurora.cool::after{background:radial-gradient(circle,rgba(34,201,243,.28),transparent 65%)}
+@keyframes aurora-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8%,12%) scale(1.08)}}
+@keyframes aurora-b{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-10%,-8%) scale(1.12)}}
+
+/* Position targets above the aurora */
+.stats,.how,.quality,.book,.cost,.roles{position:relative;isolation:isolate}
+.stats > *:not(.aurora),.how > *:not(.aurora),.quality > *:not(.aurora),.book > *:not(.aurora),.cost > *:not(.aurora),.roles > *:not(.aurora){position:relative;z-index:1}
+
+/* How-it-works trace: a connecting path that draws in across the four steps */
+.how{overflow:hidden}
+.how .trace{position:absolute;left:0;right:0;top:50%;height:80px;transform:translateY(-50%);z-index:0;pointer-events:none;opacity:.55}
+.how .trace svg{width:100%;height:100%;display:block}
+.how .trace path{fill:none;stroke:url(#traceGrad);stroke-width:2.4;stroke-dasharray:3000;stroke-dashoffset:3000;transition:stroke-dashoffset 2.4s cubic-bezier(.22,.61,.36,1)}
+.how.is-in .trace path{stroke-dashoffset:0}
+@media (max-width:900px){.how .trace{display:none}}
+
+/* Shimmer pulse on primary blue CTAs */
+.btn-blue{position:relative;overflow:hidden}
+.btn-blue::before{content:"";position:absolute;top:0;bottom:0;left:-80%;width:60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:transform .9s ease}
+.btn-blue:hover::before{transform:translateX(360%) skewX(-20deg)}
+
+/* Spring-ish reveal on stats/role cards + counter target */
+.stats li,.roles a,.how li{transition:transform .55s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .2s ease}
+.stats li.in,.roles a.in,.how li.in{animation:popIn .55s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes popIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.stats li b[data-count]{font-variant-numeric:tabular-nums}
+
+/* Section-divider wave more alive */
+.sdiv svg path{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw-sweep 2.6s ease-out forwards, breathe-op 8s ease-in-out 2.6s infinite}
+@keyframes draw-sweep{to{stroke-dashoffset:0}}
+@keyframes breathe-op{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce){
+  .aurora::before,.aurora::after,.btn-blue::before,.how .trace path,.sdiv svg path{animation:none!important;transition:none!important}
+  .stats li.in,.roles a.in,.how li.in{animation:none!important}
+}
+
 </style>
 
 </head>
@@ -1138,6 +1184,88 @@ body::before{display:none}
   }
 
   show();
+
+  /* ----- Section ambient aurora: inject a .aurora layer into each targeted section ----- */
+  function injectAurora(selector, variant){
+    var el = document.querySelector(selector);
+    if (!el || el.querySelector(":scope > .aurora")) return;
+    var aurora = document.createElement("div");
+    aurora.className = "aurora" + (variant ? " " + variant : "");
+    aurora.setAttribute("aria-hidden","true");
+    el.prepend(aurora);
+  }
+  injectAurora(".stats","soft");
+  injectAurora(".how","cool");
+  injectAurora(".quality","soft");
+  injectAurora(".book","soft");
+
+  /* ----- How-it-works connecting trace ----- */
+  (function(){
+    var how = document.querySelector(".how");
+    if (!how) return;
+    var holder = document.createElement("div");
+    holder.className = "trace";
+    holder.setAttribute("aria-hidden","true");
+    holder.innerHTML = '<svg viewBox="0 0 1200 80" preserveAspectRatio="none"><defs><linearGradient id="traceGrad" x1="0" x2="1" y1="0" y2="0"><stop stop-color="#0879ED" stop-opacity=".2"/><stop offset=".5" stop-color="#22C9F3"/><stop offset="1" stop-color="#0879ED" stop-opacity=".2"/></linearGradient></defs><path d="M60 40 Q 300 10 450 40 T 900 40 T 1140 40"/></svg>';
+    how.appendChild(holder);
+    if ("IntersectionObserver" in window){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if (e.isIntersecting) { how.classList.add("is-in"); } });
+      },{threshold:.25}).observe(how);
+    } else { how.classList.add("is-in"); }
+  })();
+
+  /* ----- Spring-pop reveal for stat/role/how cards + stat counter tick-up ----- */
+  (function(){
+    var cards = document.querySelectorAll(".stats li, .roles a, .how li");
+    if (!cards.length) return;
+    if ("IntersectionObserver" in window){
+      var cardIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e,i){
+          if (e.isIntersecting){
+            e.target.style.animationDelay = (i * 70) + "ms";
+            e.target.classList.add("in");
+            cardIO.unobserve(e.target);
+          }
+        });
+      },{threshold:.15});
+      cards.forEach(function(c){ cardIO.observe(c); });
+    } else {
+      cards.forEach(function(c){ c.classList.add("in"); });
+    }
+
+    // Count-up for stat numbers that contain a leading integer
+    var nums = document.querySelectorAll(".stats li b, .mstat b");
+    var easeOut = function(t){ return 1 - Math.pow(1 - t, 3); };
+    function animate(el, target, suffix, prefix, duration){
+      var start = null;
+      function step(ts){
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / duration, 1);
+        var val = Math.floor(easeOut(p) * target);
+        el.textContent = (prefix||"") + val.toLocaleString("en-GB") + (suffix||"");
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = (prefix||"") + target.toLocaleString("en-GB") + (suffix||"");
+      }
+      requestAnimationFrame(step);
+    }
+    if ("IntersectionObserver" in window){
+      var numIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (!e.isIntersecting) return;
+          var el = e.target;
+          var raw = (el.textContent||"").trim();
+          var m = raw.match(/^(\D*?)([\d,]+)(.*)$/);
+          if (!m) { numIO.unobserve(el); return; }
+          var target = parseInt(m[2].replace(/,/g,""), 10);
+          if (isNaN(target) || target === 0) { numIO.unobserve(el); return; }
+          animate(el, target, m[3]||"", m[1]||"", 1500);
+          numIO.unobserve(el);
+        });
+      },{threshold:.3});
+      nums.forEach(function(n){ numIO.observe(n); });
+    }
+  })();
 })();
 </script>
 
