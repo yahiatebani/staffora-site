@@ -557,6 +557,29 @@ body::before{display:none}
   .hero-content .cta .btn{flex:1 1 100%}
 }
 
+/* ===== Scroll journey: a plane traces a flight path down the whole page ===== */
+.journey{position:absolute;top:0;left:clamp(10px,2.2vw,32px);width:84px;pointer-events:none;z-index:0;overflow:visible}
+.journey-svg{position:absolute;top:0;left:0;display:block;overflow:visible}
+.journey .j-bg{fill:none;stroke:rgba(8,121,237,.10);stroke-width:2;stroke-linecap:round}
+.journey .j-fg{fill:none;stroke:url(#jGrad);stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 8px rgba(34,201,243,.5))}
+.journey .j-dot{fill:url(#jGrad);filter:drop-shadow(0 0 6px rgba(34,201,243,.6))}
+.journey-plane{position:absolute;top:0;left:0;color:var(--cyan);filter:drop-shadow(0 6px 18px rgba(34,201,243,.65));will-change:transform;transform-origin:center}
+.journey-plane .halo{opacity:.85;animation:plane-pulse 2.6s ease-in-out infinite}
+@keyframes plane-pulse{0%,100%{opacity:.3;r:14}50%{opacity:.75;r:22}}
+
+/* Push section content above the journey trail */
+section,footer,.stats,.trust-band{position:relative;z-index:1}
+
+/* Mobile: thinner, dimmer, keep readable */
+@media (max-width:900px){
+  .journey{left:4px;width:48px;opacity:.7}
+  .journey-plane svg.plane-icon{width:26px;height:26px}
+}
+@media (prefers-reduced-motion: reduce){
+  .journey-plane{display:none}
+  .journey .j-fg{animation:none;stroke-dashoffset:0!important}
+}
+
 /* Trust band directly under the hero */
 .trust-band{background:#061B42;color:rgba(255,255,255,.9);padding-block:clamp(32px,4vw,56px);position:relative;z-index:1}
 .trust-band .wrap{max-width:900px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
@@ -644,6 +667,25 @@ body::before{display:none}
 <symbol id="as-no-fee" viewBox="0 0 24 24" fill="none" stroke="#061B42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14 8h-2.5a2 2 0 0 0 0 4h1a2 2 0 0 1 0 4H10"/><path d="M12 7v10" stroke-width="1.8"/><path d="M7 7l10 10" stroke="#0879ED" opacity=".4"/></symbol>
   <symbol id="as-brand-mark" viewBox="0 0 240 140"><g transform="translate(38 22)"><path d="M8 92 52 22 Q59 12 66 22 L114 92 H83 L59 55 35 92Z" fill="currentColor"/><path d="M67 41 89 7 Q96 -1 104 10 L160 92 H127 L96 41 84 60Z" fill="currentColor" opacity=".55"/></g></symbol>
 </svg>
+
+<div class="journey" aria-hidden="true">
+  <svg class="journey-svg" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="jGrad" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0" stop-color="#22C9F3"/>
+        <stop offset=".55" stop-color="#0879ED"/>
+        <stop offset="1" stop-color="#065FB8"/>
+      </linearGradient>
+    </defs>
+    <path class="j-bg"/>
+    <path class="j-fg"/>
+    <g class="j-dots"></g>
+  </svg>
+  <div class="journey-plane">
+    <svg width="48" height="48" viewBox="-24 -24 48 48" style="position:absolute;top:-6px;left:-6px" aria-hidden="true"><circle class="halo" cx="0" cy="0" r="14" fill="rgba(34,201,243,.3)"/></svg>
+    <svg class="plane-icon" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.5 15.5 14 11V5a2 2 0 1 0-4 0v6l-7.5 4.5V17l7.5-2v4l-2 1.5V22l4-1 4 1v-1.5L14 19v-4l7.5 2z"/></svg>
+  </div>
+</div>
 
 <header class="top">
   <div class="wrap">
@@ -788,7 +830,6 @@ body::before{display:none}
   </div>
 </section>
 
-<div class="sdiv" aria-hidden="true"><svg><use href="#as-divider"/></svg></div>
 <section class="roles" id="roles">
   <div class="wrap">
     <div class="head">
@@ -1282,6 +1323,93 @@ body::before{display:none}
         });
       },{threshold:.3});
       nums.forEach(function(n){ numIO.observe(n); });
+    }
+  })();
+
+  /* ----- Scroll journey: plane traces a flight path down the full page ----- */
+  (function(){
+    var journey = document.querySelector(".journey");
+    if (!journey) return;
+    var svg = journey.querySelector(".journey-svg");
+    var bg = journey.querySelector(".j-bg");
+    var fg = journey.querySelector(".j-fg");
+    var dotsG = journey.querySelector(".j-dots");
+    var plane = journey.querySelector(".journey-plane");
+    var totalLen = 0, cachedPageH = 0, segmentsCount = 0;
+
+    function buildPath(){
+      var pageH = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      if (pageH === cachedPageH) return;
+      cachedPageH = pageH;
+      var w = 84;
+      var amplitude = 28;
+      var centerX = w / 2;
+      var segLen = 420; // one gentle S curve per ~420px of page
+      var segs = Math.max(4, Math.floor(pageH / segLen));
+      segmentsCount = segs;
+      var step = pageH / segs;
+      var d = "M " + centerX + " 0";
+      for (var i = 0; i < segs; i++){
+        var y1 = (i + 0.5) * step;
+        var y2 = (i + 1) * step;
+        var x1 = (i % 2 === 0) ? (centerX + amplitude) : (centerX - amplitude);
+        d += " Q " + x1 + " " + y1.toFixed(1) + ", " + centerX + " " + y2.toFixed(1);
+      }
+      svg.setAttribute("viewBox", "0 0 " + w + " " + pageH);
+      svg.setAttribute("width", w);
+      svg.setAttribute("height", pageH);
+      journey.style.height = pageH + "px";
+      bg.setAttribute("d", d);
+      fg.setAttribute("d", d);
+      totalLen = fg.getTotalLength();
+      fg.style.strokeDasharray = totalLen;
+      fg.style.strokeDashoffset = totalLen;
+
+      // Waypoint dots at the inflection points
+      dotsG.innerHTML = "";
+      for (var k = 1; k < segs; k++){
+        var py = k * step;
+        var dot = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        dot.setAttribute("class","j-dot");
+        dot.setAttribute("cx", centerX);
+        dot.setAttribute("cy", py);
+        dot.setAttribute("r", 3);
+        dotsG.appendChild(dot);
+      }
+      update();
+    }
+
+    function update(){
+      if (!totalLen) return;
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      var progress = Math.max(0, Math.min(1, scrollTop / maxScroll));
+      var distance = progress * totalLen;
+      fg.style.strokeDashoffset = (totalLen - distance).toFixed(2);
+      try {
+        var point = fg.getPointAtLength(distance);
+        var ahead = fg.getPointAtLength(Math.min(totalLen, distance + 2));
+        var angle = Math.atan2(ahead.y - point.y, ahead.x - point.x) * 180 / Math.PI + 90;
+        plane.style.transform = "translate(" + (point.x - 18) + "px, " + (point.y - 18) + "px) rotate(" + angle.toFixed(1) + "deg)";
+      } catch(e){}
+    }
+
+    var ticking = false;
+    function onScroll(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){ update(); ticking = false; });
+    }
+
+    buildPath();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", function(){ cachedPageH = 0; buildPath(); });
+    window.addEventListener("load", function(){ cachedPageH = 0; buildPath(); });
+    // Rebuild on content changes (images lazy-loaded, animations expanding content)
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(function(){ cachedPageH = 0; buildPath(); }).observe(document.body);
+    } else {
+      setTimeout(buildPath, 1500);
     }
   })();
 })();
