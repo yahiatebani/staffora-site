@@ -621,28 +621,7 @@ body::before{display:none}
   .hero-content .cta .btn{flex:1 1 100%}
 }
 
-/* ===== Scroll journey: a plane traces a flight path down the whole page ===== */
-.journey{position:absolute;top:0;left:clamp(10px,2.2vw,32px);width:84px;pointer-events:none;z-index:0;overflow:visible;contain:layout style}
-.journey-svg{position:absolute;top:0;left:0;display:block;overflow:visible}
-.journey .j-bg{fill:none;stroke:rgba(0,123,255,.10);stroke-width:2;stroke-linecap:round}
-.journey .j-fg{fill:none;stroke:url(#jGrad);stroke-width:3;stroke-linecap:round}
-.journey .j-dot{fill:url(#jGrad)}
-.journey-plane{position:absolute;top:0;left:0;color:var(--cyan);will-change:transform;transform-origin:center;contain:layout style paint}
-.journey-plane .halo{opacity:.85;transform-origin:center;transform-box:fill-box;animation:plane-pulse 2.6s ease-in-out infinite}
-@keyframes plane-pulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.75;transform:scale(1.5)}}
-
-/* Push section content above the journey trail */
-section,footer,.stats,.trust-band{position:relative;z-index:1}
-
-/* Mobile: thinner, dimmer, keep readable */
-@media (max-width:900px){
-  .journey{left:4px;width:48px;opacity:.7}
-  .journey-plane svg.plane-icon{width:26px;height:26px}
-}
-@media (prefers-reduced-motion: reduce){
-  .journey-plane{display:none}
-  .journey .j-fg{animation:none;stroke-dashoffset:0!important}
-}
+section,footer,.commitments,.trust-band{position:relative;z-index:1}
 
 /* Trust band directly under the hero */
 .trust-band{background:#0F2A44;color:rgba(255,255,255,.9);padding-block:clamp(32px,4vw,56px);position:relative;z-index:1}
@@ -812,25 +791,6 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
   .beam-halo{animation:none;opacity:.25}
 }
 
-/* ===== Cursor spotlight on cards ========================================
-   Ported from the React libraries as plain CSS plus one throttled handler:
-   a soft brand coloured light that follows the cursor across a card. */
-.roles a,.col{position:relative;isolation:isolate;overflow:hidden;--spot-fill:rgba(0,123,255,1) 0%,rgba(0,123,255,1) 13.97%,rgba(0,123,255,.9794) 20.11%,rgba(0,123,255,.9207) 26.26%,rgba(0,123,255,.8312) 32.40%,rgba(0,123,255,.7211) 38.55%,rgba(0,123,255,.6010) 44.69%,rgba(0,123,255,.4808) 50.84%,rgba(0,123,255,.3682) 56.98%,rgba(0,123,255,.2685) 63.13%,rgba(0,123,255,.1847) 69.27%,rgba(0,123,255,.1175) 75.42%,rgba(0,123,255,.0667) 81.56%,rgba(0,123,255,.0310) 87.71%,rgba(0,123,255,.0091) 93.85%,rgba(0,123,255,0) 100%;--spot-edge:rgba(0,123,255,1) 0%,rgba(0,123,255,.9768) 7.14%,rgba(0,123,255,.9104) 14.29%,rgba(0,123,255,.8095) 21.43%,rgba(0,123,255,.6866) 28.57%,rgba(0,123,255,.5550) 35.71%,rgba(0,123,255,.4269) 42.86%,rgba(0,123,255,.3117) 50%,rgba(0,123,255,.2149) 57.14%,rgba(0,123,255,.1389) 64.29%,rgba(0,123,255,.0830) 71.43%,rgba(0,123,255,.0447) 78.57%,rgba(0,123,255,.0206) 85.71%,rgba(0,123,255,.0068) 92.86%,rgba(0,123,255,0) 100%}
-/* The 16 stop falloff is ReactBits': a smoothstep blended against a Gaussian
-   glow, which is why it reads as light rather than as a flat radial. */
-.spot-edge{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0}
-/* Rebuilding a 16 stop gradient string every frame repaints the card. A fixed
-   gradient on a layer we translate is handed to the compositor instead. */
-.spot-light{position:absolute;left:0;top:0;width:640px;height:640px;
-  margin:-320px 0 0 -320px;border-radius:50%;z-index:-1;opacity:0;
-  pointer-events:none;will-change:transform;
-  background:radial-gradient(circle 300px at 50% 50%,rgba(0,123,255,1) 0%,rgba(0,123,255,1) 13.97%,rgba(0,123,255,.9794) 20.11%,rgba(0,123,255,.9207) 26.26%,rgba(0,123,255,.8312) 32.40%,rgba(0,123,255,.7211) 38.55%,rgba(0,123,255,.6010) 44.69%,rgba(0,123,255,.4808) 50.84%,rgba(0,123,255,.3682) 56.98%,rgba(0,123,255,.2685) 63.13%,rgba(0,123,255,.1847) 69.27%,rgba(0,123,255,.1175) 75.42%,rgba(0,123,255,.0667) 81.56%,rgba(0,123,255,.0310) 87.71%,rgba(0,123,255,.0091) 93.85%,rgba(0,123,255,0) 100%)}
-.spot-edge{z-index:1;padding:1px;
-  background:radial-gradient(circle 180px at 50% 50%,rgba(0,123,255,1) 0%,rgba(0,123,255,.9768) 7.14%,rgba(0,123,255,.9104) 14.29%,rgba(0,123,255,.8095) 21.43%,rgba(0,123,255,.6866) 28.57%,rgba(0,123,255,.5550) 35.71%,rgba(0,123,255,.4269) 42.86%,rgba(0,123,255,.3117) 50%,rgba(0,123,255,.2149) 57.14%,rgba(0,123,255,.1389) 64.29%,rgba(0,123,255,.0830) 71.43%,rgba(0,123,255,.0447) 78.57%,rgba(0,123,255,.0206) 85.71%,rgba(0,123,255,.0068) 92.86%,rgba(0,123,255,0) 100%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
-@media (hover:none){.spot-light,.spot-edge{display:none}}
 </style>
 
 </head>
@@ -856,25 +816,6 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 <symbol id="as-no-fee" viewBox="0 0 24 24" fill="none" stroke="#0F2A44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14 8h-2.5a2 2 0 0 0 0 4h1a2 2 0 0 1 0 4H10"/><path d="M12 7v10" stroke-width="1.8"/><path d="M7 7l10 10" stroke="#007BFF" opacity=".4"/></symbol>
   <symbol id="as-brand-mark" viewBox="0 0 240 140"><g transform="translate(38 22)"><path d="M8 92 52 22 Q59 12 66 22 L114 92 H83 L59 55 35 92Z" fill="currentColor"/><path d="M67 41 89 7 Q96 -1 104 10 L160 92 H127 L96 41 84 60Z" fill="currentColor" opacity=".55"/></g></symbol>
 </svg>
-
-<div class="journey" aria-hidden="true">
-  <svg class="journey-svg" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="jGrad" x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0" stop-color="#38B6FF"/>
-        <stop offset=".55" stop-color="#007BFF"/>
-        <stop offset="1" stop-color="#0066D6"/>
-      </linearGradient>
-    </defs>
-    <path class="j-bg"/>
-    <path class="j-fg"/>
-    <g class="j-dots"></g>
-  </svg>
-  <div class="journey-plane">
-    <svg width="48" height="48" viewBox="-24 -24 48 48" style="position:absolute;top:-6px;left:-6px" aria-hidden="true"><circle class="halo" cx="0" cy="0" r="14" fill="rgba(56,182,255,.3)"/></svg>
-    <svg class="plane-icon" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.5 15.5 14 11V5a2 2 0 1 0-4 0v6l-7.5 4.5V17l7.5-2v4l-2 1.5V22l4-1 4 1v-1.5L14 19v-4l7.5 2z"/></svg>
-  </div>
-</div>
 
 <header class="top">
   <div class="wrap">
@@ -1545,87 +1486,8 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
     }
   })();
 
-  /* ----- Scroll journey: plane traces a flight path down the full page ----- */
+  /* ----- How it works: steps advance while the section is pinned ----- */
   (function(){
-    var journey = document.querySelector(".journey");
-    if (!journey) return;
-    var svg = journey.querySelector(".journey-svg");
-    var bg = journey.querySelector(".j-bg");
-    var fg = journey.querySelector(".j-fg");
-    var dotsG = journey.querySelector(".j-dots");
-    var plane = journey.querySelector(".journey-plane");
-
-    // Slack at the document end so the plane and its glow never spill past the
-    // last pixel of the page. Without this the overflow grows scrollHeight, the
-    // ResizeObserver rebuilds a longer path, and the page grows again: a loop
-    // that reads as jitter at the bottom of the page.
-    var BOTTOM_SLACK = 170;
-    var W = 84, AMP = 28, CENTER = W / 2, SEG_LEN = 420;
-
-    var totalLen = 0, pathH = 0, cachedPageH = 0, maxScroll = 1;
-
-    function measure(){
-      return Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-    }
-
-    function buildPath(){
-      var pageH = measure();
-      // Ignore the sub pixel churn that reveal animations and lazy images cause.
-      if (Math.abs(pageH - cachedPageH) < 8) { refreshScrollRange(); return; }
-      cachedPageH = pageH;
-      pathH = Math.max(600, pageH - BOTTOM_SLACK);
-
-      var segs = Math.max(4, Math.floor(pathH / SEG_LEN));
-      var step = pathH / segs;
-      var d = "M " + CENTER + " 0";
-      for (var i = 0; i < segs; i++){
-        var y1 = (i + 0.5) * step;
-        var y2 = (i + 1) * step;
-        var x1 = (i % 2 === 0) ? (CENTER + AMP) : (CENTER - AMP);
-        d += " Q " + x1 + " " + y1.toFixed(1) + ", " + CENTER + " " + y2.toFixed(1);
-      }
-      svg.setAttribute("viewBox", "0 0 " + W + " " + pathH);
-      svg.setAttribute("width", W);
-      svg.setAttribute("height", pathH);
-      journey.style.height = pathH + "px";
-      bg.setAttribute("d", d);
-      fg.setAttribute("d", d);
-      totalLen = fg.getTotalLength();
-      fg.style.strokeDasharray = totalLen;
-
-      dotsG.innerHTML = "";
-      for (var k = 1; k < segs; k++){
-        var dot = document.createElementNS("http://www.w3.org/2000/svg","circle");
-        dot.setAttribute("class","j-dot");
-        dot.setAttribute("cx", CENTER);
-        dot.setAttribute("cy", k * step);
-        dot.setAttribute("r", 3);
-        dotsG.appendChild(dot);
-      }
-      refreshScrollRange();
-      update();
-    }
-
-    // Cached so update() never touches scrollHeight, which would force a
-    // synchronous layout on every scroll frame.
-    function refreshScrollRange(){
-      maxScroll = Math.max(1, measure() - window.innerHeight);
-    }
-
-    function update(){
-      if (!totalLen) return;
-      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
-      var progress = Math.max(0, Math.min(1, scrollTop / maxScroll));
-      var distance = progress * totalLen;
-      fg.style.strokeDashoffset = (totalLen - distance).toFixed(2);
-      try {
-        var point = fg.getPointAtLength(distance);
-        var ahead = fg.getPointAtLength(Math.min(totalLen, distance + 2));
-        var angle = Math.atan2(ahead.y - point.y, ahead.x - point.x) * 180 / Math.PI + 90;
-        plane.style.transform = "translate3d(" + (point.x - 18).toFixed(1) + "px," + (point.y - 18).toFixed(1) + "px,0) rotate(" + angle.toFixed(1) + "deg)";
-      } catch(e){}
-    }
-
     // "How it works" steps light up in turn while the section is pinned.
     var howEl = document.querySelector(".how");
     var howSteps = howEl ? howEl.querySelectorAll("ol li") : [];
@@ -1653,125 +1515,16 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
       }
     }
 
-    // Cursor spotlight, ported from ReactBits' SpotlightCard. The parts that
-    // matter for how it feels: the light eases toward the cursor instead of
-    // snapping to it, it fades in from `proximity` px before the cursor reaches
-    // the card, and presence fades in faster than it fades out. The rAF only
-    // runs while something is actually moving.
-    (function(){
-      if (window.matchMedia("(hover:none)").matches) return;
-      var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-      var cards = document.querySelectorAll(".roles a, .col");
-      if (!cards.length) return;
-
-      var SIZE = 300, PROXIMITY = 90, SMOOTHING = 0.3, INTENSITY = 0.30, RIM = 0.45;
-      var items = [];
-
-      cards.forEach(function(el){
-        var light = document.createElement("span");
-        var edge  = document.createElement("span");
-        light.className = "spot-light"; edge.className = "spot-edge";
-        light.setAttribute("aria-hidden","true"); edge.setAttribute("aria-hidden","true");
-        el.appendChild(light); el.appendChild(edge);
-        items.push({el:el, light:light, edge:edge, x:0, y:0, rx:-999, ry:-999, presence:0, target:0});
-      });
-
-      var raf = 0, last = 0, px = 0, py = 0, pointerActive = false;
-
-      function tick(now){
-        raf = 0;
-        var dt = Math.min(0.05, Math.max(0.001, (now - last)/1000));
-        last = now;
-        var busy = false;
-
-        for (var i=0;i<items.length;i++){
-          var it = items[i];
-          var r = it.el.getBoundingClientRect();
-          if (r.bottom < -200 || r.top > innerHeight + 200){
-            if (it.presence !== 0){ it.presence = 0; paint(it); }
-            continue;
-          }
-          // Nothing to do for a card that is dark and staying dark.
-          var quickGapX = Math.max(0, r.left - px, px - r.right);
-          var quickGapY = Math.max(0, r.top - py, py - r.bottom);
-          if (it.presence === 0 && (quickGapX > PROXIMITY || quickGapY > PROXIMITY)) continue;
-          var tx = px - r.left, ty = py - r.top, target = 0;
-          if (pointerActive){
-            var gx = Math.max(0, -tx, tx - r.width);
-            var gy = Math.max(0, -ty, ty - r.height);
-            var gap = Math.sqrt(gx*gx + gy*gy);
-            target = gap === 0 ? 1 : Math.pow(Math.max(0, 1 - gap/PROXIMITY), 2);
-          }
-          // jump straight to position when arriving from nothing
-          if (it.presence < 0.02 && target > 0){ it.x = tx; it.y = ty; }
-          var follow = reduce ? 1 : 1 - Math.exp(-dt / (0.015 + SMOOTHING*0.22));
-          it.x += (tx - it.x) * follow;
-          it.y += (ty - it.y) * follow;
-          var fade = reduce ? 1 : 1 - Math.exp(-dt / (target > it.presence ? 0.1 : 0.32));
-          it.presence += (target - it.presence) * fade;
-          if (Math.abs(target - it.presence) < 0.002) it.presence = target;
-          paint(it);
-          if (it.presence !== target || Math.abs(tx-it.x) > 0.1 || Math.abs(ty-it.y) > 0.1) busy = true;
-        }
-        if (busy) wake();
-      }
-
-      function paint(it){
-        var lo = Math.min(1, it.presence * INTENSITY);
-        var eo = Math.min(1, it.presence * RIM);
-        it.light.style.transform = "translate3d(" + it.x.toFixed(1) + "px," + it.y.toFixed(1) + "px,0)";
-        it.light.style.opacity = lo.toFixed(3);
-        it.edge.style.opacity  = eo.toFixed(3);
-        // The rim is masked to a 1px border so it cannot be translated the same
-        // way. It is only redrawn while the card is actually lit.
-        // The rim is a soft 180px glow, so a few pixels of lag is invisible and
-        // it saves rebuilding the gradient on frames where nothing moved much.
-        if (eo > 0.004 && (Math.abs(it.x - it.rx) > 3 || Math.abs(it.y - it.ry) > 3)){
-          it.rx = it.x; it.ry = it.y;
-          it.edge.style.background =
-            "radial-gradient(circle " + (SIZE*0.6).toFixed(0) + "px at " +
-            it.x.toFixed(0) + "px " + it.y.toFixed(0) + "px, var(--spot-edge))";
-        }
-      }
-
-      function wake(){ if (!raf){ last = performance.now(); raf = requestAnimationFrame(tick); } }
-
-      window.addEventListener("pointermove", function(ev){
-        px = ev.clientX; py = ev.clientY; pointerActive = true; wake();
-      }, {passive:true});
-      document.addEventListener("pointerout", function(ev){
-        if (ev.relatedTarget) return;
-        pointerActive = false; wake();
-      });
-      window.addEventListener("scroll", function(){ if (pointerActive) wake(); }, {passive:true});
-    })();
-
     var ticking = false;
     function onScroll(){
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(function(){ update(); updateSteps(); ticking = false; });
+      requestAnimationFrame(function(){ updateSteps(); ticking = false; });
     }
     updateSteps();
-    window.addEventListener("resize", function(){ howActive = -1; updateSteps(); });
-
-    var rebuildQueued = false;
-    function queueRebuild(force){
-      if (force) cachedPageH = 0;
-      if (rebuildQueued) return;
-      rebuildQueued = true;
-      requestAnimationFrame(function(){ rebuildQueued = false; buildPath(); });
-    }
-
-    buildPath();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", function(){ queueRebuild(true); });
-    window.addEventListener("load", function(){ queueRebuild(true); });
-    if ("ResizeObserver" in window) {
-      new ResizeObserver(function(){ queueRebuild(false); }).observe(document.body);
-    } else {
-      setTimeout(function(){ queueRebuild(true); }, 1500);
-    }
+    window.addEventListener("resize", function(){ howActive = -1; updateSteps(); });
+    window.addEventListener("load",   function(){ howActive = -1; updateSteps(); });
   })();
 })();
 </script>
