@@ -35,7 +35,7 @@
 /* Beyondesk design system: navy #0F2A44, blue #007BFF, light blue #38B6FF, slate #64748B, surface #F5F8FC; Inter; 8px rhythm; mobile first. */
 :root{
   --navy:#0F2A44; --blue:#007BFF; --blue-dark:#0066D6; --soft:#F5F8FC; --white:#FFFFFF;
-  --slate:#64748B; --ink:#243447; --cyan:#38B6FF; --light-blue:#38B6FF; --line:#E5E7EB; --line-strong:#CBD5E1; --green:#1A7F4B;
+  --slate:#64738B; --ink:#243447; --cyan:#38B6FF; --light-blue:#38B6FF; --blue-text:#0066D6; --line:#E5E7EB; --line-strong:#CBD5E1; --green:#1A7F4B;
   --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   color-scheme:light;
 }
@@ -57,8 +57,8 @@ p{margin:0}
 .head{display:grid;gap:12px;max-width:720px;margin-bottom:clamp(28px,4vw,48px)}
 section{padding-block:clamp(56px,7vw,96px)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;line-height:1.2;min-height:48px;padding:14px 24px;border-radius:8px;border:1.5px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s,color .15s}
-.btn-blue{background:var(--blue);color:#fff}
-.btn-blue:hover{background:var(--blue-dark)}
+.btn-blue{background:var(--blue-text);color:#fff}
+.btn-blue:hover{background:#0055B8}
 .btn-line{background:#fff;color:var(--navy);border-color:var(--line-strong)}
 .btn-line:hover{border-color:var(--navy)}
 .btn-white{background:#fff;color:var(--navy)}
@@ -183,7 +183,7 @@ input[type=range]{width:100%;accent-color:var(--blue);height:30px;cursor:pointer
 .how ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .how li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;display:grid;gap:8px;align-content:start}
 .how .n{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:15px;display:grid;place-items:center}
-.how .when{font-size:13.5px;font-weight:700;color:var(--blue)}
+.how .when{font-size:13.5px;font-weight:700;color:var(--blue-text)}
 .how p{font-size:15.5px}
 @media (max-width:900px){.how ol{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.how ol{grid-template-columns:1fr}}
@@ -373,7 +373,7 @@ footer a:hover{color:var(--blue)}
 .risk .fix{font-size:15px;color:var(--ink);background:var(--soft);padding:12px 14px;border-radius:8px}
 .risk b{color:var(--navy)}
 .risk .prob b{color:#92400E}
-.risk .fix b{color:var(--blue)}
+.risk .fix b{color:var(--blue-text)}
 .risk .prob{border-left:3px solid #D97706;background:#FFFBEB;padding:12px 14px;border-radius:8px}
 @media (max-width:900px){.risks{grid-template-columns:1fr}}
 
@@ -523,8 +523,8 @@ footer a:hover{color:var(--blue)}
 .hero-content .lead .hl{color:var(--cyan);font-weight:700}
 .hero-content .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
 .hero-content .cta .btn{min-height:52px;padding:14px 28px;font-size:16px;font-weight:700}
-.hero-content .cta .btn-blue{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 10px 30px rgba(0,123,255,.35)}
-.hero-content .cta .btn-blue:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
+.hero-content .cta .btn-blue{background:var(--blue-text);color:#fff;border-color:var(--blue-text);box-shadow:0 10px 30px rgba(0,123,255,.35)}
+.hero-content .cta .btn-blue:hover{background:#0055B8;border-color:#0055B8}
 .hero-content .cta .hero-link{color:#fff;font-weight:600;text-decoration:none;font-size:16px;padding:14px 10px;display:inline-flex;align-items:center;gap:6px;border-bottom:1.5px solid rgba(255,255,255,.4);transition:border-color .2s}
 .hero-content .cta .hero-link:hover{border-bottom-color:#fff}
 .hero-content .cta .hero-link:focus-visible{outline:3px solid var(--cyan);outline-offset:4px;border-radius:4px}
@@ -560,14 +560,14 @@ body::before{display:none}
 }
 
 /* ===== Scroll journey: a plane traces a flight path down the whole page ===== */
-.journey{position:absolute;top:0;left:clamp(10px,2.2vw,32px);width:84px;pointer-events:none;z-index:0;overflow:visible}
+.journey{position:absolute;top:0;left:clamp(10px,2.2vw,32px);width:84px;pointer-events:none;z-index:0;overflow:visible;contain:layout style}
 .journey-svg{position:absolute;top:0;left:0;display:block;overflow:visible}
 .journey .j-bg{fill:none;stroke:rgba(0,123,255,.10);stroke-width:2;stroke-linecap:round}
-.journey .j-fg{fill:none;stroke:url(#jGrad);stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 8px rgba(56,182,255,.5))}
-.journey .j-dot{fill:url(#jGrad);filter:drop-shadow(0 0 6px rgba(56,182,255,.6))}
-.journey-plane{position:absolute;top:0;left:0;color:var(--cyan);filter:drop-shadow(0 6px 18px rgba(56,182,255,.65));will-change:transform;transform-origin:center}
-.journey-plane .halo{opacity:.85;animation:plane-pulse 2.6s ease-in-out infinite}
-@keyframes plane-pulse{0%,100%{opacity:.3;r:14}50%{opacity:.75;r:22}}
+.journey .j-fg{fill:none;stroke:url(#jGrad);stroke-width:3;stroke-linecap:round}
+.journey .j-dot{fill:url(#jGrad)}
+.journey-plane{position:absolute;top:0;left:0;color:var(--cyan);will-change:transform;transform-origin:center;contain:layout style paint}
+.journey-plane .halo{opacity:.85;transform-origin:center;transform-box:fill-box;animation:plane-pulse 2.6s ease-in-out infinite}
+@keyframes plane-pulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.75;transform:scale(1.5)}}
 
 /* Push section content above the journey trail */
 section,footer,.stats,.trust-band{position:relative;z-index:1}
@@ -1336,54 +1336,67 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
     var fg = journey.querySelector(".j-fg");
     var dotsG = journey.querySelector(".j-dots");
     var plane = journey.querySelector(".journey-plane");
-    var totalLen = 0, cachedPageH = 0, segmentsCount = 0;
+
+    // Slack at the document end so the plane and its glow never spill past the
+    // last pixel of the page. Without this the overflow grows scrollHeight, the
+    // ResizeObserver rebuilds a longer path, and the page grows again: a loop
+    // that reads as jitter at the bottom of the page.
+    var BOTTOM_SLACK = 170;
+    var W = 84, AMP = 28, CENTER = W / 2, SEG_LEN = 420;
+
+    var totalLen = 0, pathH = 0, cachedPageH = 0, maxScroll = 1;
+
+    function measure(){
+      return Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    }
 
     function buildPath(){
-      var pageH = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-      if (pageH === cachedPageH) return;
+      var pageH = measure();
+      // Ignore the sub pixel churn that reveal animations and lazy images cause.
+      if (Math.abs(pageH - cachedPageH) < 8) { refreshScrollRange(); return; }
       cachedPageH = pageH;
-      var w = 84;
-      var amplitude = 28;
-      var centerX = w / 2;
-      var segLen = 420; // one gentle S curve per ~420px of page
-      var segs = Math.max(4, Math.floor(pageH / segLen));
-      segmentsCount = segs;
-      var step = pageH / segs;
-      var d = "M " + centerX + " 0";
+      pathH = Math.max(600, pageH - BOTTOM_SLACK);
+
+      var segs = Math.max(4, Math.floor(pathH / SEG_LEN));
+      var step = pathH / segs;
+      var d = "M " + CENTER + " 0";
       for (var i = 0; i < segs; i++){
         var y1 = (i + 0.5) * step;
         var y2 = (i + 1) * step;
-        var x1 = (i % 2 === 0) ? (centerX + amplitude) : (centerX - amplitude);
-        d += " Q " + x1 + " " + y1.toFixed(1) + ", " + centerX + " " + y2.toFixed(1);
+        var x1 = (i % 2 === 0) ? (CENTER + AMP) : (CENTER - AMP);
+        d += " Q " + x1 + " " + y1.toFixed(1) + ", " + CENTER + " " + y2.toFixed(1);
       }
-      svg.setAttribute("viewBox", "0 0 " + w + " " + pageH);
-      svg.setAttribute("width", w);
-      svg.setAttribute("height", pageH);
-      journey.style.height = pageH + "px";
+      svg.setAttribute("viewBox", "0 0 " + W + " " + pathH);
+      svg.setAttribute("width", W);
+      svg.setAttribute("height", pathH);
+      journey.style.height = pathH + "px";
       bg.setAttribute("d", d);
       fg.setAttribute("d", d);
       totalLen = fg.getTotalLength();
       fg.style.strokeDasharray = totalLen;
-      fg.style.strokeDashoffset = totalLen;
 
-      // Waypoint dots at the inflection points
       dotsG.innerHTML = "";
       for (var k = 1; k < segs; k++){
-        var py = k * step;
         var dot = document.createElementNS("http://www.w3.org/2000/svg","circle");
         dot.setAttribute("class","j-dot");
-        dot.setAttribute("cx", centerX);
-        dot.setAttribute("cy", py);
+        dot.setAttribute("cx", CENTER);
+        dot.setAttribute("cy", k * step);
         dot.setAttribute("r", 3);
         dotsG.appendChild(dot);
       }
+      refreshScrollRange();
       update();
+    }
+
+    // Cached so update() never touches scrollHeight, which would force a
+    // synchronous layout on every scroll frame.
+    function refreshScrollRange(){
+      maxScroll = Math.max(1, measure() - window.innerHeight);
     }
 
     function update(){
       if (!totalLen) return;
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
-      var maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       var progress = Math.max(0, Math.min(1, scrollTop / maxScroll));
       var distance = progress * totalLen;
       fg.style.strokeDashoffset = (totalLen - distance).toFixed(2);
@@ -1391,7 +1404,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
         var point = fg.getPointAtLength(distance);
         var ahead = fg.getPointAtLength(Math.min(totalLen, distance + 2));
         var angle = Math.atan2(ahead.y - point.y, ahead.x - point.x) * 180 / Math.PI + 90;
-        plane.style.transform = "translate(" + (point.x - 18) + "px, " + (point.y - 18) + "px) rotate(" + angle.toFixed(1) + "deg)";
+        plane.style.transform = "translate3d(" + (point.x - 18).toFixed(1) + "px," + (point.y - 18).toFixed(1) + "px,0) rotate(" + angle.toFixed(1) + "deg)";
       } catch(e){}
     }
 
@@ -1402,15 +1415,22 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
       requestAnimationFrame(function(){ update(); ticking = false; });
     }
 
+    var rebuildQueued = false;
+    function queueRebuild(force){
+      if (force) cachedPageH = 0;
+      if (rebuildQueued) return;
+      rebuildQueued = true;
+      requestAnimationFrame(function(){ rebuildQueued = false; buildPath(); });
+    }
+
     buildPath();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", function(){ cachedPageH = 0; buildPath(); });
-    window.addEventListener("load", function(){ cachedPageH = 0; buildPath(); });
-    // Rebuild on content changes (images lazy-loaded, animations expanding content)
+    window.addEventListener("resize", function(){ queueRebuild(true); });
+    window.addEventListener("load", function(){ queueRebuild(true); });
     if ("ResizeObserver" in window) {
-      new ResizeObserver(function(){ cachedPageH = 0; buildPath(); }).observe(document.body);
+      new ResizeObserver(function(){ queueRebuild(false); }).observe(document.body);
     } else {
-      setTimeout(buildPath, 1500);
+      setTimeout(function(){ queueRebuild(true); }, 1500);
     }
   })();
 })();
