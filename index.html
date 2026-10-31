@@ -531,6 +531,50 @@ html.js .reveal-stagger:not(.in) > *{opacity:0;transform:translateY(10px)}
 .hero-video{position:absolute;inset:0;z-index:0;overflow:hidden}
 .hero-video video{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .hero-dim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,42,68,.35) 0%,rgba(15,42,68,.25) 40%,rgba(15,42,68,.78) 100%)}
+
+/* ---- Focal sequence: the working day arrives ----------------------------
+   The scene opens cool and underlit and resolves into full working light
+   while the headline wipes up from its own baseline. One rehearsed moment,
+   about 1.2s, then the hero is still. Pure CSS, so a failed script cannot
+   leave the hero hidden, and every element ends in its natural state. */
+
+/* Animating the gradient itself, or a filter on the full bleed image, repaints
+   the whole viewport every frame: measured at 4x CPU throttle that dropped
+   every frame of the sequence. A fixed cool layer fading out gives the same
+   read with opacity alone, which the compositor handles. */
+.hero-dawn{position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(6,16,32,.78) 0%,rgba(9,22,44,.66) 45%,rgba(6,16,32,.88) 100%),
+    linear-gradient(180deg,rgba(90,120,160,.30),rgba(90,120,160,.30));
+  animation:dawn-lift 1500ms cubic-bezier(.33,0,.25,1) both}
+@keyframes dawn-lift{ from{opacity:1} to{opacity:0} }
+/* inset(0 0 100% 0) clips everything from the bottom, so as that inset falls
+   to zero the headline is revealed top down, in reading order, while it
+   settles the last few pixels upward. */
+@keyframes line-rise{
+  from{ clip-path:inset(0 0 100% 0); transform:translateY(14px) }
+  to  { clip-path:inset(0 0 0 0);    transform:translateY(0) }
+}
+@keyframes settle{
+  from{ opacity:0; transform:translateY(10px) }
+  to  { opacity:1; transform:translateY(0) }
+}
+
+/* The light gets a gentler, more even curve than the text. A confident
+   deceleration lands type well but makes an atmospheric shift snap, because
+   it is ~90% resolved inside 300ms. */
+
+.hero-content h1{animation:line-rise 820ms cubic-bezier(.16,1,.3,1) 160ms both}
+.hero-content .lead{animation:settle 620ms cubic-bezier(.16,1,.3,1) 540ms both}
+.hero-content .cta{animation:settle 560ms cubic-bezier(.16,1,.3,1) 720ms both}
+
+/* Reduced motion keeps the light resolving, because that carries the meaning,
+   and drops the spatial movement and the clip. */
+@media (prefers-reduced-motion:reduce){
+  .hero-content h1{animation:settle 400ms ease both;clip-path:none}
+  .hero-content .lead,.hero-content .cta{animation:settle 400ms ease both;animation-delay:120ms}
+  .hero-dawn{animation:dawn-lift 600ms ease both}
+}
 .hero-content{position:relative;z-index:2;width:100%;padding-top:clamp(140px,20vh,200px);padding-bottom:clamp(40px,10vh,96px);margin-top:auto}
 .hero-content .wrap{display:grid;grid-template-columns:1fr;gap:18px;max-width:760px;margin:0 auto 0 max(20px,calc((100vw - 1160px) / 2));padding:0;align-items:start;justify-items:start}
 @media (max-width:1200px){.hero-content .wrap{margin-left:max(20px,env(safe-area-inset-left,0px))}}
@@ -608,7 +652,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 
 /* Calculator pin CTA extra prominence */
 .keep + .calc-cta{box-shadow:0 10px 30px rgba(0,123,255,.3);margin-top:4px;animation:nudge 2.4s ease-out 1}
-@keyframes nudge{0%{transform:translateY(0)}30%{transform:translateY(-3px)}60%{transform:translateY(0)}100%{transform:translateY(0)}}
+@keyframes nudge{0%,100%{transform:translateY(0)}30%{transform:translateY(-3px)}60%{transform:translateY(0)}}
 
 /* Honour reduced motion for the hero video (poster-only) */
 @media (prefers-reduced-motion: reduce){
@@ -618,15 +662,15 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 
 /* ===== Section backgrounds: ambient aurora, orbit lines, shimmer ===== */
 .aurora{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.aurora::before,.aurora::after{content:"";position:absolute;border-radius:50%;filter:blur(80px);will-change:transform}
+.aurora::before,.aurora::after{content:"";position:absolute;border-radius:50%;will-change:transform}
 .aurora::before{top:-20%;left:-10%;width:55%;height:70%;background:radial-gradient(circle,rgba(56,182,255,.42),transparent 65%);animation:aurora-a 26s ease-in-out infinite}
 .aurora::after{bottom:-25%;right:-10%;width:65%;height:75%;background:radial-gradient(circle,rgba(0,123,255,.38),transparent 65%);animation:aurora-b 34s ease-in-out infinite}
 .aurora.soft::before{background:radial-gradient(circle,rgba(56,182,255,.3),transparent 65%)}
 .aurora.soft::after{background:radial-gradient(circle,rgba(0,123,255,.26),transparent 65%)}
 .aurora.cool::before{background:radial-gradient(circle,rgba(234,245,255,.9),transparent 65%);opacity:.6}
 .aurora.cool::after{background:radial-gradient(circle,rgba(56,182,255,.28),transparent 65%)}
-@keyframes aurora-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8%,12%) scale(1.08)}}
-@keyframes aurora-b{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-10%,-8%) scale(1.12)}}
+@keyframes aurora-a{0%,100%{transform:translate(0,0)}50%{transform:translate(8%,12%)}}
+@keyframes aurora-b{0%,100%{transform:translate(0,0)}50%{transform:translate(-10%,-8%)}}
 
 /* Position targets above the aurora */
 .stats,.how,.quality,.book,.cost,.roles{position:relative;isolation:isolate}
@@ -745,6 +789,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
       <source src="hero.mp4" type="video/mp4">
     </video>
     <div class="hero-dim"></div>
+    <div class="hero-dawn"></div>
   </div>
   <div class="hero-content">
     <div class="wrap">
@@ -1278,7 +1323,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
     aurora.setAttribute("aria-hidden","true");
     el.prepend(aurora);
   }
-  injectAurora(".stats","soft");
+  injectAurora(".commitments","soft");
   injectAurora(".how","cool");
   injectAurora(".quality","soft");
   injectAurora(".book","soft");
