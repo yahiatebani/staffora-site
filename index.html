@@ -132,13 +132,34 @@ section{padding-block:clamp(56px,7vw,96px)}
 
 /* stats */
 .stats{background:var(--soft);padding-block:28px}
-.commitments{background:var(--white);padding-block:clamp(36px,5vw,60px)}
-.commitments dl{margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
-.commitments dl>div{border-top:2px solid var(--navy);padding-top:14px}
-.commitments dt{font-size:16px;font-weight:700;color:var(--navy);letter-spacing:-.01em;margin-bottom:6px}
-.commitments dd{margin:0;font-size:15px;line-height:1.55;color:var(--slate)}
-@media (max-width:860px){.commitments dl{grid-template-columns:1fr 1fr;gap:24px}}
-@media (max-width:520px){.commitments dl{grid-template-columns:1fr;gap:20px}}
+/* The replacement guarantee leads, because with no clients or testimonials yet
+   it is the strongest thing on the page. The other three support it. */
+.commitments{background:var(--soft);padding-block:clamp(48px,6vw,84px)}
+.cm-head{margin-bottom:clamp(26px,3.5vw,42px)}
+.cm-head h2{font-size:clamp(28px,3.2vw,40px);font-weight:800;color:var(--navy);
+  letter-spacing:-.025em;line-height:1.1;margin:0 0 10px;text-wrap:balance}
+.cm-head .lead{margin:0;font-size:17px;color:var(--slate);max-width:62ch}
+.cm-lead{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(24px,4vw,56px);
+  align-items:center;background:var(--navy);color:#fff;border-radius:18px;
+  padding:clamp(26px,3.5vw,44px);margin-bottom:18px}
+.cm-lead h3{margin:0 0 8px;font-size:clamp(22px,2.4vw,30px);font-weight:800;
+  letter-spacing:-.02em;line-height:1.15;color:#fff}
+.cm-lead p{margin:0;color:rgba(255,255,255,.88);font-size:16.5px}
+.cm-figure{display:block}
+.cm-figure strong{display:block;font-size:clamp(46px,6vw,74px);font-weight:800;
+  letter-spacing:-.04em;line-height:.9;color:#7CCBFF;font-variant-numeric:tabular-nums}
+.cm-figure span{display:block;font-size:14.5px;font-weight:600;
+  color:rgba(255,255,255,.78);margin-top:8px}
+.cm-three{margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cm-three>div{background:var(--white);border:1px solid var(--line);
+  border-radius:14px;padding:22px;box-shadow:0 6px 22px rgba(15,42,68,.04)}
+.cm-three dt{font-size:16.5px;font-weight:700;color:var(--navy);
+  letter-spacing:-.01em;margin-bottom:6px}
+.cm-three dd{margin:0;font-size:15.5px;line-height:1.55;color:var(--slate)}
+@media (max-width:900px){
+  .cm-lead{grid-template-columns:1fr;gap:20px}
+  .cm-three{grid-template-columns:1fr;gap:12px}
+}
 .stats ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .stats li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;gap:4px}
 .stats b{font-size:clamp(22px,2.2vw,28px);font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
@@ -872,11 +893,21 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 
 <div class="commitments" role="region" aria-label="What we commit to">
   <div class="wrap">
-    <dl>
-      <div><dt>Employed, not freelance</dt><dd>On a proper contract through Beyondesk in Morocco, working only for you.</dd></div>
+    <div class="cm-head">
+      <h2>What you are actually getting.</h2>
+      <p class="lead">Four things we commit to in writing, before you have paid anything.</p>
+    </div>
+    <div class="cm-lead">
+      <div class="cm-lead-copy">
+        <h3>If they are not right, we replace them.</h3>
+        <p>At our cost, for the first 90 days. One replacement per role, and you are never billed for two people during the handover.</p>
+      </div>
+      <p class="cm-figure"><strong>90</strong><span>days of replacement cover, carried by us</span></p>
+    </div>
+    <dl class="cm-three">
+      <div><dt>Employed, not freelance</dt><dd>A proper contract through Beyondesk in Morocco, working only for you.</dd></div>
       <div><dt>Assessed before you meet them</dt><dd>English assessment, skills test and reference checks on every shortlist.</dd></div>
       <div><dt>Your working day</dt><dd>Morocco shares the UK time zone for most of the year, so no overnight shifts.</dd></div>
-      <div><dt>Replaced if they are not right</dt><dd>At our cost, for the first 90 days. One replacement per role.</dd></div>
     </dl>
   </div>
 </div>
