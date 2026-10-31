@@ -796,34 +796,41 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 .beamline{max-width:980px;margin:clamp(34px,5vw,56px) auto clamp(40px,6vw,72px);padding-inline:20px}
 .beamline svg{width:100%;height:auto;display:block;overflow:visible}
 .beam-base{fill:none;stroke:rgba(0,123,255,.22);stroke-width:2.5;stroke-linecap:round}
-.beam-pulse{fill:none;stroke:url(#beamGrad);stroke-width:3.5;stroke-linecap:round;
-  stroke-dasharray:70 860;animation:beam-run 3.4s linear infinite}
-.beam-pulse.b2{animation-delay:1.7s;opacity:.65}
-@keyframes beam-run{from{stroke-dashoffset:930}to{stroke-dashoffset:0}}
+.beam-pulse{fill:none;stroke:url(#beamGrad);stroke-width:3.5;stroke-linecap:round}
 .beam-node{fill:var(--blue-text)}
 .beamline svg{overflow:visible}
 .beam-halo{fill:rgba(56,182,255,.22);transform-origin:center;transform-box:fill-box;
   animation:beam-ping 3.4s ease-out infinite}
-.beam-halo.b2{animation-delay:1.7s}
+.beam-halo.b2{animation-delay:2.25s}
 @keyframes beam-ping{0%{transform:scale(.6);opacity:.75}70%,100%{transform:scale(1.5);opacity:0}}
+.beam-halo{animation-duration:4.5s}
 .beam-label{fill:var(--navy);font-family:var(--font);font-size:15px;font-weight:700}
 .beam-mid{fill:var(--slate);font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:.02em}
 @media (max-width:560px){.beam-label{font-size:19px}.beam-mid{font-size:17px}}
 @media (prefers-reduced-motion:reduce){
-  .beam-pulse{animation:none;stroke-dasharray:none;opacity:.5}
+  .beam-pulse{opacity:.5}
   .beam-halo{animation:none;opacity:.25}
 }
 
 /* ===== Cursor spotlight on cards ========================================
    Ported from the React libraries as plain CSS plus one throttled handler:
    a soft brand coloured light that follows the cursor across a card. */
-.roles a,.col{position:relative}
-.roles a::after,.col::after{content:"";position:absolute;inset:0;border-radius:inherit;
-  pointer-events:none;opacity:0;transition:opacity .35s ease;
-  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
-             rgba(0,123,255,.13),transparent 62%)}
-.roles a:hover::after,.col:hover::after{opacity:1}
-@media (hover:none){.roles a::after,.col::after{display:none}}
+.roles a,.col{position:relative;isolation:isolate;overflow:hidden;--spot-fill:rgba(0,123,255,1) 0%,rgba(0,123,255,1) 13.97%,rgba(0,123,255,.9794) 20.11%,rgba(0,123,255,.9207) 26.26%,rgba(0,123,255,.8312) 32.40%,rgba(0,123,255,.7211) 38.55%,rgba(0,123,255,.6010) 44.69%,rgba(0,123,255,.4808) 50.84%,rgba(0,123,255,.3682) 56.98%,rgba(0,123,255,.2685) 63.13%,rgba(0,123,255,.1847) 69.27%,rgba(0,123,255,.1175) 75.42%,rgba(0,123,255,.0667) 81.56%,rgba(0,123,255,.0310) 87.71%,rgba(0,123,255,.0091) 93.85%,rgba(0,123,255,0) 100%;--spot-edge:rgba(0,123,255,1) 0%,rgba(0,123,255,.9768) 7.14%,rgba(0,123,255,.9104) 14.29%,rgba(0,123,255,.8095) 21.43%,rgba(0,123,255,.6866) 28.57%,rgba(0,123,255,.5550) 35.71%,rgba(0,123,255,.4269) 42.86%,rgba(0,123,255,.3117) 50%,rgba(0,123,255,.2149) 57.14%,rgba(0,123,255,.1389) 64.29%,rgba(0,123,255,.0830) 71.43%,rgba(0,123,255,.0447) 78.57%,rgba(0,123,255,.0206) 85.71%,rgba(0,123,255,.0068) 92.86%,rgba(0,123,255,0) 100%}
+/* The 16 stop falloff is ReactBits': a smoothstep blended against a Gaussian
+   glow, which is why it reads as light rather than as a flat radial. */
+.spot-edge{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0}
+/* Rebuilding a 16 stop gradient string every frame repaints the card. A fixed
+   gradient on a layer we translate is handed to the compositor instead. */
+.spot-light{position:absolute;left:0;top:0;width:640px;height:640px;
+  margin:-320px 0 0 -320px;border-radius:50%;z-index:-1;opacity:0;
+  pointer-events:none;will-change:transform;
+  background:radial-gradient(circle 300px at 50% 50%,rgba(0,123,255,1) 0%,rgba(0,123,255,1) 13.97%,rgba(0,123,255,.9794) 20.11%,rgba(0,123,255,.9207) 26.26%,rgba(0,123,255,.8312) 32.40%,rgba(0,123,255,.7211) 38.55%,rgba(0,123,255,.6010) 44.69%,rgba(0,123,255,.4808) 50.84%,rgba(0,123,255,.3682) 56.98%,rgba(0,123,255,.2685) 63.13%,rgba(0,123,255,.1847) 69.27%,rgba(0,123,255,.1175) 75.42%,rgba(0,123,255,.0667) 81.56%,rgba(0,123,255,.0310) 87.71%,rgba(0,123,255,.0091) 93.85%,rgba(0,123,255,0) 100%)}
+.spot-edge{z-index:1;padding:1px;
+  background:radial-gradient(circle 180px at 50% 50%,rgba(0,123,255,1) 0%,rgba(0,123,255,.9768) 7.14%,rgba(0,123,255,.9104) 14.29%,rgba(0,123,255,.8095) 21.43%,rgba(0,123,255,.6866) 28.57%,rgba(0,123,255,.5550) 35.71%,rgba(0,123,255,.4269) 42.86%,rgba(0,123,255,.3117) 50%,rgba(0,123,255,.2149) 57.14%,rgba(0,123,255,.1389) 64.29%,rgba(0,123,255,.0830) 71.43%,rgba(0,123,255,.0447) 78.57%,rgba(0,123,255,.0206) 85.71%,rgba(0,123,255,.0068) 92.86%,rgba(0,123,255,0) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+@media (hover:none){.spot-light,.spot-edge{display:none}}
 </style>
 
 </head>
@@ -1072,16 +1079,22 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
     <div class="beamline" aria-hidden="true">
       <svg viewBox="0 0 900 150" preserveAspectRatio="xMidYMid meet" role="presentation">
         <defs>
-          <linearGradient id="beamGrad" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0"   stop-color="#38B6FF" stop-opacity="0"/>
-            <stop offset=".45" stop-color="#38B6FF"/>
-            <stop offset=".55" stop-color="#007BFF"/>
-            <stop offset="1"   stop-color="#007BFF" stop-opacity="0"/>
+          <!-- MagicUI's AnimatedBeam sweeps the gradient's own coordinates along
+               the path on an easeOutExpo curve, rather than moving a dash. That
+               is what gives it the sense of a pulse being sent. -->
+          <linearGradient id="beamGrad" gradientUnits="userSpaceOnUse" x1="0%" x2="0%" y1="0%" y2="0%">
+            <stop stop-color="#38B6FF" stop-opacity="0"/>
+            <stop stop-color="#38B6FF"/>
+            <stop offset="32.5%" stop-color="#007BFF"/>
+            <stop offset="100%" stop-color="#007BFF" stop-opacity="0"/>
+            <animate attributeName="x1" values="10%;110%" dur="4.5s" repeatCount="indefinite"
+                     calcMode="spline" keyTimes="0;1" keySplines="0.16 1 0.3 1"/>
+            <animate attributeName="x2" values="0%;100%" dur="4.5s" repeatCount="indefinite"
+                     calcMode="spline" keyTimes="0;1" keySplines="0.16 1 0.3 1"/>
           </linearGradient>
         </defs>
         <path class="beam-base"  d="M120 92 Q 450 0 780 92"/>
         <path class="beam-pulse" d="M120 92 Q 450 0 780 92"/>
-        <path class="beam-pulse b2" d="M120 92 Q 450 0 780 92"/>
         <circle class="beam-halo" cx="120" cy="92" r="16"/>
         <circle class="beam-halo b2" cx="780" cy="92" r="16"/>
         <circle class="beam-node" cx="120" cy="92" r="7"/>
@@ -1640,28 +1653,97 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
       }
     }
 
-    // Cursor spotlight: one delegated handler, rAF throttled, two custom
-    // properties per move. No per card listeners.
+    // Cursor spotlight, ported from ReactBits' SpotlightCard. The parts that
+    // matter for how it feels: the light eases toward the cursor instead of
+    // snapping to it, it fades in from `proximity` px before the cursor reaches
+    // the card, and presence fades in faster than it fades out. The rAF only
+    // runs while something is actually moving.
     (function(){
       if (window.matchMedia("(hover:none)").matches) return;
-      var spots = document.querySelectorAll(".roles a, .col");
-      if (!spots.length) return;
-      var pending = null;
-      function flush(){
-        if (pending){
-          pending.el.style.setProperty("--mx", pending.x + "px");
-          pending.el.style.setProperty("--my", pending.y + "px");
-          pending = null;
+      var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+      var cards = document.querySelectorAll(".roles a, .col");
+      if (!cards.length) return;
+
+      var SIZE = 300, PROXIMITY = 90, SMOOTHING = 0.3, INTENSITY = 0.30, RIM = 0.45;
+      var items = [];
+
+      cards.forEach(function(el){
+        var light = document.createElement("span");
+        var edge  = document.createElement("span");
+        light.className = "spot-light"; edge.className = "spot-edge";
+        light.setAttribute("aria-hidden","true"); edge.setAttribute("aria-hidden","true");
+        el.appendChild(light); el.appendChild(edge);
+        items.push({el:el, light:light, edge:edge, x:0, y:0, rx:-999, ry:-999, presence:0, target:0});
+      });
+
+      var raf = 0, last = 0, px = 0, py = 0, pointerActive = false;
+
+      function tick(now){
+        raf = 0;
+        var dt = Math.min(0.05, Math.max(0.001, (now - last)/1000));
+        last = now;
+        var busy = false;
+
+        for (var i=0;i<items.length;i++){
+          var it = items[i];
+          var r = it.el.getBoundingClientRect();
+          if (r.bottom < -200 || r.top > innerHeight + 200){
+            if (it.presence !== 0){ it.presence = 0; paint(it); }
+            continue;
+          }
+          // Nothing to do for a card that is dark and staying dark.
+          var quickGapX = Math.max(0, r.left - px, px - r.right);
+          var quickGapY = Math.max(0, r.top - py, py - r.bottom);
+          if (it.presence === 0 && (quickGapX > PROXIMITY || quickGapY > PROXIMITY)) continue;
+          var tx = px - r.left, ty = py - r.top, target = 0;
+          if (pointerActive){
+            var gx = Math.max(0, -tx, tx - r.width);
+            var gy = Math.max(0, -ty, ty - r.height);
+            var gap = Math.sqrt(gx*gx + gy*gy);
+            target = gap === 0 ? 1 : Math.pow(Math.max(0, 1 - gap/PROXIMITY), 2);
+          }
+          // jump straight to position when arriving from nothing
+          if (it.presence < 0.02 && target > 0){ it.x = tx; it.y = ty; }
+          var follow = reduce ? 1 : 1 - Math.exp(-dt / (0.015 + SMOOTHING*0.22));
+          it.x += (tx - it.x) * follow;
+          it.y += (ty - it.y) * follow;
+          var fade = reduce ? 1 : 1 - Math.exp(-dt / (target > it.presence ? 0.1 : 0.32));
+          it.presence += (target - it.presence) * fade;
+          if (Math.abs(target - it.presence) < 0.002) it.presence = target;
+          paint(it);
+          if (it.presence !== target || Math.abs(tx-it.x) > 0.1 || Math.abs(ty-it.y) > 0.1) busy = true;
+        }
+        if (busy) wake();
+      }
+
+      function paint(it){
+        var lo = Math.min(1, it.presence * INTENSITY);
+        var eo = Math.min(1, it.presence * RIM);
+        it.light.style.transform = "translate3d(" + it.x.toFixed(1) + "px," + it.y.toFixed(1) + "px,0)";
+        it.light.style.opacity = lo.toFixed(3);
+        it.edge.style.opacity  = eo.toFixed(3);
+        // The rim is masked to a 1px border so it cannot be translated the same
+        // way. It is only redrawn while the card is actually lit.
+        // The rim is a soft 180px glow, so a few pixels of lag is invisible and
+        // it saves rebuilding the gradient on frames where nothing moved much.
+        if (eo > 0.004 && (Math.abs(it.x - it.rx) > 3 || Math.abs(it.y - it.ry) > 3)){
+          it.rx = it.x; it.ry = it.y;
+          it.edge.style.background =
+            "radial-gradient(circle " + (SIZE*0.6).toFixed(0) + "px at " +
+            it.x.toFixed(0) + "px " + it.y.toFixed(0) + "px, var(--spot-edge))";
         }
       }
-      spots.forEach(function(el){
-        el.addEventListener("pointermove", function(ev){
-          var r = el.getBoundingClientRect();
-          var queued = !!pending;
-          pending = {el:el, x:Math.round(ev.clientX-r.left), y:Math.round(ev.clientY-r.top)};
-          if (!queued) requestAnimationFrame(flush);
-        }, {passive:true});
+
+      function wake(){ if (!raf){ last = performance.now(); raf = requestAnimationFrame(tick); } }
+
+      window.addEventListener("pointermove", function(ev){
+        px = ev.clientX; py = ev.clientY; pointerActive = true; wake();
+      }, {passive:true});
+      document.addEventListener("pointerout", function(ev){
+        if (ev.relatedTarget) return;
+        pointerActive = false; wake();
       });
+      window.addEventListener("scroll", function(){ if (pointerActive) wake(); }, {passive:true});
     })();
 
     var ticking = false;
