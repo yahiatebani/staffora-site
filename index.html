@@ -677,7 +677,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 .stats > *:not(.aurora),.how > *:not(.aurora),.quality > *:not(.aurora),.book > *:not(.aurora),.cost > *:not(.aurora),.roles > *:not(.aurora){position:relative;z-index:1}
 
 /* How-it-works trace: a connecting path that draws in across the four steps */
-.how{overflow:hidden}
+.how{overflow:clip}
 .how .trace{position:absolute;left:0;right:0;top:50%;height:80px;transform:translateY(-50%);z-index:0;pointer-events:none;opacity:.55}
 .how .trace svg{width:100%;height:100%;display:block}
 .how .trace path{fill:none;stroke:url(#traceGrad);stroke-width:2.4;stroke-dasharray:3000;stroke-dashoffset:3000;transition:stroke-dashoffset 2.4s cubic-bezier(.22,.61,.36,1)}
@@ -691,7 +691,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 
 /* Spring-ish reveal on stats/role cards + counter target */
 .stats li,.roles a,.how li{transition:transform .55s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .2s ease}
-.stats li.in,.roles a.in,.how li.in{animation:popIn .55s cubic-bezier(.34,1.56,.64,1) both}
+.stats li.in,.roles a.in{animation:popIn .55s cubic-bezier(.34,1.56,.64,1) both}
 @keyframes popIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .stats li b[data-count]{font-variant-numeric:tabular-nums}
 
@@ -703,7 +703,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 /* Reduced motion fallback */
 @media (prefers-reduced-motion: reduce){
   .aurora::before,.aurora::after,.btn-blue::before,.how .trace path,.sdiv svg path{animation:none!important;transition:none!important}
-  .stats li.in,.roles a.in,.how li.in{animation:none!important}
+  .stats li.in,.roles a.in{animation:none!important}
 }
 
 .guarantee{margin-top:28px;padding-top:22px;border-top:2px solid var(--blue-text)}
@@ -711,6 +711,119 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 .guarantee p{margin:0;font-size:15.5px;line-height:1.6;color:var(--ink)}
 .foot-brand{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
 .foot-tag{margin:0;font-size:13.5px;font-weight:600;letter-spacing:.01em;color:var(--slate)}
+
+/* ===== Scroll cinematic =================================================
+   Driven by native scroll timelines so the work happens off the main thread,
+   and only transform and opacity move, which the compositor owns. Browsers
+   without scroll timelines (Firefox today) get the page exactly as it was,
+   because everything here lives inside @supports. */
+@supports (animation-timeline: view()) and (animation-timeline: scroll()) {
+
+  /* Hero exit. The image pushes in slowly while the copy lifts out faster,
+     so the two layers separate as you leave: the cinematic part. */
+  @keyframes hero-push{ from{transform:scale(1)} to{transform:scale(1.16)} }
+  @keyframes hero-lift{
+    0%  {transform:translateY(0);    opacity:1}
+    65% {transform:translateY(-14%); opacity:.55}
+    100%{transform:translateY(-26%); opacity:0}
+  }
+  @keyframes hero-deepen{ from{opacity:0} to{opacity:.55} }
+
+  .hero-video video,.hero-video img{
+    animation:hero-push linear both;
+    animation-timeline:scroll(root block); animation-range:0 110vh}
+  .hero-content{
+    animation:hero-lift linear both;
+    animation-timeline:scroll(root block); animation-range:0 85vh}
+  .hero-dawn{
+    animation:dawn-lift 1500ms cubic-bezier(.33,0,.25,1) both,
+              hero-deepen linear both;
+    animation-timeline:auto,scroll(root block);
+    animation-range:normal,20vh 110vh}
+
+  /* Sections scrub in against their own position rather than firing once,
+     so the page reads as playing rather than popping. */
+  @keyframes scrub-in{
+    from{opacity:0;transform:translateY(34px)}
+    to  {opacity:1;transform:none}
+  }
+  html.js .reveal:not(.in),html.js .reveal-stagger:not(.in) > *{opacity:1;transform:none}
+  .reveal{animation:scrub-in linear both;
+    animation-timeline:view(); animation-range:entry 8% entry 78%}
+  .reveal-stagger > *{animation:scrub-in linear both;animation-timeline:view()}
+  .reveal-stagger > *:nth-child(1){animation-range:entry 4%  entry 64%}
+  .reveal-stagger > *:nth-child(2){animation-range:entry 10% entry 70%}
+  .reveal-stagger > *:nth-child(3){animation-range:entry 16% entry 76%}
+  .reveal-stagger > *:nth-child(4){animation-range:entry 22% entry 82%}
+  .reveal-stagger > *:nth-child(5){animation-range:entry 28% entry 88%}
+  .reveal-stagger > *:nth-child(6){animation-range:entry 34% entry 94%}
+  .reveal-stagger > *:nth-child(n+7){animation-range:entry 40% entry 100%}
+
+  /* The one pinned moment. "How it works" is a real four step sequence, so the
+     heading holds still while the steps build one at a time underneath it.
+     Desktop only: a tall pinned section on a phone is a trap. */
+  @media (min-width:901px) and (prefers-reduced-motion:no-preference){
+    .how{min-height:200vh;view-timeline:--how block;padding-block:0}
+    .how > .wrap{position:sticky;top:0;min-height:100vh;
+      display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,4vh,48px)}
+    /* Steps advance as discrete states, driven from the scroll loop that already
+       runs for the flight path. A process is a sequence of four things, not a
+       continuous scrub, so stepping suits it better than easing. */
+    .how ol li{opacity:.2;transform:translateY(26px) scale(.975);
+      transition:opacity 420ms cubic-bezier(.16,1,.3,1),transform 420ms cubic-bezier(.16,1,.3,1)}
+    .how ol li.step-on{opacity:1;transform:none}
+    .how ol li.step-past{opacity:.72}
+  }
+
+  /* Section headings ride up at their own rate against the body beneath them. */
+  @keyframes head-drift{ from{transform:translateY(26px)} to{transform:translateY(-10px)} }
+  .cost .head h2,.roles .head h2,.how .head h2,.quality h2,.why h2,.faq h2{
+    animation:head-drift linear both;
+    animation-timeline:view(); animation-range:cover 0% cover 100%}
+
+  @media (prefers-reduced-motion:reduce){
+    .hero-video video,.hero-video img,.hero-content,.hero-dawn,
+    .reveal,.reveal-stagger > *,
+    .cost .head h2,.roles .head h2,.how .head h2,.quality h2,.why h2,.faq h2{
+      animation-timeline:auto!important}
+    .reveal,.reveal-stagger > *{animation:none!important;opacity:1!important;transform:none!important}
+  }
+}
+
+/* ===== Connection beam: London to Casablanca ============================
+   The point of the section is that the distance does not cost you the working
+   day, so the two ends sit on one line with light running between them. */
+.beamline{max-width:980px;margin:clamp(34px,5vw,56px) auto clamp(40px,6vw,72px);padding-inline:20px}
+.beamline svg{width:100%;height:auto;display:block;overflow:visible}
+.beam-base{fill:none;stroke:rgba(0,123,255,.22);stroke-width:2.5;stroke-linecap:round}
+.beam-pulse{fill:none;stroke:url(#beamGrad);stroke-width:3.5;stroke-linecap:round;
+  stroke-dasharray:70 860;animation:beam-run 3.4s linear infinite}
+.beam-pulse.b2{animation-delay:1.7s;opacity:.65}
+@keyframes beam-run{from{stroke-dashoffset:930}to{stroke-dashoffset:0}}
+.beam-node{fill:var(--blue-text)}
+.beamline svg{overflow:visible}
+.beam-halo{fill:rgba(56,182,255,.22);transform-origin:center;transform-box:fill-box;
+  animation:beam-ping 3.4s ease-out infinite}
+.beam-halo.b2{animation-delay:1.7s}
+@keyframes beam-ping{0%{transform:scale(.6);opacity:.75}70%,100%{transform:scale(1.5);opacity:0}}
+.beam-label{fill:var(--navy);font-family:var(--font);font-size:15px;font-weight:700}
+.beam-mid{fill:var(--slate);font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:.02em}
+@media (max-width:560px){.beam-label{font-size:19px}.beam-mid{font-size:17px}}
+@media (prefers-reduced-motion:reduce){
+  .beam-pulse{animation:none;stroke-dasharray:none;opacity:.5}
+  .beam-halo{animation:none;opacity:.25}
+}
+
+/* ===== Cursor spotlight on cards ========================================
+   Ported from the React libraries as plain CSS plus one throttled handler:
+   a soft brand coloured light that follows the cursor across a card. */
+.roles a,.col{position:relative}
+.roles a::after,.col::after{content:"";position:absolute;inset:0;border-radius:inherit;
+  pointer-events:none;opacity:0;transition:opacity .35s ease;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+             rgba(0,123,255,.13),transparent 62%)}
+.roles a:hover::after,.col:hover::after{opacity:1}
+@media (hover:none){.roles a::after,.col::after{display:none}}
 </style>
 
 </head>
@@ -956,6 +1069,29 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
       <p class="lead">Morocco has quietly become one of the biggest offshoring hubs in Europe's time zone. The government backs it with real money, the universities feed it with graduates, and the workforce is fluent in the languages UK and European businesses actually speak.</p>
     </div>
 
+    <div class="beamline" aria-hidden="true">
+      <svg viewBox="0 0 900 150" preserveAspectRatio="xMidYMid meet" role="presentation">
+        <defs>
+          <linearGradient id="beamGrad" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0"   stop-color="#38B6FF" stop-opacity="0"/>
+            <stop offset=".45" stop-color="#38B6FF"/>
+            <stop offset=".55" stop-color="#007BFF"/>
+            <stop offset="1"   stop-color="#007BFF" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="beam-base"  d="M120 92 Q 450 0 780 92"/>
+        <path class="beam-pulse" d="M120 92 Q 450 0 780 92"/>
+        <path class="beam-pulse b2" d="M120 92 Q 450 0 780 92"/>
+        <circle class="beam-halo" cx="120" cy="92" r="16"/>
+        <circle class="beam-halo b2" cx="780" cy="92" r="16"/>
+        <circle class="beam-node" cx="120" cy="92" r="7"/>
+        <circle class="beam-node" cx="780" cy="92" r="7"/>
+        <text class="beam-label" x="120" y="124" text-anchor="middle">London</text>
+        <text class="beam-label" x="780" y="124" text-anchor="middle">Casablanca</text>
+        <text class="beam-mid"   x="450" y="40" text-anchor="middle">Same working day, most of the year</text>
+      </svg>
+    </div>
+
     <div class="mstats reveal-stagger">
       <div class="mstat">
         <b>11,000</b>
@@ -1002,7 +1138,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
       <h2>How Beyondesk works.</h2>
       <p class="lead">A simple four step process from your first call to a settled team member.</p>
     </div>
-    <ol class="reveal-stagger">
+    <ol>
       <li><span class="n">1</span><span class="when">Brief</span><h3>Tell us the role</h3><p>A short call about the work, your tools and your hours. You get a fixed monthly fee for the role.</p></li>
       <li><span class="n">2</span><span class="when">Shortlist and interview</span><h3>Meet the candidates</h3><p>We send a shortlist with English assessments and skills tests. You interview and choose.</p></li>
       <li><span class="n">3</span><span class="when">Onboarding</span><h3>Set up together</h3><p>We supply the equipment and set up access. You train them on your systems with our support.</p></li>
@@ -1346,7 +1482,7 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
 
   /* ----- Spring-pop reveal for stat/role/how cards + stat counter tick-up ----- */
   (function(){
-    var cards = document.querySelectorAll(".stats li, .roles a, .how li");
+    var cards = document.querySelectorAll(".stats li, .roles a");
     if (!cards.length) return;
     if ("IntersectionObserver" in window){
       var cardIO = new IntersectionObserver(function(entries){
@@ -1477,12 +1613,65 @@ section,footer,.stats,.trust-band{position:relative;z-index:1}
       } catch(e){}
     }
 
+    // "How it works" steps light up in turn while the section is pinned.
+    var howEl = document.querySelector(".how");
+    var howSteps = howEl ? howEl.querySelectorAll("ol li") : [];
+    var howActive = -1;
+    function updateSteps(){
+      if (!howEl || !howSteps.length) return;
+      if (!window.matchMedia("(min-width:901px)").matches ||
+          window.matchMedia("(prefers-reduced-motion:reduce)").matches){
+        if (howActive !== 99){ howActive = 99;
+          for (var j=0;j<howSteps.length;j++){
+            howSteps[j].classList.add("step-on");
+            howSteps[j].classList.remove("step-past"); } }
+        return;
+      }
+      var r = howEl.getBoundingClientRect();
+      var span = Math.max(1, r.height - window.innerHeight);
+      var p = Math.max(0, Math.min(1, -r.top / span));
+      // four steps across the pinned run, the last landing a little early
+      var current = Math.min(howSteps.length - 1, Math.floor(p / 0.23));
+      if (current === howActive) return;
+      howActive = current;
+      for (var i=0;i<howSteps.length;i++){
+        howSteps[i].classList.toggle("step-on", i <= current);
+        howSteps[i].classList.toggle("step-past", i < current);
+      }
+    }
+
+    // Cursor spotlight: one delegated handler, rAF throttled, two custom
+    // properties per move. No per card listeners.
+    (function(){
+      if (window.matchMedia("(hover:none)").matches) return;
+      var spots = document.querySelectorAll(".roles a, .col");
+      if (!spots.length) return;
+      var pending = null;
+      function flush(){
+        if (pending){
+          pending.el.style.setProperty("--mx", pending.x + "px");
+          pending.el.style.setProperty("--my", pending.y + "px");
+          pending = null;
+        }
+      }
+      spots.forEach(function(el){
+        el.addEventListener("pointermove", function(ev){
+          var r = el.getBoundingClientRect();
+          var queued = !!pending;
+          pending = {el:el, x:Math.round(ev.clientX-r.left), y:Math.round(ev.clientY-r.top)};
+          if (!queued) requestAnimationFrame(flush);
+        }, {passive:true});
+      });
+    })();
+
     var ticking = false;
     function onScroll(){
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(function(){ update(); ticking = false; });
+      requestAnimationFrame(function(){ update(); updateSteps(); ticking = false; });
     }
+    updateSteps();
+    window.addEventListener("resize", function(){ howActive = -1; updateSteps(); });
 
     var rebuildQueued = false;
     function queueRebuild(force){
