@@ -1,5 +1,11 @@
 /* Final enquiry section on the animated ribbon background */
-.sec.final[data-ribbons]{background:#EEF5FD;color:#0F2A44;position:relative;overflow:hidden;isolation:isolate;padding-bottom:clamp(150px,20vw,300px)}
+[data-ribbons]{position:relative;overflow:hidden;isolation:isolate;background:#EEF5FD}
+[data-ribbons] > .wrap{position:relative;z-index:1}
+.sec.final[data-ribbons]{color:#0F2A44;padding-bottom:clamp(150px,20vw,300px)}
+.sync[data-ribbons]{padding-bottom:clamp(190px,21vw,320px)}
+.sync[data-ribbons] > .sync-curve{z-index:2}
+#guarantee[data-ribbons]{padding-bottom:clamp(120px,15vw,240px)}
+#guarantee[data-ribbons] .guar-terms li{box-shadow:0 10px 30px rgba(15,42,68,.07)}
 .sec.final[data-ribbons]::before{display:none!important}
 .sec.final[data-ribbons] .plane-cta{display:none!important}
 .rb-canvas{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}

@@ -84,6 +84,8 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
     var sprite = document.createElement("canvas"), spriteR = 0;
     var dots = [], map = {x:0, y:0, w:0, h:0}, rib = {sx:1, sy:1, oy:0};
     var pulses = [], nextPulse = 0;
+    var globe = (host.getAttribute("data-ribbons") || "globe") !== "plain";
+    var bandFrac = parseFloat(host.getAttribute("data-band")) || .42;
 
     function makeSprite(r){
       spriteR = r; var d = Math.ceil(r * 2 + 2);
@@ -96,11 +98,11 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
       var r = host.getBoundingClientRect();
       W = Math.max(1, Math.round(r.width)); H = Math.max(1, Math.round(r.height));
       phone = W < 760;
-      dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 1.75);
+      dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.25 : 1.75);
       c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
       c.style.width = W + "px"; c.style.height = H + "px";
       // ribbons: the reference's lower band (y 280 to 941) stretched across the full width, anchored to the bottom
-      var bandH = Math.max(phone ? 300 : 340, Math.min(phone ? 460 : 560, W * .42));
+      var bandH = Math.max(phone ? 240 : 260, Math.min(phone ? 460 : 560, W * bandFrac));
       rib.sx = W / DW; rib.sy = bandH / (DH - 280); rib.oy = H - bandH - 280 * rib.sy;
       // world map: top right, kept to its own proportions
       var mw = phone ? Math.min(W * .9, 420) : Math.min(Math.max(W * .52, 420), 820);
@@ -110,7 +112,8 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
       map.y = phone ? 24 : 14;
       // dots that sit behind the heading and intro text are dimmed so the words stay crisp
       var hr = host.getBoundingClientRect(), clear = [];
-      [].forEach.call(host.querySelectorAll(".final-copy h2, .final-copy p"), function(el){
+      [].forEach.call(host.querySelectorAll("h2, p"), function(el){
+        if (el.closest(".enq, .sync-board, .guar-panel, .eng-card")) return;
         var r = el.getBoundingClientRect(); clear.push([r.left - hr.left - 12, r.top - hr.top - 10, r.right - hr.left + 12, r.bottom - hr.top + 10]);
       });
       dots = [];
@@ -204,7 +207,7 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
     function frame(now){
       raf = 0;
       if (!visible || document.hidden) return;
-      var minGap = phone ? 1000 / 30 : 0;                    // phones: 30 fps is plenty for slow motion
+      var minGap = 0;                                        // every frame, so the flow never stutters
       if (now - last < minGap){ raf = requestAnimationFrame(frame); return; }
       last = now;
       draw((now - t0) / 1000);
@@ -221,7 +224,7 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
       var tr = ctx.createRadialGradient(c.width, 0, 0, c.width, 0, c.width * .55);
       tr.addColorStop(0, "rgba(176,214,252,.55)"); tr.addColorStop(1, "rgba(176,214,252,0)");
       ctx.fillStyle = tr; ctx.fillRect(0, 0, c.width, c.height);
-      drawMap(t);
+      if (globe) drawMap(t);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var edges = [];
       for (var i = 0; i < SHEETS.length; i++){
