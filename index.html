@@ -863,6 +863,11 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .hero .lead{color:rgba(255,255,255,.93);font-size:clamp(17px,1.35vw,20px);line-height:1.55;max-width:60ch;margin:0 0 26px}
 .hero .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .hero-note{color:rgba(255,255,255,.84);font-size:14.5px;margin:18px 0 0}
+/* styles.css fades the hero's base to white over 56px, from the old layout
+   where a white section followed it. A navy section follows it now, so that
+   fade was painting a grey seam across the join. The dim gradient already
+   closes on solid navy, so the photograph dissolves into the next section. */
+.hero-media::after{display:none}
 /* On a phone the hero is the whole first screen, so the reader gets no signal
    that anything follows. Shortening it lets the next section peek. */
 @media(max-width:640px){
@@ -870,7 +875,14 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   .hero-inner{padding-top:104px;padding-bottom:30px}
   .hero .lead{font-size:16.5px;margin-bottom:20px}
   .hero .cta{gap:10px}
-  .hero .cta .btn,.hero .cta .hero-link{min-height:48px}
+  .hero .cta .btn{min-height:48px}
+  /* The 48px tap target pushed a border-bottom 48px clear of the text.
+     A text underline hugs the glyphs whatever the box height does. */
+  .hero .cta .hero-link{min-height:48px;display:inline-flex;align-items:center;
+    align-self:flex-start;border-bottom:0;text-decoration:underline;
+    text-decoration-thickness:1.5px;text-underline-offset:6px;
+    text-decoration-color:rgba(255,255,255,.5)}
+  .hero .cta .hero-link:hover{text-decoration-color:#fff}
   .hero-note{margin-top:14px}
 }
 
