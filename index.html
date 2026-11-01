@@ -976,6 +976,106 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 
 .final-note{color:rgba(255,255,255,.7);font-size:14.5px;margin:16px 0 0}
 
+/* ---- group B: break the repeated head-then-one-block rhythm ----------- */
+
+/* What they do: the heading moves beside the content rather than above it,
+   and the two answers become two tracks the eye can take in one pass. */
+.role-grid{display:grid;grid-template-columns:minmax(240px,330px) 1fr;
+  gap:clamp(28px,5vw,64px);align-items:start}
+@media(max-width:980px){.role-grid{grid-template-columns:1fr;gap:24px}}
+.role-aside h2{font-size:clamp(28px,3.3vw,42px);font-weight:800;color:var(--navy);
+  letter-spacing:-.025em;line-height:1.08;margin:0 0 14px;text-wrap:balance}
+.role-aside p{font-size:16.5px;color:var(--slate);line-height:1.6;margin:0}
+.role-aside .note{margin-top:16px}
+
+.tracks{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 6px 24px rgba(15,42,68,.05)}
+@media(max-width:820px){.tracks{grid-template-columns:1fr}}
+.track{padding:clamp(20px,2.6vw,28px)}
+.track + .track{border-left:1px solid var(--line);background:var(--soft)}
+@media(max-width:820px){.track + .track{border-left:0;border-top:1px solid var(--line)}}
+.track-h{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  margin:0 0 16px}
+.track-yes .track-h{color:var(--blue-text)}
+.track-no .track-h{color:var(--slate)}
+.track .dolist li{font-size:16px}
+
+/* Who manages what: a comparison, not a stacked table. */
+.cmp{display:grid;gap:10px}
+.cmp-labels{display:grid;grid-template-columns:minmax(140px,200px) 1fr 1fr;
+  padding:0 0 4px;gap:0}
+.cmp-labels span{font-size:13px;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--slate);padding:0 20px}
+.cmp-row{display:grid;grid-template-columns:minmax(140px,200px) 1fr 1fr;
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+.cmp-k{display:flex;align-items:center;padding:16px 20px;background:var(--soft);
+  font-size:16px;font-weight:700;color:var(--navy)}
+.cmp-c{padding:16px 20px;font-size:15.5px;line-height:1.5;color:var(--ink)}
+.cmp-c + .cmp-c{border-left:1px solid var(--line)}
+.cmp-c.ours{background:rgba(0,123,255,.05);color:var(--navy);font-weight:600}
+@media(max-width:760px){
+  .cmp-labels{display:none}
+  .cmp-row{grid-template-columns:1fr}
+  .cmp-k{background:var(--navy);color:#fff;padding:11px 18px;font-size:13px;
+    font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+  .cmp-c{padding:13px 18px;font-size:15.5px}
+  .cmp-c + .cmp-c{border-left:0;border-top:1px solid var(--line)}
+  /* inline, not stacked: a block label above each cell cost two extra lines
+     per row and six rows is most of a phone screen */
+  .cmp-c::before{content:attr(data-l) ": ";font-weight:700;color:var(--slate)}
+  .cmp-c.ours::before{color:var(--blue-text)}
+  .cmp-c{padding:10px 18px;line-height:1.45}
+  .cmp-row{border-radius:12px}
+  .cmp{gap:8px}
+}
+
+/* Industries: one feature card so it does not read as an icon grid. */
+/* Six cards with one spanning two columns leaves an orphan on the third row.
+   Two columns by two rows uses the grid exactly: a large tile, two beside it,
+   three beneath. */
+.ind-grid a.feature{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column}
+.ind-grid a.feature em{margin-top:auto;padding-top:14px}
+@media(max-width:900px){.ind-grid a.feature{grid-column:span 2;grid-row:span 1}}
+.ind-ic{width:30px;height:30px;color:var(--blue-text);display:block;margin-bottom:12px}
+.ind-grid a.feature .ind-ic{width:38px;height:38px;margin-bottom:14px}
+.ind-grid a.feature b{font-size:21px}
+.ind-grid a.feature span{font-size:16.5px;max-width:54ch}
+.ind-paper{display:block;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--slate);line-height:1.45}
+.ind-feat{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:9px}
+.ind-feat li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;
+  font-size:15.5px;line-height:1.45;color:var(--ink)}
+.ind-feat li::before{content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--blue-text);margin-top:8px}
+@media(max-width:560px){.ind-feat{display:none}}
+/* On a phone this is an index, not six articles: the feature card carries the
+   proof and the rest become a compact two up grid, with the detail one tap
+   away on the trade page it already links to. */
+@media(max-width:560px){
+  .ind-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .ind-grid a.feature{grid-column:span 2}
+  .ind-grid a.plain{padding:16px 15px}
+  .ind-grid a.plain .ind-paper,.ind-grid a.plain > span:not(.ind-paper){display:none}
+  .ind-grid a.plain .ind-ic{width:26px;height:26px;margin-bottom:10px}
+  .ind-grid a.plain b{font-size:15.5px;line-height:1.25}
+  .ind-grid a.plain em{margin-top:9px;font-size:13.5px}
+}
+
+/* Pricing: the coordinator is the specialist role, so it carries the weight. */
+.tiers{grid-template-columns:1fr 1.14fr}
+@media(max-width:780px){.tiers{grid-template-columns:1fr}}
+.tier.lead{padding:0;overflow:hidden}
+/* `.tier p` (0,2,0) outranks a bare `.tier-band` (0,1,0), so the band text
+   was being painted slate on navy at 3.04:1. */
+.tier p.tier-band{background:var(--navy);color:#fff;padding:11px clamp(22px,3vw,30px);
+  font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  display:flex;align-items:center;gap:9px}
+.tier-band svg{width:16px;height:16px;color:#7CCBFF;flex:none}
+.tier-body{padding:clamp(22px,3vw,30px)}
+.tier.lead .px{font-size:clamp(36px,4.6vw,48px)}
+.tier-from{display:block;font-size:14px;font-weight:600;color:var(--slate);margin-bottom:2px}
+
+
 </style>
 </head>
 <body>
@@ -1049,13 +1149,15 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 
 <section class="sec" id="role">
   <div class="wrap">
-    <div class="head">
-      <h2>One role, trained properly.</h2>
-      <p class="lead">Rather than a general assistant who can turn a hand to anything, you get a maintenance and compliance coordinator who already understands planned maintenance, certificates and chasing subcontractors.</p>
-    </div>
-    <div class="split">
-      <div>
-        <h3 class="sub">What they do</h3>
+    <div class="role-grid">
+      <div class="role-aside">
+        <h2>One role, trained properly.</h2>
+        <p>Rather than a general assistant who can turn a hand to anything, you get a coordinator who already understands planned maintenance, certificates and chasing subcontractors.</p>
+        <p class="note">The work is written first, through your systems, email and messaging, with calls limited to engineers, suppliers and site contacts. We would rather tell you the boundary than let you discover it.</p>
+      </div>
+      <div class="tracks reveal">
+      <div class="track track-yes">
+        <p class="track-h">What they do</p>
         <ul class="dolist">
           <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>Log reactive jobs and allocate planned maintenance tasks on your job system</span></li>
           <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>Chase engineers for job sheets, photographs and completion paperwork</span></li>
@@ -1065,14 +1167,14 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
           <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>Keep your CRM, portals and client spreadsheets current</span></li>
         </ul>
       </div>
-      <div>
-        <h3 class="sub">What they do not do</h3>
+      <div class="track track-no">
+        <p class="track-h">What they do not do</p>
         <ul class="dolist">
           <li><span class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg></span><span>Cold outbound calling</span></li>
           <li><span class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg></span><span>Your out of hours or emergency line</span></li>
           <li><span class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg></span><span>Front line calls with the public</span></li>
         </ul>
-        <p class="note">This is deliberate. The work is written first, through your systems, email and messaging, with calls limited to engineers, suppliers and site contacts. We would rather tell you the boundary than let you discover it.</p>
+      </div>
       </div>
     </div>
   </div>
@@ -1084,17 +1186,15 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       <h2>Who manages what.</h2>
       <p class="lead">The most common complaint about offshore staffing is paying for a managed service and receiving a CV. Here is the line, before you ask for it.</p>
     </div>
-    <table class="boundary">
-      <thead><tr><th>&nbsp;</th><th>You</th><th>Beyondesk</th></tr></thead>
-      <tbody>
-        <tr><th>The work</th><td data-l="You">Tasks, priorities, deadlines and quality standards</td><td data-l="Beyondesk">Nothing. We do not set your priorities</td></tr>
-        <tr><th>Training</th><td data-l="You">Your systems, your processes, your clients</td><td data-l="Beyondesk">Sector training before they reach you, and English assessment</td></tr>
-        <tr><th>Attendance</th><td data-l="You">Nothing</td><td data-l="Beyondesk">Clock in and clock out, random checks, absence cover arrangements</td></tr>
-        <tr><th>Employment</th><td data-l="You">Nothing</td><td data-l="Beyondesk">Contract, payroll, local employment costs, HR</td></tr>
-        <tr><th>Workplace</th><td data-l="You">Nothing</td><td data-l="Beyondesk">Managed office, equipment, backup connection</td></tr>
-        <tr><th>If it is not working</th><td data-l="You">Tell us</td><td data-l="Beyondesk">We replace them at our cost and manage the exit</td></tr>
-      </tbody>
-    </table>
+    <div class="cmp reveal-stagger">
+      <div class="cmp-labels" aria-hidden="true"><span></span><span>You</span><span>Beyondesk</span></div>
+      <div class="cmp-row"><div class="cmp-k">The work</div><div class="cmp-c" data-l="You">Tasks, priorities, deadlines and quality standards</div><div class="cmp-c ours" data-l="Beyondesk">Nothing. We do not set your priorities</div></div>
+      <div class="cmp-row"><div class="cmp-k">Training</div><div class="cmp-c" data-l="You">Your systems, your processes, your clients</div><div class="cmp-c ours" data-l="Beyondesk">Sector training before they reach you, and English assessment</div></div>
+      <div class="cmp-row"><div class="cmp-k">Attendance</div><div class="cmp-c" data-l="You">Nothing</div><div class="cmp-c ours" data-l="Beyondesk">Clock in and clock out, random checks, absence cover arrangements</div></div>
+      <div class="cmp-row"><div class="cmp-k">Employment</div><div class="cmp-c" data-l="You">Nothing</div><div class="cmp-c ours" data-l="Beyondesk">Contract, payroll, local employment costs, HR</div></div>
+      <div class="cmp-row"><div class="cmp-k">Workplace</div><div class="cmp-c" data-l="You">Nothing</div><div class="cmp-c ours" data-l="Beyondesk">Managed office, equipment, backup connection</div></div>
+      <div class="cmp-row"><div class="cmp-k">If it is not working</div><div class="cmp-c" data-l="You">Tell us</div><div class="cmp-c ours" data-l="Beyondesk">We replace them at our cost and manage the exit</div></div>
+    </div>
   </div>
 </section>
 
@@ -1105,12 +1205,12 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       <p class="lead">The same role, trained on the paperwork and systems each sector actually runs on.</p>
     </div>
     <div class="ind-grid reveal-stagger">
-      <a href="/trades/refrigeration/"><b>Commercial refrigeration</b><span>Planned maintenance schedules, F-Gas records, breakdown response and engineer paperwork.</span><em>See the role &rarr;</em></a>
-      <a href="/trades/air-conditioning/"><b>Air conditioning and HVAC</b><span>PPM rotas, site access, F-Gas certificates and subcontractor coordination.</span><em>See the role &rarr;</em></a>
-      <a href="/trades/electrical/"><b>Electricians</b><span>Job booking, EICR and certificate chasing, remedial quoting and invoicing. Domestic, landlord and commercial.</span><em>See the role &rarr;</em></a>
-      <a href="/trades/plumbing-heating/"><b>Plumbing and heating</b><span>Diary and job booking, gas safety records, service plan renewals and payment chasing. Domestic, landlord and commercial.</span><em>See the role &rarr;</em></a>
-      <a href="/trades/fire-security/"><b>Fire and security</b><span>Testing schedules, asset registers, remedial tracking and compliance evidence.</span><em>See the role &rarr;</em></a>
-      <a href="/property-managers/"><b>Property and lettings</b><span>Maintenance coordination, compliance certificates, contractor chasing and landlord reporting.</span><em>See the role &rarr;</em></a>
+      <a class="feature" href="/trades/refrigeration/"><svg class="ind-ic" aria-hidden="true"><use href="#i-snow"></use></svg><b>Commercial refrigeration</b><span>Planned maintenance schedules, F-Gas records, breakdown response and engineer paperwork, on a calendar that has to work around trading hours.</span><span class="ind-paper">F-Gas leak checks &middot; PPM visit sheets &middot; breakdown job sheets &middot; asset registers</span><ul class="ind-feat"><li>Builds the planned maintenance calendar around trading hours and site access</li><li>Logs breakdowns and allocates the nearest available engineer</li><li>Tracks leak check intervals by system charge and flags what is coming due</li></ul><em>See the role &rarr;</em></a>
+      <a class="plain" href="/trades/air-conditioning/"><svg class="ind-ic" aria-hidden="true"><use href="#i-ac"></use></svg><b>Air conditioning and HVAC</b><span>PPM rotas, site access, F-Gas certificates and subcontractor coordination.</span><span class="ind-paper">F-Gas records &middot; TM44 scheduling &middot; commissioning sheets</span><em>See the role &rarr;</em></a>
+      <a class="plain" href="/trades/electrical/"><svg class="ind-ic" aria-hidden="true"><use href="#i-bolt"></use></svg><b>Electricians</b><span>Job booking, EICR and certificate chasing, remedial quoting and invoicing. Domestic, landlord and commercial.</span><span class="ind-paper">EICRs &middot; minor works certificates &middot; C1 and C2 remedials</span><em>See the role &rarr;</em></a>
+      <a class="plain" href="/trades/plumbing-heating/"><svg class="ind-ic" aria-hidden="true"><use href="#i-drop"></use></svg><b>Plumbing and heating</b><span>Diary and job booking, gas safety records, service plan renewals and payment chasing. Domestic, landlord and commercial.</span><span class="ind-paper">Gas safety records &middot; annual service records &middot; legionella schedules</span><em>See the role &rarr;</em></a>
+      <a class="plain" href="/trades/fire-security/"><svg class="ind-ic" aria-hidden="true"><use href="#i-shield"></use></svg><b>Fire and security</b><span>Testing schedules, asset registers, remedial tracking and compliance evidence.</span><span class="ind-paper">BS 5839 alarm tests &middot; BS 5266 emergency lighting &middot; BS 5306 extinguishers</span><em>See the role &rarr;</em></a>
+      <a class="plain" href="/property-managers/"><svg class="ind-ic" aria-hidden="true"><use href="#i-building"></use></svg><b>Property and lettings</b><span>Maintenance coordination, compliance certificates, contractor chasing and landlord reporting.</span><span class="ind-paper">Gas safety and EICR expiry &middot; deposit deadlines &middot; licensing renewals</span><em>See the role &rarr;</em></a>
     </div>
   </div>
 </section>
@@ -1157,16 +1257,19 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
         </ul>
       </div>
       <div class="tier lead">
-        <h3>Maintenance and compliance coordinator</h3>
-        <p class="px">&pound;1,195<small> a month</small></p>
-        <p>Trained before they reach you on planned maintenance, certificates, engineer paperwork and the systems your trade runs on.</p>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Everything in Administrator</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Sector training completed before day one</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Job system and CAFM familiarity</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Certificate and compliance tracking</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Named UK contact for escalation</span></li>
-        </ul>
+        <p class="tier-band"><svg aria-hidden="true"><use href="#tick"></use></svg>Trained for your trade before day one</p>
+        <div class="tier-body">
+          <h3>Maintenance and compliance coordinator</h3>
+          <p class="px">&pound;1,195<small> a month</small></p>
+          <p>Trained before they reach you on planned maintenance, certificates, engineer paperwork and the systems your trade runs on.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span><strong>Everything in Administrator</strong>, plus the five below</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Sector training completed before day one</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Job system and CAFM familiarity</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Certificate and compliance tracking</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Named UK contact for escalation</span></li>
+          </ul>
+        </div>
       </div>
     </div>
     <p class="px-note">For comparison, a full time UK hire on the National Living Wage of &pound;12.71 an hour from April 2026 costs roughly &pound;28,300 a year once employer National Insurance and pension are included, before recruitment, a desk or software. We publish our prices because most of this market does not.</p>
