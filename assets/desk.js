@@ -469,3 +469,38 @@ function bxPage(root, name){
     $("s4c3t").textContent = "Photos pulled from the job sheet"; var p = $("s4state"); p.className = "bdx-pill g"; p.textContent = "Sent"; }
   s.start(play, reset, still);
 })();
+
+/* ===== keep every card tall enough for its content =====
+   Phones with a larger text size grow the text but not fixed heights,
+   which cut the bottom of a card off. Measure the laid out content
+   (ignoring animation transforms and hidden overlays) and grow to fit. */
+(function(){
+  var SKIP = ".sup-det,.mail,.bdx-toast,.bdx-cur,.ringcard,.bdx-form,.bdx-rows,.calls,.doc,.bdx-h,.idle";
+  var boxes = [].slice.call(document.querySelectorAll("#desk .bdx-stage, #desk .wbody, #desk .rv4"));
+  if (!boxes.length) return;
+  boxes.forEach(function(c){ c._base = 0; });
+  function bottomIn(el, c){
+    var y = el.offsetHeight, e = el;
+    while (e && e !== c){ y += e.offsetTop; e = e.offsetParent; }
+    return e === c ? y : 0;
+  }
+  function fit(c, fresh){
+    if (fresh || !c._base){ c.style.height = ""; c._base = parseFloat(getComputedStyle(c).height) || 0; }
+    var need = 0, all = c.querySelectorAll("*");
+    for (var i = 0; i < all.length; i++){
+      var el = all[i];
+      if (el.closest(SKIP) || el.offsetParent === null) continue;
+      var b = bottomIn(el, c); if (b > need) need = b;
+    }
+    // only content that spills past the current height counts; panels stretched to fill sit exactly at it
+    var cur = parseFloat(c.style.height) || c._base;
+    if (need > cur + 1) c.style.height = Math.ceil(need + 14) + "px";
+    else if (fresh && cur !== c._base) c.style.height = "";
+  }
+  function all(fresh){ boxes.forEach(function(c){ fit(c, fresh); }); }
+  all(true);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ all(true); });
+  var rt; window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(function(){ all(true); }, 150); }, {passive:true});
+  // typed notes and new rows change content as the scenes play, so keep checking (grow only)
+  setInterval(function(){ if (!document.hidden) all(false); }, 1200);
+})();
