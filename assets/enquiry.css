@@ -1,0 +1,70 @@
+/* Beyondesk enquiry form. Sits inside the navy .final section on every sales page. */
+.sec.final .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:clamp(28px,5vw,64px);align-items:start}
+.sec.final .final-copy{min-width:0}
+@media (max-width:900px){.sec.final .wrap{grid-template-columns:minmax(0,1fr)}}
+.final-alt{color:rgba(255,255,255,.78);font-size:14.5px;margin:18px 0 0}
+.final-alt a{color:#fff;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,255,255,.5)}
+
+.enq{background:#fff;color:#0F2A44;border-radius:16px;padding:22px;box-shadow:0 24px 60px rgba(2,10,22,.35);position:relative}
+.enq *{box-sizing:border-box}
+.enq-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px}
+.enq-top b{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.enq-count{font-size:12.5px;font-weight:600;color:#64738B;white-space:nowrap}
+.enq-bar{height:4px;border-radius:2px;background:#E5EAF1;margin:0 0 18px;overflow:hidden}
+.enq-bar i{display:block;height:100%;width:25%;background:#0066D6;border-radius:2px;transition:width .3s cubic-bezier(.16,1,.3,1)}
+.enq fieldset{border:0;margin:0;padding:0;display:grid;gap:12px;min-width:0}
+.enq legend{font-size:15px;font-weight:700;margin:0 0 10px;padding:0;color:#0F2A44}
+.js .enq fieldset{display:none}
+.js .enq fieldset.on{display:grid;animation:enq-in .25s cubic-bezier(.16,1,.3,1)}
+@keyframes enq-in{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+.enq-opts{display:grid;gap:8px}
+.enq-opt{position:relative;display:flex;align-items:center;gap:10px;min-height:46px;padding:10px 12px;border:1.5px solid #E5EAF1;border-radius:10px;cursor:pointer;
+  font-size:15px;font-weight:500;transition:border-color .15s,background .15s}
+.enq-opt:hover{border-color:#CBD5E1}
+.enq-opt input{position:absolute;opacity:0;pointer-events:none}
+.enq-opt .dot{width:18px;height:18px;border-radius:50%;border:2px solid #CBD5E1;flex:none;display:grid;place-items:center;transition:border-color .15s}
+.enq-opt .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:#0066D6;transform:scale(0);transition:transform .15s}
+.enq-opt small{margin-left:auto;color:#64738B;font-size:13px;font-weight:600;white-space:nowrap}
+.enq-opt:has(input:checked){border-color:#0066D6;background:#F3F8FF}
+.enq-opt input:checked + .dot{border-color:#0066D6}
+.enq-opt input:checked + .dot::after{transform:scale(1)}
+.enq-opt input:focus-visible + .dot{outline:3px solid #38B6FF;outline-offset:2px}
+.enq-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.enq-two{grid-template-columns:1fr}}
+.enq label.f{display:grid;gap:6px;font-size:13.5px;font-weight:600;color:#33445A}
+.enq label.f span em{font-style:normal;font-weight:500;color:#64738B}
+.enq input[type=text],.enq input[type=email],.enq input[type=tel],.enq select,.enq textarea{width:100%;min-height:46px;padding:10px 12px;border:1.5px solid #E5EAF1;border-radius:10px;
+  font:inherit;font-size:15.5px;color:#0F2A44;background:#fff;transition:border-color .15s,box-shadow .15s}
+.enq textarea{min-height:92px;resize:vertical}
+.enq input:focus,.enq select:focus,.enq textarea:focus{outline:none;border-color:#0066D6;box-shadow:0 0 0 3px rgba(0,102,214,.15)}
+.enq .bad{border-color:#C2414B!important}
+.enq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.enq-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}
+.enq-back{background:none;border:0;font:inherit;font-size:14.5px;font-weight:600;color:#55657A;cursor:pointer;padding:10px 4px;min-height:44px}
+.enq-back[hidden]{display:none}
+.enq-next{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border:0;border-radius:10px;background:#0066D6;color:#fff;
+  font:inherit;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .15s,transform .1s}
+.enq-next:hover{background:#0055B8}
+.enq-next:active{transform:scale(.98)}
+.enq-next:focus-visible,.enq-back:focus-visible{outline:3px solid #38B6FF;outline-offset:2px}
+.enq-next[disabled]{opacity:.6;cursor:wait}
+.enq .enq-err{color:#B42318;font-size:13.5px;font-weight:600;margin:10px 0 0;min-height:0}
+.enq .enq-err:empty{display:none}
+.enq .enq-fine{max-width:none;font-size:12.5px;color:#64738B;margin:12px 0 0;line-height:1.45}
+.enq-done{text-align:left;display:grid;gap:10px}
+.enq-done .tick{width:44px;height:44px;border-radius:50%;background:#E9F6EE;color:#2E8B57;display:grid;place-items:center}
+.enq-done .tick svg{width:22px;height:22px}
+.enq .enq-done h3{margin:0;font-size:19px;color:#0F2A44}
+.enq .enq-done p{margin:0;max-width:none;color:#55657A;font-size:15px;line-height:1.55}
+.enq-done .enq-next{justify-self:start;margin:6px 0 0;text-decoration:none}
+.enq .enq-addr{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14.5px;color:#0F2A44}
+.enq-addr code{font:inherit;font-weight:700;user-select:all}
+.enq-copy{background:#F3F6FA;border:1px solid #E5EAF1;border-radius:8px;font:inherit;font-size:13px;font-weight:600;color:#0F2A44;padding:6px 10px;cursor:pointer}
+
+/* Sticky enquiry bar on phones */
+.enq-sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:rgba(255,255,255,.96);border-top:1px solid #E5EAF1;box-shadow:0 -8px 24px rgba(15,42,68,.08);transform:translateY(110%);transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.enq-sticky a{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:10px;background:#0066D6;color:#fff;font-weight:700;font-size:16px;text-decoration:none}
+@media (max-width:760px){.enq-sticky{display:block}}
+.enq-sticky.show{transform:none}
+@media (prefers-reduced-motion:reduce){.enq-sticky,.enq-bar i{transition:none}.js .enq fieldset.on{animation:none}}
