@@ -1261,6 +1261,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 
 
 </style>
+<link rel="stylesheet" href="/assets/desk.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1443,6 +1444,264 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="sec desk" id="desk" aria-labelledby="deskH">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="dkcg" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient></defs></svg>
+  <div class="wrap">
+    <div class="head">
+      <h2 id="deskH">A day at the desk.</h2>
+      <p class="lead">Four everyday tasks, shown the way they happen on screen.</p>
+    </div>
+<div class="desk-row">
+<div class="desk-copy"><span class="desk-eye">Jobs</span><h3>Log the job. Keep it moving.</h3><p>Logged, engineer allocated and the customer given a time, then followed through the schedule, certificates and quote to the invoice.</p></div>
+<div class="bdx-wrap"><div class="bdx" id="bdx" aria-label="Illustrative animation of a coordinator logging and progressing a maintenance job" role="img">
+  <aside class="bdx-side" aria-hidden="true">
+    <div class="bdx-brand"><img src="/assets/desk-logo-side.webp" loading="lazy" alt="Beyondesk" width="800" height="157"></div>
+    <button class="bdx-nav on" data-p="jobs" tabindex="-1"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="12" height="12" rx="2"/><rect x="5" y="5" width="6" height="6" rx="1" fill="currentColor"/></svg>Jobs</button>
+    <button class="bdx-nav" data-p="ppm" tabindex="-1"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 7h12M5.5 1.5v3M10.5 1.5v3"/></svg>PPM schedule</button>
+    <button class="bdx-nav" data-p="certs" tabindex="-1"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 2h10v12H3z"/><path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3"/></svg>Certificates<span class="bdx-badge" id="bdxBadge">1</span></button>
+    <button class="bdx-nav" data-p="quotes" tabindex="-1"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="12" height="11" rx="1.5"/><path d="M4.5 6h7M4.5 8.5h7M4.5 11h4"/></svg>Quotes &amp; POs</button>
+    <button class="bdx-nav" data-p="reports" tabindex="-1"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 13.5h11"/><path d="M4.5 11V7M8 11V4M11.5 11V8.5"/></svg>Reports</button>
+  </aside>
+
+  <div class="bdx-main" aria-hidden="true">
+    <div class="bdx-top"><h3 class="bdx-h" id="bdxH"><span>Jobs overview</span></h3><span class="bdx-live"><i></i>Live</span></div>
+
+    <div class="bdx-kpis">
+      <div class="bdx-kpi k1" id="k1"><p>Open jobs</p><b>24</b></div>
+      <div class="bdx-kpi k2" id="k2"><p>PPM due</p><b>8</b></div>
+      <div class="bdx-kpi k3" id="k3"><p>Certificates</p><b>3</b></div>
+      <div class="bdx-kpi k4" id="k4"><p>Completed</p><b>36</b></div>
+    </div>
+
+    <div class="bdx-stage">
+      <!-- JOBS -->
+      <div class="bdx-pg on" data-pg="jobs">
+        <div class="bdx-tbar"><small>Today, all engineers</small><span class="bdx-btn" id="bdxNew"><b style="font-size:15px;line-height:0">+</b> New job</span></div>
+        <div class="bdx-thead"><span>Job</span><span>Site</span><span>Status</span></div>
+        <div class="bdx-rows" id="bdxRows"></div>
+        <div class="bdx-form" id="bdxForm">
+          <h4>Log a new job</h4>
+          <div class="bdx-field">Site<span class="bdx-in" id="fSite"></span></div>
+          <div class="bdx-field">Fault<span class="bdx-in" id="fFault"></span></div>
+          <div class="bdx-field">Priority<span class="bdx-chips"><span class="bdx-chip">Routine</span><span class="bdx-chip" id="fUrgent">Urgent</span></span></div>
+          <span class="bdx-btn" id="fLog">Log job</span>
+        </div>
+      </div>
+
+      <!-- PPM -->
+      <div class="bdx-pg" data-pg="ppm">
+        <div class="bdx-week" id="bdxWeek">
+          <div class="bdx-day"><b>Mon</b><small>3 visits</small></div>
+          <div class="bdx-day" id="dTue"><b>Tue</b><small>2 visits</small></div>
+          <div class="bdx-day"><b>Wed</b><small>2 visits</small></div>
+          <div class="bdx-day" id="dThu"><b>Thu</b><small>1 visit</small></div>
+          <div class="bdx-day"><b>Fri</b><small>2 visits</small></div>
+          <div class="bdx-ev" style="--d:0;--r:0"><b>PPM9931</b><span>Hotel</span></div>
+          <div class="bdx-ev g" style="--d:0;--r:1"><b>PPM9934</b><span>Office</span></div>
+          <div class="bdx-ev o" style="--d:1;--r:0" id="evMove"><b>PPM9937</b><span>Restaurant</span></div>
+          <div class="bdx-ev" style="--d:1;--r:1"><b>PPM9940</b><span>Retail</span></div>
+          <div class="bdx-ev g" style="--d:2;--r:0"><b>PPM9942</b><span>School</span></div>
+          <div class="bdx-ev" style="--d:3;--r:0"><b>PPM9945</b><span>Clinic</span></div>
+          <div class="bdx-ev o" style="--d:4;--r:0"><b>PPM9948</b><span>Hotel</span></div>
+          <div class="bdx-ev" style="--d:4;--r:1"><b>PPM9951</b><span>Office</span></div>
+        </div>
+      </div>
+
+      <!-- CERTIFICATES -->
+      <div class="bdx-pg" data-pg="certs">
+        <div class="bdx-certs">
+          <div class="bdx-cert flag" id="cFlag"><div><b>F-Gas leak check</b><small id="cTxt">Hotel, due in 14 days</small></div><span class="bdx-ghost" id="cBtn">Book visit</span><span class="bdx-bar"><i style="--w:88%" id="cBar"></i></span></div>
+          <div class="bdx-cert"><div><b>Gas safety record</b><small>Office, due in 62 days</small></div><span class="bdx-pill g">Valid</span><span class="bdx-bar"><i style="--w:52%"></i></span></div>
+          <div class="bdx-cert"><div><b>EICR</b><small>Retail, due in 7 months</small></div><span class="bdx-pill g">Valid</span><span class="bdx-bar"><i style="--w:22%"></i></span></div>
+        </div>
+      </div>
+
+      <!-- QUOTES -->
+      <div class="bdx-pg" data-pg="quotes">
+        <div class="bdx-q">
+          <div class="bdx-qtop"><div><b>Quote Q2208</b><small>Restaurant, compressor replacement</small></div><span class="bdx-amt">£1,240</span></div>
+          <div class="bdx-track" id="qTrack"><span class="done">Sent</span><span>Chased</span><span>Approved</span><span>PO in</span></div>
+          <div class="bdx-field">PO number<span class="bdx-in" id="qPO"></span></div>
+        </div>
+        <div class="bdx-qmini" style="margin-top:10px">
+          <div><b>Q2205, Hotel</b>Chase booked Thursday</div>
+          <div><b>Q2201, Office</b>Approved, PO received</div>
+        </div>
+      </div>
+
+      <!-- REPORTS -->
+      <div class="bdx-pg" data-pg="reports">
+        <div class="bdx-rep">
+          <div class="bdx-chart"><p>Jobs completed per week</p>
+            <div class="bdx-bars"><i style="--h:46%"></i><i style="--h:58%"></i><i style="--h:52%"></i><i style="--h:70%"></i><i style="--h:64%"></i><i style="--h:84%"></i></div>
+            <div class="bdx-wk"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>Now</span></div>
+          </div>
+          <div class="bdx-donut"><p>Job mix</p>
+            <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="42" stroke="#E5EAF1"/><circle class="arc" cx="55" cy="55" r="42"/><circle class="arc2" cx="55" cy="55" r="42" style="transform:rotate(156deg)"/><text x="55" y="62" text-anchor="middle">36</text></svg>
+            <div class="bdx-leg"><span><i></i>Reactive</span><span><i></i>PPM</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bdx-flow">
+      <div class="bdx-flow-h"><b>Live workflow<br> demonstration</b><span class="bdx-state" id="bdxState">Waiting for a call</span></div>
+      <div class="bdx-steps" id="bdxSteps">
+        <div class="bdx-step"><i>1</i>Logged</div>
+        <div class="bdx-step"><i>2</i>Assigned</div>
+        <div class="bdx-step"><i>3</i>In progress</div>
+        <div class="bdx-step"><i>4</i>Completed</div>
+      </div>
+      <div class="bdx-flow-f"><span class="bdx-cap" id="bdxCap">A breakdown call is coming in</span></div>
+    </div>
+
+    <div class="bdx-toast" id="bdxToast"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></i><span></span></div>
+  </div>
+
+  <svg class="bdx-cur" id="bdxCur" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5v17.2l4.6-4.3 2.9 6.6 3.1-1.4-2.9-6.5H18z" fill="#0F2A44" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+</div></div>
+</div>
+<div class="desk-row flip">
+<div class="desk-copy"><span class="desk-eye">Quoting</span><h3>Source the part. Build the quote.</h3><p>Finds the part on your supplier's trade site, checks stock and price, and turns it into a tidy quote ready to send.</p></div>
+<div class="sc-wrap"><div class="sc" id="sc2" role="img" aria-label="Illustrative animation of a coordinator sourcing a part on a supplier website and building a quote">
+  <div class="chrome" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span>
+    <div class="tabs"><span class="tab on" id="s2tA"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h12l-1 8H3z"/><path d="M5.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Trade supplier</span>
+    <span class="tab" id="s2tB"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 1.5 14.5 8 8 14.5 1.5 8z"/></svg>Quote Q2209</span></div></div>
+  <div class="addr" aria-hidden="true"><span class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3 5 8l5 5"/></svg><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 3 5 5-5 5"/></svg></span>
+    <span class="url" id="s2url"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="7" width="9" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><b>trade.yoursupplier.co.uk</b>/refrigeration/compressors</span></div>
+  <div class="wbody" aria-hidden="true">
+    <div class="pg2 on" data-pg="sup">
+      <div class="sup">
+        <div class="sup-head"><b class="sup-logo">TRADE<span>SUPPLY</span></b>
+          <span class="sup-search" id="s2q"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span class="typed" id="s2qt"><span class="dk-phd">Search parts</span></span></span>
+          <span class="sup-acct"><i></i>Trade account</span></div>
+        <div class="sup-crumbs">Refrigeration &rsaquo; Compressors &rsaquo; <b id="s2res">Results</b></div>
+        <div class="sup-grid">
+          <div class="prod"><div class="prod-img"><svg viewBox="0 0 80 72" fill="none"><rect x="14" y="20" width="52" height="40" rx="18" fill="#334155"/><rect x="14" y="20" width="52" height="40" rx="18" fill="url(#dkcg)"/><rect x="10" y="56" width="60" height="8" rx="3" fill="#1E293B"/><path d="M30 20v-8h8M50 20v-6" stroke="#B87333" stroke-width="4" stroke-linecap="round"/><rect x="34" y="32" width="14" height="10" rx="2" fill="#E2E8F0" opacity=".8"/></svg></div><b>Hermetic compressor 1.25hp</b><small>R404A, 230V</small><div class="dk-row"><span class="stock low">2 left</span><span class="price">£368.00</span></div></div>
+          <div class="prod" id="s2pick"><div class="prod-img"><svg viewBox="0 0 80 72" fill="none"><rect x="14" y="20" width="52" height="40" rx="18" fill="#334155"/><rect x="14" y="20" width="52" height="40" rx="18" fill="url(#dkcg)"/><rect x="10" y="56" width="60" height="8" rx="3" fill="#1E293B"/><path d="M30 20v-8h8M50 20v-6" stroke="#B87333" stroke-width="4" stroke-linecap="round"/><rect x="34" y="32" width="14" height="10" rx="2" fill="#E2E8F0" opacity=".8"/></svg></div><b>Hermetic compressor 1.5hp</b><small>R404A, 230V</small><div class="dk-row"><span class="stock">In stock</span><span class="price">£412.00</span></div></div>
+          <div class="prod"><div class="prod-img"><svg viewBox="0 0 80 72" fill="none"><rect x="14" y="20" width="52" height="40" rx="18" fill="#334155"/><rect x="14" y="20" width="52" height="40" rx="18" fill="url(#dkcg)"/><rect x="10" y="56" width="60" height="8" rx="3" fill="#1E293B"/><path d="M30 20v-8h8M50 20v-6" stroke="#B87333" stroke-width="4" stroke-linecap="round"/><rect x="34" y="32" width="14" height="10" rx="2" fill="#E2E8F0" opacity=".8"/></svg></div><b>Scroll compressor 2hp</b><small>R404A, 400V</small><div class="dk-row"><span class="stock">In stock</span><span class="price">£596.00</span></div></div>
+        </div>
+      </div>
+      <div class="sup-det" id="s2det"><div class="prod-img"><svg viewBox="0 0 80 72" fill="none"><rect x="14" y="20" width="52" height="40" rx="18" fill="#334155"/><rect x="14" y="20" width="52" height="40" rx="18" fill="url(#dkcg)"/><rect x="10" y="56" width="60" height="8" rx="3" fill="#1E293B"/><path d="M30 20v-8h8M50 20v-6" stroke="#B87333" stroke-width="4" stroke-linecap="round"/><rect x="34" y="32" width="14" height="10" rx="2" fill="#E2E8F0" opacity=".8"/></svg></div>
+        <div><h5>Hermetic compressor 1.5hp, R404A</h5><p>6 in stock at your branch. Order by 4pm for next day delivery.</p>
+        <div class="buy"><span class="big">£412.00<small>trade, ex VAT</small></span><span class="btn-o" id="s2add">+ Add to quote</span></div></div></div>
+    </div>
+    <div class="pg2" data-pg="quote">
+      <div class="qb">
+        <div class="qb-top"><div><h5>Quote Q2209</h5><small>Restaurant, Unit 4. Cold room compressor replacement</small></div><span class="bdx-pill" id="s2st">Draft</span></div>
+        <div>
+          <div class="ql-head"><span>Item</span><span>Qty</span><span>Price</span></div>
+          <div class="ql" id="s2l1"><div><b>Hermetic compressor 1.5hp R404A <span class="tag-sup">from supplier</span></b><small>Next day from branch</small></div><span>1</span><span>£535.60</span></div>
+          <div class="ql" id="s2l2"><div><b>Refrigerant R404A</b><small>Recover and recharge</small></div><span>6kg</span><span>£270.00</span></div>
+          <div class="ql" id="s2l3"><div><b>Labour, two engineers</b><small>Remove, fit, pressure test, commission</small></div><span>5h</span><span>£650.00</span></div>
+          <div class="ql" id="s2l4"><div><b>Sundries and disposal</b><small>Filter drier, brazing, waste transfer</small></div><span>1</span><span>£85.00</span></div>
+        </div>
+        <div class="qt"><dl><dt>Subtotal</dt><dd id="s2sub">£0.00</dd><dt>VAT 20%</dt><dd id="s2vat">£0.00</dd><dt class="tot">Total</dt><dd class="tot" id="s2tot">£0.00</dd></dl>
+          <span class="bdx-btn" id="s2send">Send quote</span></div>
+      </div>
+    </div>
+    <div class="bdx-toast"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></i><span></span></div>
+  </div>
+  <svg class="bdx-cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5v17.2l4.6-4.3 2.9 6.6 3.1-1.4-2.9-6.5H18z" fill="#0F2A44" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+</div></div>
+</div>
+
+<div class="desk-row">
+<div class="desk-copy"><span class="desk-eye">Calls</span><h3>Calls from site, handled.</h3><p>Site contacts and engineers get through to someone who knows the job. The caller is matched, the call is noted, and it becomes a job before the line goes quiet.</p></div>
+<div class="sc-wrap"><div class="sc" id="sc3" role="img" aria-label="Illustrative animation of a coordinator answering a call from a site contact and logging a job">
+  <div class="chrome" aria-hidden="true" style="align-items:center"><span class="dots"><i></i><i></i><i></i></span><span class="app-title">Phone</span></div>
+  <div class="wbody" aria-hidden="true">
+    <div class="ph">
+      <div class="ph-rail"><div class="me"><i id="s3me"></i></div>
+        <span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H8l-4 4z"/></svg></span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/></svg></span>
+      </div>
+      <div class="ph-list">
+        <div class="ph-st"><b>Calls</b><span class="status" id="s3st"><i></i><span>Available</span></span></div>
+        <div class="calls" id="s3calls"></div>
+      </div>
+      <div class="ph-main">
+        <div class="idle" id="s3idle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="4.5" height="7" rx="2"/><rect x="17" y="13" width="4.5" height="7" rx="2"/></svg>Ready for the next call</div>
+        <div class="ringcard" id="s3ring"><span class="lbl">Incoming call</span>
+          <div class="pulse"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></div>
+          <h5>Hotel, site manager</h5><p>020 7946 0123</p>
+          <div class="ringbtns"><span class="rb no"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+          <span class="rb yes" id="s3ans"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span></div>
+        </div>
+        <div class="oncall" id="s3on">
+          <div class="oc-top"><span class="av"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+            <div><b>Hotel, site manager</b><small>020 7946 0123</small></div><span class="timer"><span class="wave"><b></b><b></b><b></b><b></b></span><span id="s3time">00:00</span></span></div>
+          <div class="match" id="s3match"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span>
+            <b>Matched to Hotel, contract site</b><small>Last visit PPM9931, kitchen cold room</small></div>
+          <div class="notes" id="s3notes"><span class="lbl">Call notes</span><span class="typed" id="s3nt"></span></div>
+          <div class="oc-btns"><span class="bdx-btn" id="s3job">+ Create job</span><span class="jobchip" id="s3chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>BRK1044 logged</span><span class="btn-end" id="s3end"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>End</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bdx-toast"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></i><span></span></div>
+  </div>
+  <svg class="bdx-cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5v17.2l4.6-4.3 2.9 6.6 3.1-1.4-2.9-6.5H18z" fill="#0F2A44" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+</div></div>
+</div>
+
+<div class="desk-row flip">
+<div class="desk-copy"><span class="desk-eye">Reporting</span><h3>Reports checked before they go.</h3><p>Every client report is checked against the job sheets, certificates and photos. Anything missing is chased and fixed, then the report goes out.</p></div>
+<div class="bdx-wrap"><div class="bdx sc4" id="sc4" role="img" aria-label="Illustrative animation of a coordinator reviewing a client report and sending it">
+  <aside class="bdx-side" aria-hidden="true">
+    <div class="bdx-brand"><img src="/assets/desk-logo-side.webp" loading="lazy" alt="Beyondesk" width="800" height="157"></div>
+    <span class="bdx-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="12" height="12" rx="2"/><rect x="5" y="5" width="6" height="6" rx="1" fill="currentColor"/></svg>Jobs</span>
+    <span class="bdx-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M2 7h12M5.5 1.5v3M10.5 1.5v3"/></svg>PPM schedule</span>
+    <span class="bdx-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 2h10v12H3z"/><path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3"/></svg>Certificates</span>
+    <span class="bdx-nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="12" height="11" rx="1.5"/><path d="M4.5 6h7M4.5 8.5h7M4.5 11h4"/></svg>Quotes &amp; POs</span>
+    <span class="bdx-nav on"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 13.5h11"/><path d="M4.5 11V7M8 11V4M11.5 11V8.5"/></svg>Reports</span>
+  </aside>
+  <div class="bdx-main" aria-hidden="true">
+    <div class="bdx-top"><h3 class="bdx-h"><span>Client report review</span></h3><span class="bdx-pill o" id="s4state">In review</span></div>
+    <div class="rv4">
+      <div class="rv">
+        <div class="doc" id="s4doc"><div class="doc-in" id="s4in">
+          <img src="/assets/desk-logo.webp" loading="lazy" alt="">
+          <h6>Monthly maintenance report</h6><div class="sub">Hotel. October 2026</div>
+          <div class="doc-stats"><div><b>12</b>PPM visits</div><div><b>4</b>Reactive jobs</div><div><b>2</b>Certs renewed</div></div>
+          <div class="doc-h">Visits</div>
+          <div class="doc-row"><b>PPM9931</b><span>Kitchen cold room service</span><span class="bdx-pill g">Complete</span></div>
+          <div class="doc-row"><b>BRK1039</b><span>Bar cooler not cooling</span><span class="bdx-pill g">Complete</span></div>
+          <div class="doc-row"><b>PPM9934</b><span>Walk in freezer service</span><span class="bdx-pill g">Complete</span></div>
+          <div class="doc-row"><b>BRK1041</b><span>Ice machine leak</span><span class="bdx-pill g">Complete</span></div>
+          <div class="doc-h">Certificates</div>
+          <div class="doc-row"><b>F-Gas</b><span>Leak check, cold room 2</span><span class="bdx-pill g">Attached</span></div>
+          <div class="doc-row"><b>F-Gas</b><span>Leak check, walk in freezer</span><span class="bdx-pill g">Attached</span></div>
+          <div class="doc-h">Photos</div>
+          <div class="ph-grid" id="s4ph"><i></i><i></i><i class="miss" id="s4miss"></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div><span class="flagbox" id="s4flag"></span></div>
+        <div class="chk">
+          <h5>Before sending</h5>
+          <div class="chk-p"><i id="s4prog"></i></div>
+          <div class="ci" id="s4c1"><span class="mk"><svg class="t" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><svg class="x" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M12 6v8M12 18v.1"/></svg></span><div><b>Visits match job sheets</b><small>16 of 16 signed off</small></div></div>
+          <div class="ci" id="s4c2"><span class="mk"><svg class="t" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><svg class="x" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M12 6v8M12 18v.1"/></svg></span><div><b>Certificates attached</b><small>Both leak checks in date</small></div></div>
+          <div class="ci" id="s4c3"><span class="mk"><svg class="t" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><svg class="x" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M12 6v8M12 18v.1"/></svg></span><div><b>Photos on every visit</b><small id="s4c3t">Checking</small><span class="bdx-ghost fix" id="s4fix" style="display:none">Pull from job sheet</span></div></div>
+          <div class="ci" id="s4c4"><span class="mk"><svg class="t" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><svg class="x" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M12 6v8M12 18v.1"/></svg></span><div><b>Totals match invoices</b><small>October invoices reconciled</small></div></div>
+          <div class="send"><span class="bdx-btn" id="s4send">Send to client</span></div>
+        </div>
+      </div>
+      <div class="mail" id="s4mail"><h6>Send report</h6>
+        <div class="mf"><span>To</span><span>Facilities manager, Hotel</span></div>
+        <div class="mf"><span>Subject</span><span>October maintenance report</span></div>
+        <span class="att"><i>PDF</i>Hotel October report.pdf</span>
+        <span class="bdx-btn" id="s4go">Send</span></div>
+    </div>
+    <div class="bdx-toast"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></i><span></span></div>
+  </div>
+  <svg class="bdx-cur" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5v17.2l4.6-4.3 2.9 6.6 3.1-1.4-2.9-6.5H18z" fill="#0F2A44" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+</div></div>
+</div>
+
+    <p class="desk-note">Illustrative animations, not connected to real client data or software.</p>
   </div>
 </section>
 
@@ -1836,5 +2095,6 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   }
 })();
 </script>
+<script src="/assets/desk.js" defer></script>
 </body>
 </html>
