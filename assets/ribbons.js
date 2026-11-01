@@ -123,6 +123,8 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
         dots.push({ x: x, y: y, nx: nx, ny: ny, dim: dim, seed: Math.sin(i * 12.9898) * 43758.5453 % 1 });
       }
       makeSprite(Math.max(1.1, mw / 650.9 * 2.6) * dpr);
+      // tell the wave divider (waves.js) the sky was redrawn, after the draw that always follows a layout
+      setTimeout(function(){ host.dispatchEvent(new Event("rb:layout")); }, 0);
     }
     function P(p){ return [p[0] * rib.sx, rib.oy + p[1] * rib.sy]; }
 
@@ -218,7 +220,7 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       // sky: white with a faint blue lift in the top corners, almost still
       var g = ctx.createLinearGradient(0, 0, c.width, c.height);
-      var drift = Math.sin(t * TAU / 24) * .04;
+      var drift = 0;                                         // held still so the wave dividers above can match the top edge exactly
       g.addColorStop(0, "#E7F0FC"); g.addColorStop(.35 + drift, "#F7FAFF"); g.addColorStop(.7, "#F2F7FE"); g.addColorStop(1, "#DDEBFB");
       ctx.fillStyle = g; ctx.fillRect(0, 0, c.width, c.height);
       var tr = ctx.createRadialGradient(c.width, 0, 0, c.width, 0, c.width * .55);
