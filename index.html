@@ -41,7 +41,14 @@ a{text-underline-offset:.18em;text-decoration-thickness:.08em}
 ::-webkit-scrollbar-thumb:hover{background:var(--slate)}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+  /* transitions off, and looping animations collapsed to their end state
+     rather than removed, so nothing that fades in stays invisible */
+  *{transition:none!important;animation-duration:.01ms!important;
+    animation-iteration-count:1!important;animation-delay:0s!important}
+  /* SMIL ignores this query, so the swept line is hidden and the static
+     one underneath carries the connection */
+  .sync-beam line:nth-of-type(2){display:none}}
 html{background:var(--white)}
 body{margin:0;background:var(--white);color:var(--slate);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--white)}
@@ -55,7 +62,7 @@ p{margin:0}
 .lead{font-size:clamp(17px,1.4vw,19px);max-width:60ch}
 .head{display:grid;gap:12px;max-width:720px;margin-bottom:clamp(28px,4vw,48px)}
 section{padding-block:clamp(56px,7vw,96px)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;line-height:1.2;min-height:48px;padding:14px 24px;border-radius:8px;border:1.5px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s,color .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;line-height:1.2;min-height:48px;padding:14px 24px;border-radius:8px;border:1.5px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color 220ms cubic-bezier(.16,1,.3,1),border-color 220ms cubic-bezier(.16,1,.3,1),color 220ms cubic-bezier(.16,1,.3,1),transform 240ms cubic-bezier(.34,1.56,.64,1)}
 .btn-blue{background:var(--blue-text);color:#fff}
 .btn-blue:hover{background:#0055B8}
 .btn-line{background:#fff;color:var(--navy);border-color:var(--line-strong)}
@@ -342,10 +349,10 @@ footer a:hover{color:var(--blue)}
 
 
 /* Reveal on view (compositor only; respects prefers-reduced-motion) */
-.reveal{transition:opacity 500ms cubic-bezier(.16,1,.3,1),transform 500ms cubic-bezier(.16,1,.3,1)}
+.reveal{transition:opacity 320ms cubic-bezier(.16,1,.3,1),transform 320ms cubic-bezier(.16,1,.3,1)}
 html.js .reveal:not(.in){opacity:0;transform:translateY(14px)}
 .reveal.in{opacity:1;transform:none}
-.reveal-stagger > *{transition:opacity 450ms cubic-bezier(.16,1,.3,1),transform 450ms cubic-bezier(.16,1,.3,1)}
+.reveal-stagger > *{transition:opacity 300ms cubic-bezier(.16,1,.3,1),transform 300ms cubic-bezier(.16,1,.3,1)}
 html.js .reveal-stagger:not(.in) > *{opacity:0;transform:translateY(10px)}
 .reveal-stagger.in > *{opacity:1;transform:none}
 .reveal-stagger.in > *:nth-child(1){transition-delay:40ms}
@@ -765,7 +772,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
        runs for the flight path. A process is a sequence of four things, not a
        continuous scrub, so stepping suits it better than easing. */
     .how ol li{opacity:.2;transform:translateY(26px) scale(.975);
-      transition:opacity 420ms cubic-bezier(.16,1,.3,1),transform 420ms cubic-bezier(.16,1,.3,1)}
+      transition:opacity 300ms cubic-bezier(.16,1,.3,1),transform 300ms cubic-bezier(.16,1,.3,1)}
     .how ol li.step-on{opacity:1;transform:none}
     .how ol li.step-past{opacity:.72}
   }
@@ -901,7 +908,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 @media(max-width:560px){.ind-grid{grid-template-columns:1fr}}
 .ind-grid a{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;
   padding:22px;text-decoration:none;box-shadow:0 6px 22px rgba(15,42,68,.04);
-  transition:transform 200ms cubic-bezier(.16,1,.3,1),box-shadow 200ms ease,border-color 180ms ease}
+  transition:transform 260ms cubic-bezier(.34,1.56,.64,1),box-shadow 240ms cubic-bezier(.16,1,.3,1),border-color 220ms cubic-bezier(.16,1,.3,1)}
 .ind-grid a:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(15,42,68,.08);border-color:var(--line-strong)}
 .ind-grid b{display:block;font-size:17px;font-weight:700;color:var(--navy);margin-bottom:5px;letter-spacing:-.01em}
 .ind-grid span{display:block;font-size:15.5px;color:var(--slate);line-height:1.5}
@@ -977,6 +984,101 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .final-note{color:rgba(255,255,255,.7);font-size:14.5px;margin:16px 0 0}
 
 
+/* ---- two desks, one working day -------------------------------------
+   Motion rules for this component, and for the retune below:
+     UI response  200-350ms
+     pop/overshoot  cubic-bezier(.34,1.56,.64,1)
+     momentum       cubic-bezier(.16,1,.3,1)
+   Only transform and opacity are animated, so nothing here can trigger
+   layout or paint. Ambient loops (the beam sweep, the packets) run longer
+   than 350ms on purpose: that budget is for responses to a user action,
+   and a 300ms ambient loop would be a strobe. */
+.sync{background:var(--navy);color:#fff;overflow:clip}
+.sync-head{max-width:760px;margin:0 0 clamp(28px,4vw,44px)}
+.sync-head h2{color:#fff;font-size:clamp(28px,3.3vw,42px);font-weight:800;
+  letter-spacing:-.025em;line-height:1.08;margin:0 0 12px;text-wrap:balance}
+.sync-head p{color:rgba(255,255,255,.86);font-size:16.5px;line-height:1.6;margin:0;max-width:62ch}
+
+.sync-rig{display:grid;grid-template-columns:1fr minmax(130px,1fr) 1fr;
+  gap:clamp(8px,1.6vw,20px);align-items:center}
+
+.sync-node{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.16);
+  border-radius:16px;padding:clamp(16px,2.2vw,24px) clamp(12px,1.8vw,22px);
+  text-align:center;will-change:transform;
+  transition:transform 260ms cubic-bezier(.34,1.56,.64,1),
+             border-color 220ms cubic-bezier(.16,1,.3,1),
+             background-color 220ms cubic-bezier(.16,1,.3,1)}
+.sync-node:hover{transform:translate3d(0,-4px,0);border-color:rgba(124,203,255,.55);
+  background-color:rgba(255,255,255,.085)}
+.sync-ic{width:30px;height:30px;color:#7CCBFF;display:block;margin:0 auto 12px}
+.sync-node b{display:block;font-size:clamp(15px,1.4vw,17px);font-weight:700;color:#fff;
+  letter-spacing:-.01em;margin-bottom:10px;line-height:1.25}
+.sync-clock{display:block;font-size:clamp(28px,3.6vw,44px);font-weight:800;color:#fff;
+  letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.sync-place{display:block;font-size:12.5px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:rgba(255,255,255,.62);margin-top:9px}
+
+.sync-link{position:relative;height:72px;display:flex;align-items:center;justify-content:center}
+.sync-beam{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+/* The overlap is the argument, so it gets its own line rather than a chip
+   fighting the packets for the beam. */
+.sync-overlap{margin:clamp(22px,3vw,32px) 0 0;text-align:center;font-size:clamp(16px,1.5vw,19px);
+  color:rgba(255,255,255,.86);line-height:1.5;opacity:0;transform:translate3d(0,8px,0);
+  transition:opacity 320ms cubic-bezier(.16,1,.3,1),transform 320ms cubic-bezier(.34,1.56,.64,1)}
+.sync-overlap.ready{opacity:1;transform:none}
+.sync-overlap b{display:block;font-size:clamp(30px,4vw,48px);font-weight:800;color:#7CCBFF;
+  letter-spacing:-.035em;line-height:1.05;margin-bottom:6px;font-variant-numeric:tabular-nums}
+
+.sync-packets{position:absolute;inset:0;list-style:none;margin:0;padding:0;pointer-events:none}
+.sync-packets li{position:absolute;top:0;left:0;white-space:nowrap;
+  font-size:11.5px;font-weight:700;letter-spacing:.02em;color:#0F2A44;background:#7CCBFF;
+  border-radius:999px;padding:4px 10px;opacity:0;will-change:transform,opacity;
+  transform:translate3d(0,0,0)}
+@media (prefers-reduced-motion:no-preference){
+  .sync-packets li{animation:sync-send 7.2s cubic-bezier(.16,1,.3,1) infinite}
+  .sync-packets li.back{animation-name:sync-back}
+  .sync-packets li:nth-child(1){animation-delay:0s;top:2px}
+  .sync-packets li:nth-child(2){animation-delay:1.8s;bottom:2px;top:auto}
+  .sync-packets li:nth-child(3){animation-delay:3.6s;top:2px}
+  .sync-packets li:nth-child(4){animation-delay:5.4s;bottom:2px;top:auto}
+}
+@keyframes sync-send{
+  0%{opacity:0;transform:translate3d(-14%,0,0) scale(.9)}
+  12%{opacity:1;transform:translate3d(6%,0,0) scale(1)}
+  78%{opacity:1;transform:translate3d(86%,0,0) scale(1)}
+  92%,100%{opacity:0;transform:translate3d(104%,0,0) scale(.9)}
+}
+@keyframes sync-back{
+  0%{opacity:0;transform:translate3d(104%,0,0) scale(.9)}
+  12%{opacity:1;transform:translate3d(86%,0,0) scale(1)}
+  78%{opacity:1;transform:translate3d(6%,0,0) scale(1)}
+  92%,100%{opacity:0;transform:translate3d(-14%,0,0) scale(.9)}
+}
+
+.sync-foot{margin:clamp(24px,3.4vw,38px) 0 0;font-size:clamp(16px,1.3vw,18px);
+  line-height:1.6;color:rgba(255,255,255,.86);max-width:76ch}
+.sync-foot strong{color:#7CCBFF;font-weight:700}
+
+@media(max-width:720px){
+  .sync-rig{grid-template-columns:1fr;gap:10px}
+  .sync-link{height:56px}
+  .sync-beam{transform:rotate(90deg) scale(.42);transform-origin:center}
+  .sync-node{display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+    text-align:left;gap:14px;padding:14px 16px}
+  .sync-ic{margin:0;width:26px;height:26px}
+  .sync-node b{margin:0;font-size:15px}
+  .sync-clock{font-size:26px}
+  .sync-place{display:none}
+  .sync-packets{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .sync-node,.sync-overlap{transition:none}
+  .sync-node:hover{transform:none}
+  .sync-packets{display:none}
+  .sync-overlap{opacity:1;transform:none}
+}
+
 /* ---- group C: the problem, and the working day ----------------------- */
 .prob{background:var(--navy);color:#fff}
 .prob-grid{display:grid;grid-template-columns:minmax(260px,400px) 1fr;
@@ -1015,7 +1117,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .flow-chips button{font:inherit;font-size:14.5px;font-weight:700;color:var(--navy);
   background:#fff;border:1px solid var(--line-strong);border-radius:999px;
   padding:9px 16px;min-height:40px;cursor:pointer;font-variant-numeric:tabular-nums;
-  transition:background .15s,border-color .15s,color .15s}
+  transition:background-color 220ms cubic-bezier(.16,1,.3,1),border-color 220ms cubic-bezier(.16,1,.3,1),color 220ms cubic-bezier(.16,1,.3,1),transform 240ms cubic-bezier(.34,1.56,.64,1)}
 .flow-chips button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
 
 .flow-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
@@ -1072,8 +1174,8 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   .flow.armed .flow-step{opacity:0;transform:translateY(14px)}
   .flow.armed .flow-else{opacity:0;transform:translateY(14px)}
   .flow-step,.flow-else{
-    transition:opacity 460ms cubic-bezier(.16,1,.3,1),transform 460ms cubic-bezier(.16,1,.3,1),
-               border-color 460ms ease,box-shadow 460ms ease}
+    transition:opacity 300ms cubic-bezier(.16,1,.3,1),transform 300ms cubic-bezier(.16,1,.3,1),
+               border-color 260ms cubic-bezier(.16,1,.3,1),box-shadow 260ms cubic-bezier(.16,1,.3,1)}
   .flow.armed .flow-step.on,.flow.armed .flow-else.on{opacity:1;transform:none}
   .flow.armed .flow-step.now{border-color:var(--blue-text);
     box-shadow:0 10px 30px rgba(0,102,214,.12)}
@@ -1213,6 +1315,8 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   <symbol id="i-drop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6c0 0 6.2 6.6 6.2 10.6a6.2 6.2 0 0 1-12.4 0C5.8 9.2 12 2.6 12 2.6z"/><path d="M9.3 14.2a2.8 2.8 0 0 0 2.8 2.8"/></g></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.4 20 5.5v6.1c0 5-3.4 8.4-8 9.9-4.6-1.5-8-4.9-8-9.9V5.5z"/><path d="M8.7 11.9l2.4 2.4 4.2-4.6"/></g></symbol>
   <symbol id="i-building" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.8" y="2.6" width="16.4" height="18.8" rx="2.1"/><path d="M8.4 7h2.1M13.5 7h2.1M8.4 11.2h2.1M13.5 11.2h2.1M8.4 15.4h2.1M13.5 15.4h2.1"/><path d="M10.1 21.4v-2.7h3.8v2.7"/></g></symbol>
+  <symbol id="i-van" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 7.4h10.2v9.1H2.6z"/><path d="M12.8 10.2h3.9l2.9 3.1v3.2h-6.8z"/><circle cx="7" cy="18.4" r="1.9"/><circle cx="16.4" cy="18.4" r="1.9"/><path d="M8.9 18.4h5.6M2.6 16.5h2.5M18.3 16.5h2.1"/></g></symbol>
+  <symbol id="i-desk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 13.4v-1.6a7.4 7.4 0 0 1 14.8 0v1.6"/><path d="M4.6 12.9h1.7a1 1 0 0 1 1 1v3.3a1 1 0 0 1-1 1H4.6a1.6 1.6 0 0 1-1.6-1.6v-2.1a1.6 1.6 0 0 1 1.6-1.6zM19.4 12.9h-1.7a1 1 0 0 0-1 1v3.3a1 1 0 0 0 1 1h1.7a1.6 1.6 0 0 0 1.6-1.6v-2.1a1.6 1.6 0 0 0-1.6-1.6z"/><path d="M19.4 18.2v.6a2.2 2.2 0 0 1-2.2 2.2h-3"/></g></symbol>
 </svg>
 
 <header class="top">
@@ -1249,9 +1353,57 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   </div>
 </section>
 
-<section class="band" aria-label="What Beyondesk is">
+<section class="sec sync" id="sync" aria-labelledby="syncH">
   <div class="wrap">
-    <p>Morocco is one hour from the UK and shares your working day for most of the year. India is five and a half hours ahead. The Philippines is eight. <strong>Everyone else covers your hours by putting someone on a night shift.</strong></p>
+    <div class="sync-head reveal">
+      <h2 id="syncH">Two desks. One working day.</h2>
+      <p>Morocco runs on UTC+1 all year, so it shares the UK business day rather than covering it from the other side of the night. These are the real clocks, right now.</p>
+    </div>
+
+    <div class="sync-rig">
+      <div class="sync-node">
+        <svg class="sync-ic" aria-hidden="true"><use href="#i-van"></use></svg>
+        <b>Your site</b>
+        <span class="sync-clock" data-tz="Europe/London">&mdash;&mdash;</span>
+        <span class="sync-place">United Kingdom</span>
+      </div>
+
+      <div class="sync-link">
+        <svg class="sync-beam" viewBox="0 0 400 72" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="0" y1="36" x2="400" y2="36" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+          <line x1="0" y1="36" x2="400" y2="36" stroke="url(#syncGrad)" stroke-width="2.4" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="syncGrad" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="0" y2="0">
+              <stop stop-color="#38B6FF" stop-opacity="0"/>
+              <stop stop-color="#38B6FF"/>
+              <stop offset="32.5%" stop-color="#7CCBFF"/>
+              <stop offset="100%" stop-color="#7CCBFF" stop-opacity="0"/>
+              <animate attributeName="x1" values="-120;400" dur="4.2s" repeatCount="indefinite"
+                       calcMode="spline" keyTimes="0;1" keySplines="0.16 1 0.3 1"/>
+              <animate attributeName="x2" values="0;520" dur="4.2s" repeatCount="indefinite"
+                       calcMode="spline" keyTimes="0;1" keySplines="0.16 1 0.3 1"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <ul class="sync-packets" aria-hidden="true">
+          <li>Job logged</li>
+          <li class="back">Engineer allocated</li>
+          <li>Certificate due</li>
+          <li class="back">Chased and filed</li>
+        </ul>
+      </div>
+
+      <div class="sync-node">
+        <svg class="sync-ic" aria-hidden="true"><use href="#i-desk"></use></svg>
+        <b>Your coordinator</b>
+        <span class="sync-clock" data-tz="Africa/Casablanca">&mdash;&mdash;</span>
+        <span class="sync-place">Morocco</span>
+      </div>
+    </div>
+
+    <p class="sync-overlap" id="syncOverlap" aria-live="polite"></p>
+
+    <p class="sync-foot">India sits four and a half to five and a half hours ahead depending on the season, and the Philippines seven to eight. <strong>Everyone else covers your hours by putting someone on a night shift.</strong></p>
   </div>
 </section>
 
@@ -1470,6 +1622,50 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 </section>
 
 </main>
+
+<script>
+(function(){
+  var clocks = [].slice.call(document.querySelectorAll(".sync-clock"));
+  var delta = document.getElementById("syncOverlap");
+  if (!clocks.length) return;
+
+  function partsFor(tz){
+    try {
+      var f = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: false });
+      var o = {};
+      f.formatToParts(new Date()).forEach(function(p){ o[p.type] = p.value; });
+      if (!o.hour || !o.minute) return null;
+      return { text: o.hour + ":" + o.minute,
+               mins: parseInt(o.hour, 10) * 60 + parseInt(o.minute, 10) };
+    } catch (e) { return null; }
+  }
+
+  function tick(){
+    var mins = [];
+    for (var i = 0; i < clocks.length; i++){
+      var r = partsFor(clocks[i].dataset.tz);
+      if (!r) return;                 // no time zone data: leave the dashes
+      clocks[i].textContent = r.text;
+      mins.push(r.mins);
+    }
+    if (delta && mins.length === 2){
+      // wrap the difference into -12..12 so midnight does not read as 23 hours
+      var d = mins[1] - mins[0];
+      if (d > 720) d -= 1440; else if (d < -720) d += 1440;
+      var ahead = Math.round(d / 60);
+      // Both desks keep 08:00 to 17:00 local. Expressed in UK time the Morocco
+      // day runs (8 - ahead) to (17 - ahead), so the overlap is what is left.
+      var overlap = Math.min(17, 17 - ahead) - Math.max(8, 8 - ahead);
+      if (overlap < 0) overlap = 0;
+      delta.innerHTML = "<b>" + overlap + " hours</b> of your working day overlap, every day";
+      delta.classList.add("ready");
+    }
+  }
+  tick();
+  setInterval(tick, 20000);
+})();
+</script>
 
 <script>
 (function(){

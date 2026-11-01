@@ -41,7 +41,14 @@ a{text-underline-offset:.18em;text-decoration-thickness:.08em}
 ::-webkit-scrollbar-thumb:hover{background:var(--slate)}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+  /* transitions off, and looping animations collapsed to their end state
+     rather than removed, so nothing that fades in stays invisible */
+  *{transition:none!important;animation-duration:.01ms!important;
+    animation-iteration-count:1!important;animation-delay:0s!important}
+  /* SMIL ignores this query, so the swept line is hidden and the static
+     one underneath carries the connection */
+  .sync-beam line:nth-of-type(2){display:none}}
 html{background:var(--white)}
 body{margin:0;background:var(--white);color:var(--slate);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--white)}
@@ -55,7 +62,7 @@ p{margin:0}
 .lead{font-size:clamp(17px,1.4vw,19px);max-width:60ch}
 .head{display:grid;gap:12px;max-width:720px;margin-bottom:clamp(28px,4vw,48px)}
 section{padding-block:clamp(56px,7vw,96px)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;line-height:1.2;min-height:48px;padding:14px 24px;border-radius:8px;border:1.5px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s,color .15s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;line-height:1.2;min-height:48px;padding:14px 24px;border-radius:8px;border:1.5px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color 220ms cubic-bezier(.16,1,.3,1),border-color 220ms cubic-bezier(.16,1,.3,1),color 220ms cubic-bezier(.16,1,.3,1),transform 240ms cubic-bezier(.34,1.56,.64,1)}
 .btn-blue{background:var(--blue-text);color:#fff}
 .btn-blue:hover{background:#0055B8}
 .btn-line{background:#fff;color:var(--navy);border-color:var(--line-strong)}
@@ -342,10 +349,10 @@ footer a:hover{color:var(--blue)}
 
 
 /* Reveal on view (compositor only; respects prefers-reduced-motion) */
-.reveal{transition:opacity 500ms cubic-bezier(.16,1,.3,1),transform 500ms cubic-bezier(.16,1,.3,1)}
+.reveal{transition:opacity 320ms cubic-bezier(.16,1,.3,1),transform 320ms cubic-bezier(.16,1,.3,1)}
 html.js .reveal:not(.in){opacity:0;transform:translateY(14px)}
 .reveal.in{opacity:1;transform:none}
-.reveal-stagger > *{transition:opacity 450ms cubic-bezier(.16,1,.3,1),transform 450ms cubic-bezier(.16,1,.3,1)}
+.reveal-stagger > *{transition:opacity 300ms cubic-bezier(.16,1,.3,1),transform 300ms cubic-bezier(.16,1,.3,1)}
 html.js .reveal-stagger:not(.in) > *{opacity:0;transform:translateY(10px)}
 .reveal-stagger.in > *{opacity:1;transform:none}
 .reveal-stagger.in > *:nth-child(1){transition-delay:40ms}
@@ -765,7 +772,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
        runs for the flight path. A process is a sequence of four things, not a
        continuous scrub, so stepping suits it better than easing. */
     .how ol li{opacity:.2;transform:translateY(26px) scale(.975);
-      transition:opacity 420ms cubic-bezier(.16,1,.3,1),transform 420ms cubic-bezier(.16,1,.3,1)}
+      transition:opacity 300ms cubic-bezier(.16,1,.3,1),transform 300ms cubic-bezier(.16,1,.3,1)}
     .how ol li.step-on{opacity:1;transform:none}
     .how ol li.step-past{opacity:.72}
   }
@@ -852,7 +859,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 @media(max-width:980px){.tgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.tgrid{grid-template-columns:1fr}}
 .tcard{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;
-  padding:24px 24px 22px;text-decoration:none;transition:border-color .18s,transform .18s}
+  padding:24px 24px 22px;text-decoration:none;transition:border-color 220ms cubic-bezier(.16,1,.3,1),transform 260ms cubic-bezier(.34,1.56,.64,1)}
 .tcard:hover{border-color:var(--blue-text);transform:translateY(-2px)}
 .tcard .ic{width:34px;height:34px;color:var(--blue-text);margin-bottom:14px;display:block}
 .tcard h2{font-size:19px;font-weight:700;color:var(--navy);margin:0 0 7px;letter-spacing:-.01em}
@@ -888,6 +895,8 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   <symbol id="i-drop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6c0 0 6.2 6.6 6.2 10.6a6.2 6.2 0 0 1-12.4 0C5.8 9.2 12 2.6 12 2.6z"/><path d="M9.3 14.2a2.8 2.8 0 0 0 2.8 2.8"/></g></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.4 20 5.5v6.1c0 5-3.4 8.4-8 9.9-4.6-1.5-8-4.9-8-9.9V5.5z"/><path d="M8.7 11.9l2.4 2.4 4.2-4.6"/></g></symbol>
   <symbol id="i-building" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.8" y="2.6" width="16.4" height="18.8" rx="2.1"/><path d="M8.4 7h2.1M13.5 7h2.1M8.4 11.2h2.1M13.5 11.2h2.1M8.4 15.4h2.1M13.5 15.4h2.1"/><path d="M10.1 21.4v-2.7h3.8v2.7"/></g></symbol>
+  <symbol id="i-van" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 7.4h10.2v9.1H2.6z"/><path d="M12.8 10.2h3.9l2.9 3.1v3.2h-6.8z"/><circle cx="7" cy="18.4" r="1.9"/><circle cx="16.4" cy="18.4" r="1.9"/><path d="M8.9 18.4h5.6M2.6 16.5h2.5M18.3 16.5h2.1"/></g></symbol>
+  <symbol id="i-desk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 13.4v-1.6a7.4 7.4 0 0 1 14.8 0v1.6"/><path d="M4.6 12.9h1.7a1 1 0 0 1 1 1v3.3a1 1 0 0 1-1 1H4.6a1.6 1.6 0 0 1-1.6-1.6v-2.1a1.6 1.6 0 0 1 1.6-1.6zM19.4 12.9h-1.7a1 1 0 0 0-1 1v3.3a1 1 0 0 0 1 1h1.7a1.6 1.6 0 0 0 1.6-1.6v-2.1a1.6 1.6 0 0 0-1.6-1.6z"/><path d="M19.4 18.2v.6a2.2 2.2 0 0 1-2.2 2.2h-3"/></g></symbol>
 </svg>
 
 <header class="top">
