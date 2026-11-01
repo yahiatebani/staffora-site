@@ -17,42 +17,69 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
   // amp: how far each control point drifts; spd: parallax (different layers, different pace)
   var SHEETS = [
     { top:[[0,300],[460,520],[920,700],[1672,560]], bot:[[0,540],[520,720],[1040,820],[1672,720]],
-      fill:[[0,"rgba(170,208,248,.55)"],[.55,"rgba(190,220,250,.30)"],[1,"rgba(220,236,252,0)"]], amp:26, spd:1, ph:0 },
+      fill:[[0,"rgba(170,208,248,.55)"],[.55,"rgba(190,220,250,.30)"],[1,"rgba(220,236,252,0)"]], amp:46, spd:.9, ph:0, sheen:9 },
     { top:[[0,455],[480,560],[930,770],[1672,650]], bot:[[0,1000],[600,1000],[1100,1000],[1672,1000]],
-      fill:[[0,"rgba(22,78,152,.97)"],[.28,"rgba(28,104,196,.9)"],[.62,"rgba(92,164,232,.55)"],[1,"rgba(170,210,248,.12)"]], amp:22, spd:.8, ph:.18, shade:true },
+      fill:[[0,"rgba(22,78,152,.97)"],[.28,"rgba(28,104,196,.9)"],[.62,"rgba(92,164,232,.55)"],[1,"rgba(170,210,248,.12)"]], amp:44, spd:.75, ph:.18, shade:true, sheen:7 },
     { top:[[0,600],[560,720],[1080,840],[1672,740]], bot:[[0,1000],[600,1000],[1100,1000],[1672,1000]],
-      fill:[[0,"rgba(255,255,255,.16)"],[.5,"rgba(255,255,255,.10)"],[1,"rgba(255,255,255,0)"]], amp:30, spd:1.15, ph:.42 },
+      fill:[[0,"rgba(255,255,255,.16)"],[.5,"rgba(255,255,255,.10)"],[1,"rgba(255,255,255,0)"]], amp:52, spd:1.05, ph:.42 },
     { top:[[560,830],[980,730],[1330,540],[1672,370]], bot:[[420,900],[980,830],[1400,660],[1672,540]],
-      fill:[[0,"rgba(56,160,240,0)"],[.35,"rgba(56,162,242,.55)"],[.75,"rgba(80,182,250,.62)"],[1,"rgba(120,200,252,.55)"]], amp:24, spd:1.3, ph:.65, xr:true },
+      fill:[[0,"rgba(56,160,240,0)"],[.35,"rgba(56,162,242,.55)"],[.75,"rgba(80,182,250,.62)"],[1,"rgba(120,200,252,.55)"]], amp:42, spd:1.2, ph:.65, xr:true, sheen:5.5 },
     { top:[[0,800],[620,930],[1200,790],[1672,620]], bot:[[0,1000],[600,1000],[1100,1000],[1672,1000]],
-      fill:[[0,"rgba(255,255,255,0)"],[.45,"rgba(246,250,255,.55)"],[.8,"rgba(250,252,255,.88)"],[1,"rgba(252,253,255,.95)"]], amp:20, spd:.7, ph:.9, xr:true }
+      fill:[[0,"rgba(255,255,255,0)"],[.45,"rgba(246,250,255,.55)"],[.8,"rgba(250,252,255,.88)"],[1,"rgba(252,253,255,.95)"]], amp:36, spd:.65, ph:.9, xr:true }
   ];
 
+  // silk strands across the full width (design space), each on its own swell and light
+  var STRANDS = [
+    { pts:[[0,520],[520,640],[1080,760],[1672,600]], col:"255,255,255", a:.7, w:1.2, amp:40, spd:1.0, ph:.3, off:.4, per:6 },
+    { pts:[[0,560],[560,690],[1100,800],[1672,650]], col:"150,210,255", a:.55, w:1, amp:48, spd:.85, ph:.55, off:1.2, per:7.5 },
+    { pts:[[0,640],[600,780],[1120,830],[1672,560]], col:"92,214,255", a:.6, w:1.4, amp:38, spd:1.15, ph:.8, off:2.1, per:5 },
+    { pts:[[0,700],[640,860],[1180,800],[1672,480]], col:"255,255,255", a:.45, w:1, amp:44, spd:.95, ph:.1, off:3, per:8.5 }
+  ];
   function bez(p0, p1, p2, p3, t){
     var u = 1 - t;
     return [u*u*u*p0[0] + 3*u*u*t*p1[0] + 3*u*t*t*p2[0] + t*t*t*p3[0],
             u*u*u*p0[1] + 3*u*u*t*p1[1] + 3*u*t*t*p2[1] + t*t*t*p3[1]];
   }
-  // control points drift with two blended sines so the motion never reads as one repeating swing.
-  // phase falls with x, so the swell travels left to right.
-  function animate(pts, s, t){
+  // travelling waves: every edge is sampled across its length and displaced by waves whose crests
+  // move left to right, so the motion flows across the section instead of bending in place.
+  var N = 56;
+  function sampleBase(pts){ var out = []; for (var i = 0; i <= N; i++) out.push(bez(pts[0], pts[1], pts[2], pts[3], i / N)); return out; }
+  SHEETS.forEach(function(s){ s.bt = sampleBase(s.top); if (s.bot[0][1] < 1000) s.bb = sampleBase(s.bot); });
+  STRANDS.forEach(function(s){ s.base = sampleBase(s.pts); });
+  function wave(x, t, s, off){
+    var k1 = TAU / 1500, k2 = TAU / 640, k3 = TAU / 2600;
+    var w = TAU / 9 * s.spd;                               // main swell crosses about one wavelength in 9 s
+    return Math.sin(k1 * x - w * t + s.ph * 6 + off) * s.amp
+         + Math.sin(k2 * x - w * 1.7 * t + s.ph * 9 + off * 1.3) * s.amp * .38
+         + Math.sin(k3 * x - w * .6 * t + s.ph * 3) * s.amp * .55;
+  }
+  function flow(base, s, t, off){
     var out = [];
-    for (var i = 0; i < 4; i++){
-      var k = i / 3, edge = (i === 0 || i === 3) ? .45 : 1;
-      var a = t * TAU / 10 * s.spd - k * 2.1 + s.ph * TAU;      // primary, about 10 s
-      var b = t * TAU / 6.5 * s.spd - k * 3.3 + s.ph * 4.1;     // secondary, faster and smaller
-      var dy = (Math.sin(a) * .75 + Math.sin(b) * .25) * s.amp * edge;
-      var dx = Math.cos(a * .5 + k) * s.amp * .6 * (i === 1 || i === 2 ? 1 : 0);
-      out.push([pts[i][0] + dx, pts[i][1] + dy]);
+    for (var i = 0; i < base.length; i++){
+      var p = base[i], taper = Math.min(1, i / 6, (base.length - 1 - i) / 3 + .35);
+      out.push([p[0], p[1] + wave(p[0], t, s, off) * taper]);
     }
     return out;
   }
+  function trace(pts, reverse){
+    var n = pts.length, i, a, b;
+    if (!reverse){
+      ctx.lineTo(pts[0][0], pts[0][1]);
+      for (i = 1; i < n - 1; i++){ a = pts[i]; b = pts[i + 1]; ctx.quadraticCurveTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); }
+      ctx.lineTo(pts[n - 1][0], pts[n - 1][1]);
+    } else {
+      ctx.lineTo(pts[n - 1][0], pts[n - 1][1]);
+      for (i = n - 2; i > 0; i--){ a = pts[i]; b = pts[i - 1]; ctx.quadraticCurveTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); }
+      ctx.lineTo(pts[0][0], pts[0][1]);
+    }
+  }
+  var ctx;   // set per scene before drawing
 
   function Scene(host){
     var c = document.createElement("canvas");
     c.className = "rb-canvas"; c.setAttribute("aria-hidden", "true");
     host.insertBefore(c, host.firstChild);
-    var ctx = c.getContext("2d", { alpha: false });
+    var cx2 = c.getContext("2d", { alpha: false });
     var W = 0, H = 0, dpr = 1, visible = false, raf = 0, last = 0, t0 = performance.now(), phone = false;
     var sprite = document.createElement("canvas"), spriteR = 0;
     var dots = [], map = {x:0, y:0, w:0, h:0}, rib = {sx:1, sy:1, oy:0};
@@ -97,42 +124,56 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
     function P(p){ return [p[0] * rib.sx, rib.oy + p[1] * rib.sy]; }
 
     function drawSheet(s, t){
-      var top = animate(s.top, s, t), bot = s.bot[0][1] >= 1000 ? null : animate(s.bot, s, t + 1.3);
-      var a = top.map(P);
+      var top = flow(s.bt, s, t, 0).map(P), bot = s.bb ? flow(s.bb, s, t, 1.1).map(P) : null;
       ctx.beginPath();
-      ctx.moveTo(a[0][0], a[0][1]);
-      ctx.bezierCurveTo(a[1][0], a[1][1], a[2][0], a[2][1], a[3][0], a[3][1]);
-      if (bot){
-        var b = bot.map(P);
-        ctx.lineTo(Math.max(W, b[3][0]), b[3][1]);
-        ctx.bezierCurveTo(b[2][0], b[2][1], b[1][0], b[1][1], b[0][0], b[0][1]);
-      } else {
-        ctx.lineTo(W + 2, H + 2); ctx.lineTo(a[0][0] > 0 ? a[0][0] : -2, H + 2);
-      }
+      ctx.moveTo(top[0][0], top[0][1]);
+      trace(top, false);
+      if (bot){ ctx.lineTo(Math.max(W + 4, bot[N][0]), bot[N][1]); trace(bot, true); }
+      else { ctx.lineTo(W + 4, top[N][1]); ctx.lineTo(W + 4, H + 4); ctx.lineTo(-4, H + 4); ctx.lineTo(-4, top[0][1]); }
       ctx.closePath();
-      var x0 = s.xr ? a[0][0] : 0, x1 = W;
-      var g = ctx.createLinearGradient(x0, 0, x1, 0);
+      var x0 = s.xr ? top[0][0] : 0;
+      var g = ctx.createLinearGradient(x0, 0, W, 0);
       for (var i = 0; i < s.fill.length; i++) g.addColorStop(s.fill[i][0], s.fill[i][1]);
       ctx.fillStyle = g; ctx.fill();
-      if (s.shade){   // deeper navy at the bottom left of the main body
+      if (s.shade){
         var v = ctx.createLinearGradient(0, rib.oy + 560 * rib.sy, 0, H);
-        v.addColorStop(0, "rgba(10,48,110,0)"); v.addColorStop(1, "rgba(10,48,110,.35)");
+        v.addColorStop(0, "rgba(10,48,110,0)"); v.addColorStop(1, "rgba(10,48,110,.38)");
         ctx.fillStyle = v; ctx.fill();
       }
-      return a;
+      // a soft band of light sliding along the sheet, like sheen on silk
+      if (s.sheen){
+        var sp = ((t / s.sheen) % 1) * 1.8 - .4;
+        var sg = ctx.createLinearGradient(0, 0, W, 0);
+        function st(o, a){ if (o > 0 && o < 1) sg.addColorStop(o, "rgba(255,255,255," + a + ")"); }
+        sg.addColorStop(0, "rgba(255,255,255,0)"); st(sp - .14, 0); st(sp, .22); st(sp + .14, 0); sg.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = sg; ctx.fill();
+      }
+      return top;
     }
-    // a highlight running along an edge: a soft glow plus a bright core whose brightest point travels
-    function drawEdge(a, t, period, core, glow, width){
-      var g = ctx.createLinearGradient(a[0][0], a[0][1], a[3][0], a[3][1]);
-      var pos = ((t / period) % 1) * 1.6 - .3;              // runs off both ends, so the loop never jumps
-      function stop(o, col){ if (o >= 0 && o <= 1) g.addColorStop(o, col); }
-      g.addColorStop(0, "rgba(" + core + ",0)");
-      stop(pos - .28, "rgba(" + core + ",.35)"); stop(pos, "rgba(" + core + ",1)"); stop(pos + .28, "rgba(" + core + ",.35)");
-      g.addColorStop(1, "rgba(" + core + ",.55)");
-      ctx.lineCap = "round";
-      ctx.beginPath(); ctx.moveTo(a[0][0], a[0][1]); ctx.bezierCurveTo(a[1][0], a[1][1], a[2][0], a[2][1], a[3][0], a[3][1]);
-      ctx.strokeStyle = "rgba(" + glow + ",.16)"; ctx.lineWidth = width * 5; ctx.stroke();
+    // light running along an edge: soft glow plus a bright core whose brightest point travels left to right
+    function drawEdge(pts, t, period, core, glow, width, from){
+      var a = pts[from || 0], b = pts[pts.length - 1];
+      var g = ctx.createLinearGradient(a[0], a[1], b[0], b[1]);
+      var pos = ((t / period) % 1) * 1.6 - .3;
+      function stop(o, col){ if (o > 0 && o < 1) g.addColorStop(o, col); }
+      g.addColorStop(0, "rgba(" + core + ",.15)");
+      stop(pos - .22, "rgba(" + core + ",.3)"); stop(pos, "rgba(" + core + ",1)"); stop(pos + .22, "rgba(" + core + ",.3)");
+      g.addColorStop(1, "rgba(" + core + ",.45)");
+      ctx.lineCap = "round"; ctx.lineJoin = "round";
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); trace(pts.slice(from || 0), false);
+      ctx.strokeStyle = "rgba(" + glow + ",.18)"; ctx.lineWidth = width * 5; ctx.stroke();
       ctx.strokeStyle = g; ctx.lineWidth = width; ctx.stroke();
+    }
+    // fine silk strands that flow across the whole width, riding on the main swell
+    function drawStrands(t){
+      for (var j = 0; j < STRANDS.length; j++){
+        var sd = STRANDS[j], pts = flow(sd.base, sd, t, sd.off).map(P);
+        var g = ctx.createLinearGradient(0, 0, W, 0), pos = ((t / sd.per) % 1) * 1.6 - .3;
+        function stop(o, a){ if (o > 0 && o < 1) g.addColorStop(o, "rgba(" + sd.col + "," + a + ")"); }
+        g.addColorStop(0, "rgba(" + sd.col + ",0)"); stop(pos - .3, sd.a * .35); stop(pos, sd.a); stop(pos + .3, sd.a * .35); g.addColorStop(1, "rgba(" + sd.col + "," + sd.a * .3 + ")");
+        ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); trace(pts, false);
+        ctx.strokeStyle = g; ctx.lineWidth = sd.w; ctx.stroke();
+      }
     }
     function drawMap(t){
       var sweep = ((t / 9) % 1) * 1.9 - .45;                // diagonal shimmer, enters and leaves off the map
@@ -170,6 +211,7 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
       raf = requestAnimationFrame(frame);
     }
     function draw(t){
+      ctx = cx2;
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       // sky: white with a faint blue lift in the top corners, almost still
       var g = ctx.createLinearGradient(0, 0, c.width, c.height);
@@ -182,10 +224,13 @@ var DOTS=[502,1,510,0,519,0,528,0,423,11,433,9,414,12,536,11,548,13,560,11,404,1
       drawMap(t);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var edges = [];
-      for (var i = 0; i < SHEETS.length; i++) edges[i] = drawSheet(SHEETS[i], t);
-      drawEdge(edges[1], t, 8.5, "255,255,255", "255,255,255", 1.4);
-      drawEdge(edges[3], t + 3, 7, "92,214,255", "56,182,255", 2.4);
-      drawEdge(edges[0], t + 5, 11, "255,255,255", "190,222,252", 1.1);
+      for (var i = 0; i < SHEETS.length; i++){
+        edges[i] = drawSheet(SHEETS[i], t);
+        if (i === 2) drawStrands(t);
+      }
+      drawEdge(edges[1], t, 6.5, "255,255,255", "255,255,255", 1.6);
+      drawEdge(edges[3], t + 2, 4.8, "110,222,255", "56,182,255", 2.8);
+      drawEdge(edges[0], t + 4, 8, "255,255,255", "190,222,252", 1.2);
     }
     function start(){ if (!raf && visible && !reduce) raf = requestAnimationFrame(frame); }
 
