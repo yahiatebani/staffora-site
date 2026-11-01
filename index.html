@@ -854,7 +854,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   background:var(--navy);color:#fff;overflow:hidden;isolation:isolate}
 .hero-media{position:absolute;inset:0;z-index:0}
 .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center}
-.hero-dim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,42,68,.45) 0%,rgba(15,42,68,.42) 38%,rgba(15,42,68,.86) 82%,rgba(15,42,68,.97) 95%,#0F2A44 100%)}
+.hero-dim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,42,68,.45) 0%,rgba(15,42,68,.42) 38%,rgba(15,42,68,.84) 82%,rgba(15,42,68,.80) 100%)}
 .hero-inner{position:relative;z-index:2;width:100%;padding-top:clamp(140px,19vh,200px);padding-bottom:clamp(40px,8vh,80px)}
 .hero-inner .wrap{max-width:820px;margin-right:auto}
 .hero h1{color:#fff;font-size:clamp(33px,5.4vw,66px);font-weight:800;line-height:1.05;
@@ -872,7 +872,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
    that anything follows. Shortening it lets the next section peek. */
 @media(max-width:640px){
   .hero{height:auto;min-height:min(74svh,620px)}
-  .hero-inner{padding-top:104px;padding-bottom:30px}
+  .hero-inner{padding-top:104px;padding-bottom:58px}
   .hero .lead{font-size:16.5px;margin-bottom:20px}
   .hero .cta{gap:10px}
   .hero .cta .btn{min-height:48px}
@@ -996,100 +996,62 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .final-note{color:rgba(255,255,255,.7);font-size:14.5px;margin:16px 0 0}
 
 
-/* ---- two desks, one working day -------------------------------------
-   Motion rules for this component, and for the retune below:
-     UI response  200-350ms
-     pop/overshoot  cubic-bezier(.34,1.56,.64,1)
-     momentum       cubic-bezier(.16,1,.3,1)
-   Only transform and opacity are animated, so nothing here can trigger
-   layout or paint. Ambient loops (the beam sweep, the packets) run longer
-   than 350ms on purpose: that budget is for responses to a user action,
-   and a 300ms ambient loop would be a strobe. */
-.sync{background:var(--navy);color:#fff;overflow:clip}
-.sync-head{max-width:760px;margin:0 0 clamp(28px,4vw,44px)}
-.sync-head h2{color:#fff;font-size:clamp(28px,3.3vw,42px);font-weight:800;
-  letter-spacing:-.025em;line-height:1.08;margin:0 0 12px;text-wrap:balance}
-.sync-head p{color:rgba(255,255,255,.86);font-size:16.5px;line-height:1.6;margin:0;max-width:62ch}
+/* ---- different countries, same business hours ------------------------
+   Light panel under the dark hero, curved top edge cutting into the photo.
+   Transform and opacity only; UI response 200-350ms; overshoot
+   cubic-bezier(.34,1.56,.64,1), momentum cubic-bezier(.16,1,.3,1). */
+.sync{background:#F7F9FC;position:relative;z-index:2}
+.sync-curve{position:absolute;left:0;right:0;top:-88px;width:100%;height:90px;
+  display:block;pointer-events:none}
+/* The path is stretched, so at phone width the same shape climbs far too
+   steeply and eats the hero's last line. Shallower there. */
+@media(max-width:760px){.sync-curve{top:-38px;height:40px}}
 
-.sync-rig{display:grid;grid-template-columns:1fr minmax(130px,1fr) 1fr;
-  gap:clamp(8px,1.6vw,20px);align-items:center}
+.sync-badge{display:inline-flex;align-items:center;gap:9px;background:#E4EEFD;
+  border-radius:999px;padding:9px 18px 9px 14px;margin:0 0 22px;
+  font-size:15px;font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.sync-badge svg{width:19px;height:19px;color:var(--blue-text);flex:none}
 
-.sync-node{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.16);
-  border-radius:16px;padding:clamp(16px,2.2vw,24px) clamp(12px,1.8vw,22px);
-  text-align:center;will-change:transform;
-  transition:transform 260ms cubic-bezier(.34,1.56,.64,1),
-             border-color 220ms cubic-bezier(.16,1,.3,1),
-             background-color 220ms cubic-bezier(.16,1,.3,1)}
-.sync-node:hover{transform:translate3d(0,-4px,0);border-color:rgba(124,203,255,.55);
-  background-color:rgba(255,255,255,.085)}
-.sync-ic{width:30px;height:30px;color:#7CCBFF;display:block;margin:0 auto 12px}
-.sync-node b{display:block;font-size:clamp(15px,1.4vw,17px);font-weight:700;color:#fff;
-  letter-spacing:-.01em;margin-bottom:10px;line-height:1.25}
-.sync-clock{display:block;font-size:clamp(28px,3.6vw,44px);font-weight:800;color:#fff;
-  letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-.sync-place{display:block;font-size:12.5px;font-weight:700;letter-spacing:.09em;
-  text-transform:uppercase;color:rgba(255,255,255,.62);margin-top:9px}
+.sync h2{font-size:clamp(31px,4.6vw,54px);font-weight:800;color:var(--navy);
+  letter-spacing:-.035em;line-height:1.05;margin:0 0 16px;text-wrap:balance}
+.sync h2 span{display:block;color:var(--blue)}
+.sync-lead{font-size:clamp(16.5px,1.5vw,20px);line-height:1.5;color:var(--slate);
+  margin:0 0 clamp(26px,3.6vw,40px);max-width:52ch}
 
-.sync-link{position:relative;height:72px;display:flex;align-items:center;justify-content:center}
-.sync-beam{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-/* The overlap is the argument, so it gets its own line rather than a chip
-   fighting the packets for the beam. */
-.sync-overlap{margin:clamp(22px,3vw,32px) 0 0;text-align:center;font-size:clamp(16px,1.5vw,19px);
-  color:rgba(255,255,255,.86);line-height:1.5;opacity:0;transform:translate3d(0,8px,0);
-  transition:opacity 320ms cubic-bezier(.16,1,.3,1),transform 320ms cubic-bezier(.34,1.56,.64,1)}
-.sync-overlap.ready{opacity:1;transform:none}
-.sync-overlap b{display:block;font-size:clamp(30px,4vw,48px);font-weight:800;color:#7CCBFF;
-  letter-spacing:-.035em;line-height:1.05;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.sync-board{background:#fff;border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 10px 36px rgba(15,42,68,.05);
+  display:grid;grid-template-columns:1fr 1px 1fr;
+  padding:clamp(24px,3.4vw,40px) clamp(16px,2.4vw,32px)}
+.sync-split{background:var(--line)}
+.sync-half{text-align:center;padding:0 clamp(8px,1.6vw,20px)}
+.sync-id{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:14px}
+.sync-flag{width:clamp(38px,3.4vw,46px);height:auto;aspect-ratio:3/2;border-radius:6px;
+  display:block;flex:none;box-shadow:0 1px 4px rgba(15,42,68,.22)}
+.sync-id b{font-size:clamp(17px,1.7vw,21px);font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.sync-clock{display:block;font-size:clamp(44px,6.4vw,76px);font-weight:800;color:var(--navy);
+  letter-spacing:-.05em;line-height:1;margin:0;font-variant-numeric:tabular-nums}
+.sync-date{display:block;font-size:clamp(15px,1.4vw,18px);color:var(--slate);margin:12px 0 0}
 
-.sync-packets{position:absolute;inset:0;list-style:none;margin:0;padding:0;pointer-events:none}
-.sync-packets li{position:absolute;top:0;left:0;white-space:nowrap;
-  font-size:11.5px;font-weight:700;letter-spacing:.02em;color:#0F2A44;background:#7CCBFF;
-  border-radius:999px;padding:4px 10px;opacity:0;will-change:transform,opacity;
-  transform:translate3d(0,0,0)}
-@media (prefers-reduced-motion:no-preference){
-  .sync-packets li{animation:sync-send 7.2s cubic-bezier(.16,1,.3,1) infinite}
-  .sync-packets li.back{animation-name:sync-back}
-  .sync-packets li:nth-child(1){animation-delay:0s;top:2px}
-  .sync-packets li:nth-child(2){animation-delay:1.8s;bottom:2px;top:auto}
-  .sync-packets li:nth-child(3){animation-delay:3.6s;top:2px}
-  .sync-packets li:nth-child(4){animation-delay:5.4s;bottom:2px;top:auto}
-}
-@keyframes sync-send{
-  0%{opacity:0;transform:translate3d(-14%,0,0) scale(.9)}
-  12%{opacity:1;transform:translate3d(6%,0,0) scale(1)}
-  78%{opacity:1;transform:translate3d(86%,0,0) scale(1)}
-  92%,100%{opacity:0;transform:translate3d(104%,0,0) scale(.9)}
-}
-@keyframes sync-back{
-  0%{opacity:0;transform:translate3d(104%,0,0) scale(.9)}
-  12%{opacity:1;transform:translate3d(86%,0,0) scale(1)}
-  78%{opacity:1;transform:translate3d(6%,0,0) scale(1)}
-  92%,100%{opacity:0;transform:translate3d(-14%,0,0) scale(.9)}
+.sync-feats{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;
+  margin-top:clamp(26px,3.4vw,42px)}
+.sync-feats .sync-split{height:60%;align-self:center}
+.sync-feat{text-align:center;padding:0 clamp(8px,1.6vw,18px)}
+.sync-feat svg{width:clamp(26px,2.4vw,32px);height:clamp(26px,2.4vw,32px);
+  color:var(--navy);display:block;margin:0 auto 12px}
+.sync-feat b{font-size:clamp(14.5px,1.5vw,19px);font-weight:700;color:var(--navy);
+  letter-spacing:-.01em;line-height:1.25}
+
+@media(max-width:640px){
+  .sync-board{grid-template-columns:1fr;gap:22px;padding:24px 20px}
+  .sync-board .sync-split{height:1px;width:100%}
+  .sync-feats{grid-template-columns:1fr;gap:0;margin-top:22px}
+  .sync-feats .sync-split{height:1px;width:100%;align-self:stretch}
+  .sync-feat{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:14px;
+    text-align:left;padding:14px 2px}
+  .sync-feat svg{margin:0;width:24px;height:24px}
 }
 
-.sync-foot{margin:clamp(24px,3.4vw,38px) 0 0;font-size:clamp(16px,1.3vw,18px);
-  line-height:1.6;color:rgba(255,255,255,.86);max-width:76ch}
-.sync-foot strong{color:#7CCBFF;font-weight:700}
-
-@media(max-width:720px){
-  .sync-rig{grid-template-columns:1fr;gap:10px}
-  .sync-link{height:56px}
-  .sync-beam{transform:rotate(90deg) scale(.42);transform-origin:center}
-  .sync-node{display:grid;grid-template-columns:auto 1fr auto;align-items:center;
-    text-align:left;gap:14px;padding:14px 16px}
-  .sync-ic{margin:0;width:26px;height:26px}
-  .sync-node b{margin:0;font-size:15px}
-  .sync-clock{font-size:26px}
-  .sync-place{display:none}
-  .sync-packets{display:none}
-}
-
-@media (prefers-reduced-motion:reduce){
-  .sync-node,.sync-overlap{transition:none}
-  .sync-node:hover{transform:none}
-  .sync-packets{display:none}
-  .sync-overlap{opacity:1;transform:none}
-}
+@media (prefers-reduced-motion:reduce){.sync-board{transition:none}}
 
 /* ---- group C: the problem, and the working day ----------------------- */
 .prob{background:var(--navy);color:#fff}
@@ -1329,6 +1291,14 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   <symbol id="i-building" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.8" y="2.6" width="16.4" height="18.8" rx="2.1"/><path d="M8.4 7h2.1M13.5 7h2.1M8.4 11.2h2.1M13.5 11.2h2.1M8.4 15.4h2.1M13.5 15.4h2.1"/><path d="M10.1 21.4v-2.7h3.8v2.7"/></g></symbol>
   <symbol id="i-van" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 7.4h10.2v9.1H2.6z"/><path d="M12.8 10.2h3.9l2.9 3.1v3.2h-6.8z"/><circle cx="7" cy="18.4" r="1.9"/><circle cx="16.4" cy="18.4" r="1.9"/><path d="M8.9 18.4h5.6M2.6 16.5h2.5M18.3 16.5h2.1"/></g></symbol>
   <symbol id="i-desk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 13.4v-1.6a7.4 7.4 0 0 1 14.8 0v1.6"/><path d="M4.6 12.9h1.7a1 1 0 0 1 1 1v3.3a1 1 0 0 1-1 1H4.6a1.6 1.6 0 0 1-1.6-1.6v-2.1a1.6 1.6 0 0 1 1.6-1.6zM19.4 12.9h-1.7a1 1 0 0 0-1 1v3.3a1 1 0 0 0 1 1h1.7a1.6 1.6 0 0 0 1.6-1.6v-2.1a1.6 1.6 0 0 0-1.6-1.6z"/><path d="M19.4 18.2v.6a2.2 2.2 0 0 1-2.2 2.2h-3"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.1"/><path d="M12 6.9V12l3.4 2"/></g></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="4.9" width="17.6" height="16" rx="2.6"/><path d="M3.2 9.6h17.6M8.1 2.9v3.6M15.9 2.9v3.6"/></g></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.4 14.3A8.6 8.6 0 0 1 9.7 3.6a8.6 8.6 0 1 0 10.7 10.7z"/></g></symbol>
+  
+  
+  <symbol id="i-people" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.2" cy="8.4" r="3.1"/><path d="M2.9 19.4a6.3 6.3 0 0 1 12.6 0"/><path d="M16.1 6.1a3 3 0 0 1 0 5.9"/><path d="M17.4 13.9a5.4 5.4 0 0 1 3.7 5.5"/></g></symbol>
+  <symbol id="f-uk" viewBox="0 0 60 40"><defs><clipPath id="f-uk-c"><rect width="60" height="40" rx="4.5"/></clipPath></defs><g clip-path="url(#f-uk-c)"><rect width="60" height="40" fill="#012169"/><path d="M0 0 60 40M60 0 0 40" stroke="#fff" stroke-width="9"/><path d="M0 0 60 40M60 0 0 40" stroke="#C8102E" stroke-width="5"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="14"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="8"/></g></symbol>
+  <symbol id="f-ma" viewBox="0 0 60 40"><rect width="60" height="40" rx="4.5" fill="#C1272D"/><path d="M30 10.5 35.88 28.59 20.49 17.41 39.51 17.41 24.12 28.59Z" fill="none" stroke="#006233" stroke-width="2.1" stroke-linejoin="round"/></symbol>
 </svg>
 
 <header class="top">
@@ -1366,56 +1336,41 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 </section>
 
 <section class="sec sync" id="sync" aria-labelledby="syncH">
+  <svg class="sync-curve" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 90 L0 70 C 470 94 950 24 1440 8 L1440 90 Z" fill="#F7F9FC"/>
+  </svg>
   <div class="wrap">
-    <div class="sync-head reveal">
-      <h2 id="syncH">Two desks. One working day.</h2>
-      <p>Morocco is within an hour of UK time all year. These are the real clocks, right now.</p>
-    </div>
+    <p class="sync-badge"><svg aria-hidden="true"><use href="#i-clock"></use></svg>Working Hours</p>
+    <h2 id="syncH">Different countries. <span>Same business hours.</span></h2>
+    <p class="sync-lead">A near time zone team in Morocco, working alongside your UK business day.</p>
 
-    <div class="sync-rig">
-      <div class="sync-node">
-        <svg class="sync-ic" aria-hidden="true"><use href="#i-van"></use></svg>
-        <b>Your site</b>
-        <span class="sync-clock" data-tz="Europe/London">&mdash;&mdash;</span>
-        <span class="sync-place">United Kingdom</span>
+    <div class="sync-board">
+      <div class="sync-half">
+        <div class="sync-id">
+          <svg class="sync-flag" viewBox="0 0 60 40" role="img" aria-label="United Kingdom"><use href="#f-uk"></use></svg>
+          <b>United Kingdom</b>
+        </div>
+        <p class="sync-clock" data-tz="Europe/London">&mdash;&mdash;</p>
+        <p class="sync-date" data-tz="Europe/London"></p>
       </div>
-
-      <div class="sync-link">
-        <svg class="sync-beam" viewBox="0 0 400 72" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="0" y1="36" x2="400" y2="36" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
-          <line x1="0" y1="36" x2="400" y2="36" stroke="url(#syncGrad)" stroke-width="2.4" stroke-linecap="round"/>
-          <defs>
-            <linearGradient id="syncGrad" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="0" y2="0">
-              <stop stop-color="#38B6FF" stop-opacity="0"/>
-              <stop stop-color="#38B6FF"/>
-              <stop offset="32.5%" stop-color="#7CCBFF"/>
-              <stop offset="100%" stop-color="#7CCBFF" stop-opacity="0"/>
-              <animate attributeName="x1" values="-120;400" dur="4.2s" repeatCount="indefinite"
-                       calcMode="spline" keyTimes="0;1" keySplines="0.16 1 0.3 1"/>
-              <animate attributeName="x2" values="0;520" dur="4.2s" repeatCount="indefinite"
-                       calcMode="spline" keyTimes="0;1" keySplines="0.16 1 0.3 1"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <ul class="sync-packets" aria-hidden="true">
-          <li>Job logged</li>
-          <li class="back">Engineer allocated</li>
-          <li>Certificate due</li>
-          <li class="back">Chased and filed</li>
-        </ul>
-      </div>
-
-      <div class="sync-node">
-        <svg class="sync-ic" aria-hidden="true"><use href="#i-desk"></use></svg>
-        <b>Your coordinator</b>
-        <span class="sync-clock" data-tz="Africa/Casablanca">&mdash;&mdash;</span>
-        <span class="sync-place">Morocco</span>
+      <div class="sync-split" aria-hidden="true"></div>
+      <div class="sync-half">
+        <div class="sync-id">
+          <svg class="sync-flag" viewBox="0 0 60 40" role="img" aria-label="Morocco"><use href="#f-ma"></use></svg>
+          <b>Morocco</b>
+        </div>
+        <p class="sync-clock" data-tz="Africa/Casablanca">&mdash;&mdash;</p>
+        <p class="sync-date" data-tz="Africa/Casablanca"></p>
       </div>
     </div>
 
-    <p class="sync-overlap" id="syncOverlap" aria-live="polite"></p>
-
-    <p class="sync-foot">India is four and a half to five and a half hours ahead. The Philippines is seven to eight. <strong>To cover your hours, they put someone on a night shift.</strong></p>
+    <div class="sync-feats">
+      <div class="sync-feat"><svg aria-hidden="true"><use href="#i-clock"></use></svg><b>Same working day</b></div>
+      <div class="sync-split" aria-hidden="true"></div>
+      <div class="sync-feat"><svg aria-hidden="true"><use href="#i-bolt"></use></svg><b>Faster responses</b></div>
+      <div class="sync-split" aria-hidden="true"></div>
+      <div class="sync-feat"><svg aria-hidden="true"><use href="#i-people"></use></svg><b>Dedicated support</b></div>
+    </div>
   </div>
 </section>
 
@@ -1653,6 +1608,19 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
     } catch (e) { return null; }
   }
 
+  var dates = [].slice.call(document.querySelectorAll(".sync-date"));
+
+  function dateFor(tz){
+    try {
+      var o = {};
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz, weekday: "short", day: "numeric", month: "short" })
+        .formatToParts(new Date()).forEach(function(p){ o[p.type] = p.value; });
+      if (!o.weekday || !o.day || !o.month) return "";
+      return o.weekday + ", " + o.day + " " + o.month;
+    } catch (e) { return ""; }
+  }
+
   function tick(){
     var mins = [];
     for (var i = 0; i < clocks.length; i++){
@@ -1661,6 +1629,9 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       clocks[i].textContent = r.text;
       mins.push(r.mins);
     }
+    // the date matters here: it is what shows the two countries are on the
+    // same day as well as the same hour
+    dates.forEach(function(d){ d.textContent = dateFor(d.dataset.tz); });
     if (delta && mins.length === 2){
       // wrap the difference into -12..12 so midnight does not read as 23 hours
       var d = mins[1] - mins[0];
@@ -1670,7 +1641,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       // day runs (8 - ahead) to (17 - ahead), so the overlap is what is left.
       var overlap = Math.min(17, 17 - ahead) - Math.max(8, 8 - ahead);
       if (overlap < 0) overlap = 0;
-      delta.innerHTML = "<b>" + overlap + " hours</b> a day when both desks are open";
+      delta.innerHTML = "<b>" + overlap + " hours</b> a day when both desks are open.";
       delta.classList.add("ready");
     }
   }
