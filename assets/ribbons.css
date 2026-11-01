@@ -1,0 +1,12 @@
+/* Final enquiry section on the animated ribbon background */
+.sec.final[data-ribbons]{background:#EEF5FD;color:#0F2A44;position:relative;overflow:hidden;isolation:isolate;padding-bottom:clamp(150px,20vw,300px)}
+.sec.final[data-ribbons]::before{display:none!important}
+.sec.final[data-ribbons] .plane-cta{display:none!important}
+.rb-canvas{position:absolute;inset:0;z-index:0;display:block;pointer-events:none}
+.sec.final[data-ribbons] > .wrap{position:relative;z-index:1}
+.sec.final[data-ribbons] h2{color:#0F2A44}
+.sec.final[data-ribbons] .lead{color:#3D4F66}
+.sec.final[data-ribbons] .final-note,.sec.final[data-ribbons] .final-alt{color:#55657A}
+.sec.final[data-ribbons] .final-alt a{color:#0066D6;text-decoration-color:rgba(0,102,214,.4)}
+.sec.final[data-ribbons] .enq{box-shadow:0 30px 70px rgba(15,42,68,.16),0 2px 6px rgba(15,42,68,.05);border:1px solid #E5EAF1}
+@media (max-width:900px){.sec.final[data-ribbons]{padding-bottom:clamp(120px,34vw,220px)}}
