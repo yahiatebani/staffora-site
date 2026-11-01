@@ -1,0 +1,84 @@
+/* English section: "Hear them before you hire them." */
+.eng{--e-navy:#0F2A44;--e-blue:#0066D6;--e-cyan:#38B6FF;--e-slate:#55657A;--e-line:#E5EAF1;--e-green:#2E8B57;--e-gbg:#E9F6EE}
+.eng .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,72px);align-items:center}
+@media (max-width:940px){.eng .wrap{grid-template-columns:minmax(0,1fr)}}
+.eng-eye{display:block;margin:0 0 12px;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--e-blue)}
+.eng h2{font-size:clamp(30px,3.6vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.06;margin:0 0 16px;color:var(--e-navy);text-wrap:balance}
+.eng .eng-lead{font-size:clamp(16.5px,1.3vw,18.5px);line-height:1.6;color:var(--e-slate);margin:0 0 28px;max-width:54ch}
+
+/* the four gates */
+.eng-gates{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+.eng-gates li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:0 0 22px;position:relative}
+.eng-gates li:last-child{padding-bottom:0}
+.eng-gates li::before{content:"";position:absolute;left:21px;top:44px;bottom:0;width:2px;background:linear-gradient(var(--e-line),var(--e-line))}
+.eng-gates li:last-child::before{display:none}
+.eng-gates .n{width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid var(--e-line);display:grid;place-items:center;color:var(--e-blue);
+  box-shadow:0 4px 12px rgba(15,42,68,.05);position:relative;z-index:1}
+.eng-gates .n svg{width:20px;height:20px}
+.eng-gates li.you .n{background:var(--e-navy);border-color:var(--e-navy);color:#fff}
+.eng-gates b{display:block;font-size:17px;font-weight:700;color:var(--e-navy);margin:2px 0 4px;letter-spacing:-.01em}
+.eng-gates p{margin:0;font-size:15.5px;line-height:1.55;color:var(--e-slate);max-width:48ch}
+
+.eng-plain{margin:28px 0 0;padding:16px 18px;border-radius:14px;background:#fff;border:1px solid var(--e-line);display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
+.eng-plain .ic{width:34px;height:34px;border-radius:10px;background:#EAF2FE;color:var(--e-blue);display:grid;place-items:center}
+.eng-plain .ic svg{width:18px;height:18px}
+.eng-plain b{display:block;font-size:15px;color:var(--e-navy);margin-bottom:3px}
+.eng-plain p{margin:0;font-size:14.5px;line-height:1.55;color:var(--e-slate)}
+
+/* example candidate profile */
+.eng-card{background:#fff;border:1px solid var(--e-line);border-radius:20px;box-shadow:0 30px 70px rgba(15,42,68,.12);padding:22px;position:relative;overflow:hidden;color:var(--e-navy)}
+.eng-card::before{content:"";position:absolute;right:-30%;top:-40%;width:70%;height:70%;background:radial-gradient(ellipse farthest-side,rgba(56,182,255,.14),rgba(56,182,255,0));pointer-events:none}
+.ec-top{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--e-line);position:relative}
+.ec-ava{width:48px;height:48px;border-radius:50%;background:linear-gradient(150deg,var(--e-cyan),var(--e-navy));color:#fff;font-weight:700;font-size:16px;display:grid;place-items:center;flex:none}
+.ec-top b{display:block;font-size:16px;font-weight:700}
+.ec-top small{display:block;font-size:13px;color:var(--e-slate);margin-top:2px}
+.ec-tag{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--e-slate);border:1px solid var(--e-line);border-radius:999px;padding:5px 9px;white-space:nowrap}
+.ec-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--e-line)}
+.ec-row > span{font-size:14px;font-weight:600}
+.ec-row > em{font-style:normal;font-size:12.5px;color:var(--e-slate);font-variant-numeric:tabular-nums}
+.ec-meter{grid-column:1 / -1;height:8px;border-radius:4px;background:#EDF2F7;overflow:hidden}
+.ec-meter i{display:block;height:100%;width:var(--w);border-radius:4px;background:linear-gradient(90deg,var(--e-blue),var(--e-cyan));transform-origin:0 50%;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.16,1,.3,1)}
+.ec-score{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.ec-call{grid-column:1 / -1;display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;background:#F5F8FC;border:1px solid var(--e-line);border-radius:12px;padding:10px 12px}
+.ec-play{width:40px;height:40px;border-radius:50%;background:var(--e-blue);color:#fff;display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,102,214,.3)}
+.ec-play svg{width:16px;height:16px;margin-left:2px}
+.ec-wave{position:relative;display:flex;align-items:center;gap:3px;height:28px;overflow:hidden}
+.ec-wave b{flex:1;min-width:2px;height:var(--h);border-radius:2px;background:#C9D6E6}
+.ec-wave .ec-prog{position:absolute;inset:0;display:flex;align-items:center;gap:3px;clip-path:inset(0 100% 0 0)}
+.ec-wave .ec-prog b{background:var(--e-blue)}
+.ec-call time{font-size:12.5px;color:var(--e-slate);font-variant-numeric:tabular-nums}
+.ec-refs{display:flex;gap:6px}
+.ec-refs i{width:24px;height:24px;border-radius:50%;background:var(--e-gbg);color:var(--e-green);display:grid;place-items:center;transform:scale(0);transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.ec-refs svg{width:13px;height:13px}
+.ec-langs{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.ec-langs span{font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;background:#EAF2FE;color:var(--e-blue)}
+.ec-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;flex-wrap:wrap}
+.ec-ready{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--e-green);background:var(--e-gbg);border-radius:999px;padding:7px 12px;
+  opacity:0;transform:translateY(6px);transition:opacity .4s ease 1.2s,transform .5s cubic-bezier(.16,1,.3,1) 1.2s}
+.ec-ready i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.ec-date{font-size:12.5px;color:var(--e-slate)}
+.eng-note{margin:12px 4px 0;font-size:12.5px;color:#7A8899;text-align:center}
+
+/* play when the card arrives on screen (site script adds .in) */
+.eng-card.in .ec-meter i{transform:none}
+.eng-card.in .ec-row:nth-of-type(4) .ec-meter i{transition-delay:.3s}
+.eng-card.in .ec-refs i{transform:none}
+.eng-card.in .ec-refs i:nth-child(1){transition-delay:.8s}
+.eng-card.in .ec-refs i:nth-child(2){transition-delay:.95s}
+.eng-card.in .ec-ready{opacity:1;transform:none}
+.eng-card.in .ec-wave .ec-prog{animation:ec-play 7s linear .6s infinite}
+@keyframes ec-play{0%{clip-path:inset(0 100% 0 0)}85%,100%{clip-path:inset(0 0 0 0)}}
+html:not(.js) .ec-meter i,html:not(.js) .ec-refs i{transform:none}
+html:not(.js) .ec-ready{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .ec-meter i,.ec-refs i{transform:none!important;transition:none!important}
+  .ec-ready{opacity:1!important;transform:none!important;transition:none!important}
+  .eng-card .ec-wave .ec-prog{animation:none!important;clip-path:inset(0 40% 0 0)}
+}
+@media (max-width:480px){
+  .eng-card{padding:16px;border-radius:16px}
+  .ec-tag{display:none}
+  .eng-gates li{grid-template-columns:38px minmax(0,1fr);gap:12px}
+  .eng-gates .n{width:38px;height:38px}
+  .eng-gates li::before{left:18px;top:38px}
+}

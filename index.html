@@ -97,6 +97,8 @@ section{padding-block:clamp(56px,7vw,96px)}
 .top nav.mnav a{display:block;padding:14px 0;border-bottom:1px solid var(--line);color:var(--navy);text-decoration:none;font-weight:600;font-size:16px}
 .top nav.mnav a:last-child{border-bottom:0}
 .top nav.mnav.open{display:block}
+.top nav.mnav a,.top:not(.shrunk) nav.mnav a{color:var(--navy)}
+.top nav.mnav a.btn,.top:not(.shrunk) nav.mnav a.btn{color:#fff}
 @media (max-width:900px){
   .top .bar{height:78px}
   .top.shrunk .bar{height:60px}
@@ -1180,6 +1182,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 </style>
 <link rel="stylesheet" href="/assets/desk.css">
 <link rel="stylesheet" href="/assets/enquiry.css">
+<link rel="stylesheet" href="/assets/english.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1659,25 +1662,33 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   </div>
 </section>
 
-<section class="sec soft" id="english">
+<section class="sec soft eng" id="english">
   <div class="wrap">
-    <div class="split">
-      <div>
-        <h2>English, tested and written down.</h2>
-        <p class="lead">Morocco is not an English speaking country, and we are not going to pretend otherwise. What we do instead is test for it and show you the result.</p>
-        <p>Every candidate you see comes with a named, dated English assessment covering written and spoken work, alongside a skills test on the systems your sector uses. You interview them yourself before anyone starts, and nobody starts until you say yes.</p>
-        <p class="note">We would rather hand you a score you can judge than a claim you cannot check.</p>
+    <div>
+      <span class="eng-eye">English</span>
+      <h2>Hear them before you hire them.</h2>
+      <p class="eng-lead">Morocco is not an English speaking country, so we never ask you to take English on trust. Every candidate reaches you with their results written down, and a recorded call you can listen to before you meet them.</p>
+      <ol class="eng-gates">
+        <li><span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg></span><div><b>Written English</b><p>A written assessment, scored and dated, so you can see how they would write to your customers.</p></div></li>
+        <li><span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><div><b>A recorded phone call</b><p>A scripted call, recorded, so you hear exactly how they sound on the phone before anyone gets a start date.</p></div></li>
+        <li><span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L4 16.8V20h3.2l5.3-5.3a4 4 0 0 0 5.2-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span><div><b>Sector skills test</b><p>Tested on the systems your sector uses, not just general admin, with references checked.</p></div></li>
+        <li class="you"><span class="n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><b>Your interview</b><p>You meet them yourself and ask what you like. Nobody starts until you say yes.</p></div></li>
+      </ol>
+      <div class="eng-plain"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/></svg></span><div><b>On accents, plainly</b><p>They are fluent, and they have an accent. If your customers need a local voice on the phone, tell us on the call and we will tell you straight whether this fits. French and Arabic are noted wherever your sites need them.</p></div></div>
+    </div>
+    <div>
+      <div class="eng-card reveal" aria-label="Example candidate profile">
+        <div class="ec-top"><span class="ec-ava" aria-hidden="true">SA</span><div><b>Example candidate</b><small>Maintenance and compliance coordinator</small></div><span class="ec-tag">Example profile</span></div>
+        <div class="ec-row"><span>Written English</span><span class="ec-score">86 / 100</span><span class="ec-meter" aria-hidden="true"><i style="--w:86%"></i></span></div>
+        <div class="ec-row"><span>Recorded phone call</span><em>Scripted, 3 minutes</em>
+          <div class="ec-call" aria-hidden="true"><span class="ec-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg></span>
+            <span class="ec-wave"><b style="--h:100%"></b><b style="--h:60%"></b><b style="--h:55%"></b><b style="--h:30%"></b><b style="--h:45%"></b><b style="--h:70%"></b><b style="--h:45%"></b><b style="--h:100%"></b><b style="--h:85%"></b><b style="--h:30%"></b><b style="--h:70%"></b><b style="--h:75%"></b><b style="--h:30%"></b><b style="--h:45%"></b><b style="--h:55%"></b><b style="--h:55%"></b><b style="--h:45%"></b><b style="--h:75%"></b><b style="--h:45%"></b><b style="--h:70%"></b><b style="--h:55%"></b><b style="--h:30%"></b><b style="--h:85%"></b><b style="--h:45%"></b><b style="--h:75%"></b><b style="--h:85%"></b><b style="--h:30%"></b><b style="--h:85%"></b><b style="--h:85%"></b><b style="--h:55%"></b><b style="--h:30%"></b><b style="--h:75%"></b><b style="--h:30%"></b><b style="--h:70%"></b><span class="ec-prog"><b style="--h:100%"></b><b style="--h:60%"></b><b style="--h:55%"></b><b style="--h:30%"></b><b style="--h:45%"></b><b style="--h:70%"></b><b style="--h:45%"></b><b style="--h:100%"></b><b style="--h:85%"></b><b style="--h:30%"></b><b style="--h:70%"></b><b style="--h:75%"></b><b style="--h:30%"></b><b style="--h:45%"></b><b style="--h:55%"></b><b style="--h:55%"></b><b style="--h:45%"></b><b style="--h:75%"></b><b style="--h:45%"></b><b style="--h:70%"></b><b style="--h:55%"></b><b style="--h:30%"></b><b style="--h:85%"></b><b style="--h:45%"></b><b style="--h:75%"></b><b style="--h:85%"></b><b style="--h:30%"></b><b style="--h:85%"></b><b style="--h:85%"></b><b style="--h:55%"></b><b style="--h:30%"></b><b style="--h:75%"></b><b style="--h:30%"></b><b style="--h:70%"></b></span></span><time>3:04</time></div></div>
+        <div class="ec-row"><span>Sector skills test</span><span class="ec-score">78 / 100</span><span class="ec-meter" aria-hidden="true"><i style="--w:78%"></i></span></div>
+        <div class="ec-row"><span>References</span><span class="ec-refs" aria-label="2 of 2 references checked"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></i></span></div>
+        <div class="ec-row" style="border-bottom:0"><span>Languages</span><span class="ec-langs"><span>English</span><span>French</span><span>Arabic</span></span></div>
+        <div class="ec-foot"><span class="ec-ready"><i></i>Ready for your interview</span><span class="ec-date">Every result dated</span></div>
       </div>
-      <div>
-        <h3 class="sub">On every candidate profile</h3>
-        <ul class="dolist">
-          <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>Written English assessment, scored and dated</span></li>
-          <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>Spoken assessment on a recorded, scripted call</span></li>
-          <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>Sector skills test on the systems you actually use</span></li>
-          <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>Reference checks</span></li>
-          <li><span class="yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span>French and Arabic noted where relevant to your sites</span></li>
-        </ul>
-      </div>
+      <p class="eng-note">Illustrative example. Real profiles carry the candidate's own results and dates.</p>
     </div>
   </div>
 </section>
