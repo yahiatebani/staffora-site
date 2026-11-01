@@ -5,13 +5,13 @@
 <script>document.documentElement.className+=" js"</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Beyondesk | Maintenance coordinators for UK trade and property firms</title>
-<meta name="description" content="Trained full time maintenance and compliance coordinators for UK refrigeration, air conditioning, electrical, plumbing and property maintenance firms. Employed in Morocco, working your UK hours. From £895 a month.">
+<meta name="description" content="Trained full time maintenance and compliance coordinators for UK refrigeration, air conditioning, electrical, plumbing and property maintenance firms. Employed in Morocco, working your UK hours. From £995 a month.">
 <link rel="canonical" href="https://staffora-site.pages.dev/">
 <meta name="robots" content="noindex,nofollow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Beyondesk">
 <meta property="og:title" content="Maintenance admin, handled during your working day">
-<meta property="og:description" content="Trained full time maintenance and compliance coordinators for UK refrigeration, air conditioning, electrical, plumbing and property maintenance firms. Employed in Morocco, working your UK hours. From £895 a month.">
+<meta property="og:description" content="Trained full time maintenance and compliance coordinators for UK refrigeration, air conditioning, electrical, plumbing and property maintenance firms. Employed in Morocco, working your UK hours. From £995 a month.">
 <meta property="og:url" content="https://staffora-site.pages.dev/">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://beyondesk.co.uk/#org","name":"Beyondesk","url":"https://beyondesk.co.uk/","slogan":"Your Team. Beyond Borders.","areaServed":"GB","knowsLanguage":["en","fr","ar"]},{"@type":"Service","name":"Managed remote maintenance and compliance coordinators","serviceType":"Remote staffing","provider":{"@id":"https://beyondesk.co.uk/#org"},"areaServed":{"@type":"Country","name":"United Kingdom"},"offers":{"@type":"AggregateOffer","priceCurrency":"GBP","lowPrice":"895","highPrice":"1195","offerCount":"2"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are they employees or freelancers?","acceptedAnswer":{"@type":"Answer","text":"Employees. Every team member is employed by Beyondesk in Morocco on a proper contract and works for one client only."}},{"@type":"Question","name":"What hours do they work?","acceptedAnswer":{"@type":"Answer","text":"Your working day. Morocco is UTC+1 year round, the same hour as the UK for most of the year. Nobody works a night shift to cover you."}},{"@type":"Question","name":"What if it does not work out?","acceptedAnswer":{"@type":"Answer","text":"We recruit a replacement at our cost for the first 90 days, one per role. You are never billed for two people during the handover."}}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://beyondesk.co.uk/#org","name":"Beyondesk","url":"https://beyondesk.co.uk/","slogan":"Your Team. Beyond Borders.","areaServed":"GB","knowsLanguage":["en","fr","ar"]},{"@type":"Service","name":"Managed remote maintenance and compliance coordinators","serviceType":"Remote staffing","provider":{"@id":"https://beyondesk.co.uk/#org"},"areaServed":{"@type":"Country","name":"United Kingdom"},"offers":{"@type":"AggregateOffer","priceCurrency":"GBP","lowPrice":"995","highPrice":"1395","offerCount":"2"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are they employees or freelancers?","acceptedAnswer":{"@type":"Answer","text":"Employees. Every team member is employed by Beyondesk in Morocco on a proper contract and works for one client only."}},{"@type":"Question","name":"What hours do they work?","acceptedAnswer":{"@type":"Answer","text":"Your working day. Morocco is UTC+1 year round, the same hour as the UK for most of the year. Nobody works a night shift to cover you."}},{"@type":"Question","name":"What if it does not work out?","acceptedAnswer":{"@type":"Answer","text":"We recruit a replacement at our cost for the first 90 days, one per role. You are never billed for two people during the handover."}}]}]}</script>
 <style>
 
 /* Beyondesk design system: navy #0F2A44, blue #007BFF, light blue #38B6FF, slate #64748B, surface #F5F8FC; Inter; 8px rhythm; mobile first. */
@@ -1022,8 +1022,34 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .flow-step{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2vw,22px);
   background:#fff;border:1px solid var(--line);border-radius:14px;
   padding:clamp(16px,2.2vw,22px) clamp(18px,2.4vw,26px)}
-.flow-time{font-size:15px;font-weight:800;color:var(--blue-text);
+.flow-time{display:flex;flex-direction:column;align-items:flex-start;gap:7px;
+  font-size:15px;font-weight:800;color:var(--blue-text);
   font-variant-numeric:tabular-nums;letter-spacing:-.01em;padding-top:2px;white-space:nowrap}
+
+/* The live state. Filled from the reader's own clock in Europe/London, and
+   kept to where a job WOULD be at this hour: Beyondesk is pre launch, so
+   nothing here claims anyone is at a desk right now. */
+.flow-badge{display:none;font-size:11px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;border-radius:999px;padding:3px 9px;line-height:1.5}
+.flow-step.t-past .flow-badge,.flow-step.t-later .flow-badge,
+.flow-step.t-next .flow-badge{display:inline-block}
+.flow-step.t-past .flow-badge{background:var(--soft);border:1px solid var(--line);color:var(--navy)}
+.flow-step.t-later .flow-badge{background:transparent;border:1px solid var(--line);color:var(--slate)}
+.flow-step.t-next .flow-badge{background:var(--blue-text);border:1px solid var(--blue-text);color:#fff}
+.flow-step.t-next{border-color:var(--blue-text)}
+
+.flow-now{display:none;margin:16px 0 0;padding:13px 15px;background:#fff;
+  border:1px solid var(--line);border-radius:12px;font-size:15px;line-height:1.5;
+  color:var(--navy);gap:11px;align-items:flex-start}
+.flow-now.ready{display:flex}
+.flow-now b{font-weight:700;font-variant-numeric:tabular-nums}
+.flow-pip{width:9px;height:9px;border-radius:50%;background:var(--blue-text);
+  margin-top:6px;flex:none}
+.flow-now.shut .flow-pip{background:var(--line-strong)}
+@media (prefers-reduced-motion:no-preference){
+  .flow-now:not(.shut) .flow-pip{animation:flow-pip 2.6s ease-in-out infinite}
+}
+@keyframes flow-pip{0%,100%{opacity:1}50%{opacity:.35}}
 .flow-step b{display:block;font-size:clamp(16.5px,1.6vw,19px);font-weight:700;
   color:var(--navy);margin-bottom:6px;letter-spacing:-.01em}
 .flow-step p{margin:0;font-size:15.5px;line-height:1.55;color:var(--slate);max-width:56ch}
@@ -1218,7 +1244,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
         <a class="btn btn-blue" href="#enquire">Book a call</a>
         <a class="hero-link" href="#how">See how it works</a>
       </div>
-      <p class="hero-note">From &pound;895 a month. One fee. No recruitment charge.</p>
+      <p class="hero-note">From &pound;995 a month. One fee. No recruitment charge.</p>
     </div>
   </div>
 </section>
@@ -1252,14 +1278,15 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       <div class="flow-aside">
         <h2>One job, one working day.</h2>
         <p>This is a real sequence, and every step of it has to happen while the UK is open. That is the whole reason the office is in Morocco rather than further east.</p>
+        <p class="flow-now" id="flowNow" aria-live="polite"><span class="flow-pip" aria-hidden="true"></span><span class="flow-now-t"></span></p>
       </div>
       <div>
         <div class="flow-chips" role="tablist" aria-label="Times of day"><button type="button" role="tab" aria-selected="true" aria-controls="flow-s0" data-i="0">08:10</button><button type="button" role="tab" aria-selected="false" aria-controls="flow-s1" data-i="1">11:30</button><button type="button" role="tab" aria-selected="false" aria-controls="flow-s2" data-i="2">14:00</button><button type="button" role="tab" aria-selected="false" aria-controls="flow-s3" data-i="3">16:45</button></div>
         <ol class="flow-steps">
-        <li class="flow-step shown" id="flow-s0" data-i="0"><span class="flow-time">08:10</span><div><b>The call comes in</b><p>A chiller is down. The job is logged, the nearest available engineer is allocated and the customer is given a window, while your phone is still ringing with the next one.</p></div></li>
-        <li class="flow-step" id="flow-s1" data-i="1"><span class="flow-time">11:30</span><div><b>Access is arranged</b><p>Permit raised, site contact confirmed, keys accounted for. Settled before the van leaves, rather than discovered at the door.</p></div></li>
-        <li class="flow-step" id="flow-s2" data-i="2"><span class="flow-time">14:00</span><div><b>The paperwork is chased</b><p>Job sheet, photographs and the certificate collected while the detail is fresh and the engineer still remembers the job.</p></div></li>
-        <li class="flow-step" id="flow-s3" data-i="3"><span class="flow-time">16:45</span><div><b>The invoice goes out</b><p>Signed off the same day, invoiced the same day, and the chase already scheduled rather than remembered in six weeks.</p></div></li>
+        <li class="flow-step shown" id="flow-s0" data-i="0" data-min="490"><span class="flow-time">08:10<span class="flow-badge"></span></span><div><b>The call comes in</b><p>A chiller is down. The job is logged, the nearest available engineer is allocated and the customer is given a window, while your phone is still ringing with the next one.</p></div></li>
+        <li class="flow-step" id="flow-s1" data-i="1" data-min="690"><span class="flow-time">11:30<span class="flow-badge"></span></span><div><b>Access is arranged</b><p>Permit raised, site contact confirmed, keys accounted for. Settled before the van leaves, rather than discovered at the door.</p></div></li>
+        <li class="flow-step" id="flow-s2" data-i="2" data-min="840"><span class="flow-time">14:00<span class="flow-badge"></span></span><div><b>The paperwork is chased</b><p>Job sheet, photographs and the certificate collected while the detail is fresh and the engineer still remembers the job.</p></div></li>
+        <li class="flow-step" id="flow-s3" data-i="3" data-min="1005"><span class="flow-time">16:45<span class="flow-badge"></span></span><div><b>The invoice goes out</b><p>Signed off the same day, invoiced the same day, and the chase already scheduled rather than remembered in six weeks.</p></div></li>
         </ol>
         <p class="flow-else">An office eight hours ahead opens as yours closes. <strong>Every one of those four moments waits until tomorrow.</strong></p>
       </div>
@@ -1367,7 +1394,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
     <div class="tiers">
       <div class="tier">
         <h3>Administrator</h3>
-        <p class="px">&pound;895<small> a month</small></p>
+        <p class="px">&pound;995<small> a month</small></p>
         <p>General office and administrative support, trained on your systems but not on a sector curriculum.</p>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span>Full time, 40 hours, your working day</span></li>
@@ -1380,7 +1407,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
         <p class="tier-band"><svg aria-hidden="true"><use href="#tick"></use></svg>Trained for your trade before day one</p>
         <div class="tier-body">
           <h3>Maintenance and compliance coordinator</h3>
-          <p class="px">&pound;1,195<small> a month</small></p>
+          <p class="px">&pound;1,395<small> a month</small></p>
           <p>Trained before they reach you on planned maintenance, certificates, engineer paperwork and the systems your trade runs on.</p>
           <ul>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg><span><strong>Everything in Administrator</strong>, plus the five below</span></li>
@@ -1392,7 +1419,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
         </div>
       </div>
     </div>
-    <p class="px-note">For comparison, a full time UK hire on the National Living Wage of &pound;12.71 an hour from April 2026 costs roughly &pound;28,300 a year once employer National Insurance and pension are included, before recruitment, a desk or software. We publish our prices because most of this market does not.</p>
+    <p class="px-note">For comparison, a full time UK hire on the National Living Wage of &pound;12.71 an hour from April 2026 costs roughly &pound;28,300 a year, about &pound;2,358 a month, once employer National Insurance and pension are included, before recruitment, a desk or software. We publish our prices because most of this market does not.</p>
   </div>
 </section>
 
@@ -1453,17 +1480,81 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   var chips = [].slice.call(flow.querySelectorAll(".flow-chips button"));
   if (!steps.length) return;
 
+  var pinnedMQ = window.matchMedia("(min-width:981px) and (prefers-reduced-motion:no-preference)");
+  var pinned = pinnedMQ;
+
   // Phones and tablets: the chips drive it, nothing scroll bound.
   function show(i){
     steps.forEach(function(s, n){ s.classList.toggle("shown", n === i); });
     chips.forEach(function(c, n){ c.setAttribute("aria-selected", String(n === i)); });
   }
   chips.forEach(function(c){
-    c.addEventListener("click", function(){ show(+c.dataset.i); });
+    c.addEventListener("click", function(){ show(+c.dataset.i); manual = true; });
   });
+  var manual = false;
+
+  // ---- the live part --------------------------------------------------
+  // The reader's own clock, read in Europe/London so it is the UK working day
+  // wherever they are. Everything here is about where a job WOULD be at this
+  // hour; nothing asserts that anyone is at a desk right now.
+  var nowBox = document.getElementById("flowNow");
+  var nowTxt = nowBox && nowBox.querySelector(".flow-now-t");
+
+  function london(){
+    try {
+      var f = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Europe/London", hour: "2-digit", minute: "2-digit",
+        hour12: false, weekday: "long" });
+      var out = {};
+      f.formatToParts(new Date()).forEach(function(p){ out[p.type] = p.value; });
+      var h = parseInt(out.hour, 10), m = parseInt(out.minute, 10);
+      if (isNaN(h) || isNaN(m)) return null;
+      return { mins: (h % 24) * 60 + m, hhmm: out.hour + ":" + out.minute, day: out.weekday };
+    } catch (e) { return null; }   // no Intl, no time zone data: stay silent
+  }
+
+  function tick(){
+    var t = london();
+    if (!t || !nowBox || !nowTxt) return;
+    var weekend = (t.day === "Saturday" || t.day === "Sunday");
+    var open = !weekend && t.mins >= 480 && t.mins < 1020;
+    var nextAt = -1;
+
+    steps.forEach(function(s, n){
+      var at = +s.dataset.min, badge = s.querySelector(".flow-badge");
+      s.classList.remove("t-past", "t-next", "t-later");
+      if (weekend){ s.classList.add("t-later"); if (badge) badge.textContent = "Monday"; return; }
+      if (t.mins >= at){ s.classList.add("t-past"); if (badge) badge.textContent = "Done by now"; return; }
+      if (nextAt < 0){ nextAt = n; s.classList.add("t-next"); if (badge) badge.textContent = "Next"; return; }
+      s.classList.add("t-later"); if (badge) badge.textContent = "Later today";
+    });
+
+    var msg;
+    if (weekend){
+      msg = "It is <b>" + t.hhmm + "</b> on " + t.day + " in London. This picks up again at 08:00 on Monday.";
+    } else if (t.mins < 480){
+      msg = "It is <b>" + t.hhmm + "</b> in London. The working day starts at 08:00.";
+    } else if (t.mins >= 1020){
+      msg = "It is <b>" + t.hhmm + "</b> in London. Today is closed off. The next one starts at 08:00.";
+    } else if (nextAt < 0){
+      msg = "It is <b>" + t.hhmm + "</b> in London, so a job that came in this morning would be invoiced by now.";
+    } else {
+      var title = steps[nextAt].querySelector("b").textContent.toLowerCase();
+      msg = "It is <b>" + t.hhmm + "</b> in London. A job like this would be at <b>" + title + "</b> next.";
+    }
+    nowTxt.innerHTML = msg;
+    nowBox.classList.add("ready");
+    nowBox.classList.toggle("shut", !open);
+
+    // On a phone, open on the moment the day is actually at, unless the reader
+    // has already picked one themselves.
+    if (!manual && !pinnedMQ.matches){
+      // weekend: open on the start of Monday, not on Friday's last step
+      show(weekend ? 0 : (nextAt < 0 ? steps.length - 1 : Math.max(0, nextAt)));
+    }
+  }
 
   // Desktop: the four moments build as the pinned section passes.
-  var pinned = window.matchMedia("(min-width:981px) and (prefers-reduced-motion:no-preference)");
   var active = -1, ticking = false;
 
   function paint(){
@@ -1507,6 +1598,8 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
   window.addEventListener("scroll", onScroll, {passive:true});
   window.addEventListener("resize", onScroll, {passive:true});
   paint();
+  tick();
+  setInterval(tick, 30000);
 })();
 </script>
 <footer>
