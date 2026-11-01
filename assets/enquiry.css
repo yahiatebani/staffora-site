@@ -68,3 +68,24 @@
 @media (max-width:760px){.enq-sticky{display:block}}
 .enq-sticky.show{transform:none}
 @media (prefers-reduced-motion:reduce){.enq-sticky,.enq-bar i{transition:none}.js .enq fieldset.on{animation:none}}
+
+/* Step 2: task picker that recommends a role */
+.enq p.enq-hint{margin:-6px 0 2px;font-size:13.5px;line-height:1.4;color:#64738B}
+.enq-chks{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+@media (max-width:480px){.enq-chks{grid-template-columns:1fr}}
+.enq-chk{position:relative;display:flex;align-items:center;gap:9px;min-height:42px;padding:8px 10px;border:1.5px solid #E5EAF1;border-radius:9px;cursor:pointer;
+  font-size:13.5px;font-weight:500;line-height:1.3;transition:border-color .15s,background .15s}
+.enq-chk:hover{border-color:#CBD5E1}
+.enq-chk input{position:absolute;opacity:0;pointer-events:none}
+.enq-chk .box{width:17px;height:17px;border-radius:5px;border:2px solid #CBD5E1;flex:none;display:grid;place-items:center;transition:background .15s,border-color .15s}
+.enq-chk .box::after{content:"";width:8px;height:4px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .15s}
+.enq-chk:has(input:checked){border-color:#0066D6;background:#F3F8FF}
+.enq-chk input:checked + .box{background:#0066D6;border-color:#0066D6}
+.enq-chk input:checked + .box::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
+.enq-chk input:focus-visible + .box{outline:3px solid #38B6FF;outline-offset:2px}
+.enq p.enq-rlab{margin:8px 0 0;line-height:1.4;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#64738B}
+.enq-roles .enq-opt{display:grid;grid-template-columns:18px 1fr;column-gap:10px;row-gap:2px;align-items:center;line-height:1.3}
+.enq-roles .enq-opt small{grid-column:2;margin:0;white-space:normal;font-weight:500}
+.enq-rec{grid-column:2;grid-row:2;justify-self:start;font-style:normal;font-size:11.5px;font-weight:700;letter-spacing:.03em;color:#fff;background:#0066D6;border-radius:999px;padding:2px 8px;margin:2px 0}
+.enq-rec[hidden]{display:none}
+.enq-roles .enq-opt:has(.enq-rec:not([hidden])) small{grid-row:3}

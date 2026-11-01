@@ -38,12 +38,15 @@
     }
     return true;
   }
+  function tasks(){ return [].slice.call(form.querySelectorAll('input[name="task"]:checked')).map(function(c){ return c.value; }).join(", "); }
   function summary(d){
     return "Trade: " + d.trade + "\nRole: " + d.role + "\nStart: " + d.start + "\nSystems: " + (d.systems || "not given") +
       "\nWhat to take off their plate: " + (d.notes || "not given") + "\n\nName: " + d.name + "\nCompany: " + d.company + "\nEmail: " + d.email + "\nPhone: " + (d.phone || "not given");
   }
   function data(){
-    return { trade: val("trade"), role: val("role"), start: val("start"), systems: val("systems"), notes: val("notes"),
+    var t = tasks(), n = val("notes");
+    return { trade: val("trade"), role: val("role"), start: val("start"), systems: val("systems"),
+             notes: (t ? "Tasks ticked: " + t + (n ? "\n\n" : "") : "") + n,
              name: val("name"), company: val("company"), email: val("email"), phone: val("phone"), website: val("website"),
              page: location.pathname };
   }
@@ -87,6 +90,28 @@
       .then(function(ok){ clearTimeout(timer); ok ? done(d) : fallback(d); });
   });
   show(0);
+
+  /* Task picker: the ticked tasks recommend a role until the visitor picks one themselves.
+     c = phone, scheduling or compliance work, a = written office admin, f = invoicing and reminders, x = bookkeeping. */
+  var picked = false, roleInputs = [].slice.call(form.querySelectorAll('input[name="role"][data-r]'));
+  function pickRole(r){
+    roleInputs.forEach(function(el){ el.checked = el.getAttribute("data-r") === r; });
+  }
+  function recommend(){
+    var k = {};
+    [].forEach.call(form.querySelectorAll('input[name="task"]:checked'), function(c){ k[c.getAttribute("data-k")] = true; });
+    var r = k.c && k.x ? "cx" : k.c ? "c" : k.x && k.a ? "cx" : k.x ? "x" : (k.a || k.f) ? "a" : "";
+    roleInputs.forEach(function(el){ var tag = el.parentNode.querySelector(".enq-rec"); if (tag) tag.hidden = !r || el.getAttribute("data-r") !== r; });
+    if (r && !picked) pickRole(r);
+  }
+  form.addEventListener("change", function(e){
+    if (e.target.name === "task") recommend();
+    else if (e.target.name === "role" && e.isTrusted !== false) picked = true;
+  });
+  /* "Choose" buttons on the role cards preselect that role in the form */
+  [].forEach.call(document.querySelectorAll("[data-pick]"), function(a){
+    a.addEventListener("click", function(){ picked = true; pickRole(a.getAttribute("data-pick")); track("role_card_click", {role: a.getAttribute("data-pick")}); });
+  });
 
   /* Sticky bar on phones: shows after the first screen, hides while the form is on screen. */
   var sticky = document.querySelector(".enq-sticky");
