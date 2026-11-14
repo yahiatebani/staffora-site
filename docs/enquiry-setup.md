@@ -2,17 +2,17 @@
 
 The form on every sales page posts to `/api/enquiry` (functions/api/enquiry.js).
 Until the settings below are added it cannot store or send anything, so visitors are
-offered a ready written email to hello@beyondesk.co.uk instead. Nothing is lost, but
+offered a ready written email to hello@beyonddesk.co.uk instead. Nothing is lost, but
 nothing is recorded either.
 
 ## 1. Email alerts (Resend)
 
-1. Create a Resend account and verify the sending domain (beyondesk.co.uk).
+1. Create a Resend account and verify the sending domain (beyonddesk.co.uk).
 2. Create an API key.
 3. In Cloudflare: Pages > staffora-site > Settings > Variables and secrets, add:
    - `RESEND_API_KEY` (secret)
    - `ENQUIRY_TO` the inbox that should receive enquiries (several allowed, comma separated)
-   - `ENQUIRY_FROM` optional, for example `Beyondesk <enquiries@beyondesk.co.uk>`
+   - `ENQUIRY_FROM` optional, for example `Beyondesk <enquiries@beyonddesk.co.uk>`
 4. Redeploy (any push, or Retry deployment in Cloudflare).
 
 ## 2. Lead database (Supabase)

@@ -3,7 +3,7 @@
 // Settings (Cloudflare Pages > Settings > Variables and secrets):
 //   SUPABASE_URL, SUPABASE_SERVICE_KEY   store each enquiry in the "enquiries" table
 //   RESEND_API_KEY, ENQUIRY_TO           email each enquiry to ENQUIRY_TO
-//   ENQUIRY_FROM (optional)              sender, default "Beyondesk <enquiries@beyondesk.co.uk>" (domain must be verified in Resend)
+//   ENQUIRY_FROM (optional)              sender, default "Beyondesk <enquiries@beyonddesk.co.uk>" (domain must be verified in Resend)
 // With neither configured it answers 503, and the page offers the visitor a ready written email instead.
 
 const FIELDS = ["trade", "role", "start", "systems", "notes", "name", "company", "email", "phone", "page"];
@@ -18,7 +18,7 @@ function reply(body, status, isForm) {
     const html = `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${ok ? "Enquiry received" : "Please email us"} | Beyondesk</title>
 <body style="font-family:Inter,system-ui,sans-serif;max-width:560px;margin:80px auto;padding:0 20px;color:#0F2A44">
 <h1 style="font-size:28px">${ok ? "Thanks. Your enquiry is in." : "We could not send that automatically."}</h1>
-<p style="color:#55657A;font-size:17px;line-height:1.6">${ok ? "We will come back to you with a written cost for the role." : "Please email hello@beyondesk.co.uk and we will reply with a written cost for the role."}</p>
+<p style="color:#55657A;font-size:17px;line-height:1.6">${ok ? "We will come back to you with a written cost for the role." : "Please email hello@beyonddesk.co.uk and we will reply with a written cost for the role."}</p>
 <p><a href="/" style="color:#0066D6">Back to Beyondesk</a></p></body>`;
     return new Response(html, { status, headers: { "content-type": "text/html; charset=utf-8" } });
   }
@@ -69,7 +69,7 @@ export async function onRequestPost({ request, env }) {
         method: "POST",
         headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          from: env.ENQUIRY_FROM || "Beyondesk <enquiries@beyondesk.co.uk>",
+          from: env.ENQUIRY_FROM || "Beyondesk <enquiries@beyonddesk.co.uk>",
           to: env.ENQUIRY_TO.split(",").map(s => s.trim()),
           reply_to: d.email,
           subject: `Enquiry: ${d.company} (${d.trade}, ${d.role})`,

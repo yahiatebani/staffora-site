@@ -1,7 +1,7 @@
 /* Beyondesk enquiry form: four steps, posts to /api/enquiry.
    If the endpoint is not set up yet, or fails, it offers the same answers as a ready written email. */
 (function(){
-  var ADDRESS = "hello@beyondesk.co.uk";
+  var ADDRESS = "hello@beyonddesk.co.uk";
   var form = document.getElementById("enqForm");
   if (!form) return;
   var steps = [].slice.call(form.querySelectorAll("fieldset"));

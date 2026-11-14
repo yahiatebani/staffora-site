@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://staffora-site.pages.dev/sitemap.xml
+Sitemap: https://www.beyonddesk.co.uk/sitemap.xml

@@ -4,7 +4,9 @@ Marketing site plus applicant form.
 
 ## Base URL
 
-Canonical, Open Graph, schema, sitemap and robots URLs all use `https://staffora-site.pages.dev`.
-When the real domain is live, change it everywhere in one go:
+Canonical, Open Graph, schema, sitemap and robots URLs all use `https://www.beyonddesk.co.uk`
+(the domain has two d's; the brand name stays Beyondesk). The Cloudflare Pages project is
+still called `staffora-site` and also serves the site at `https://staffora-site.pages.dev`.
+To change the base URL later, replace it everywhere in one go:
 
-    rg -l 'https://staffora-site.pages.dev' | xargs sed -i 's#https://staffora-site.pages.dev#https://beyondesk.co.uk#g'
+    rg -l 'https://www.beyonddesk.co.uk' | xargs sed -i 's#https://www.beyonddesk.co.uk#https://NEW-HOST#g'
