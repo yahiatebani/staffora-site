@@ -825,7 +825,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .hero-link:hover{border-bottom-color:#fff}
 
 /* footer, multi column */
-.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:clamp(24px,4vw,56px);
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:clamp(24px,4vw,56px);
   padding-block:clamp(40px,5vw,64px);align-items:start}
 @media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;gap:28px}}
 @media(max-width:540px){.foot-grid{grid-template-columns:1fr}}
@@ -859,6 +859,10 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .tcard p{font-size:15.5px;color:var(--slate);line-height:1.55;margin:0 0 12px}
 .tcard .go{font-size:15px;font-weight:600;color:var(--blue-text)}
 
+
+/* Header nav: keep links on one line between the phone menu and wide screens */
+.top nav a{white-space:nowrap}
+@media (min-width:901px) and (max-width:1180px){.top nav{gap:16px}.top nav a{font-size:14px}}
 </style>
 <link rel="stylesheet" href="/assets/menu.css">
 </head>
@@ -868,12 +872,12 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
     <div class="bar">
       <a class="logo" href="/" aria-label="Beyondesk home"><img src="/assets/img/logo.webp" width="800" height="157" alt="Beyondesk"></a>
       <nav aria-label="Main">
-        <a href="/trades/" aria-current="page">Trades</a><a href="/property-managers/">Property managers</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a>
+        <a href="/trades/">Trades</a><a href="/property-managers/">Property managers</a><a href="/industries/">Industries</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a>
         <a class="btn btn-blue" href="/#enquire">Get my cost</a>
         <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       </nav>
     </div>
-    <nav class="mnav" id="mnav" aria-label="Mobile"><a href="/trades/">Trades</a><a href="/property-managers/">Property managers</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/#enquire">Get my cost</a></nav>
+    <nav class="mnav" id="mnav" aria-label="Mobile"><a href="/trades/">Trades</a><a href="/property-managers/">Property managers</a><a href="/industries/">Industries</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="/#enquire">Get my cost</a></nav>
   </div>
 </header>
 <main id="top">
@@ -905,6 +909,16 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       <ul>
         <li><a href="/property-managers/">Letting agents and property managers</a></li>
         <li><a href="/property-managers/#block">Block and leasehold management</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h2>Industries</h2>
+      <ul>
+        <li><a href="/industries/accountants/">Accountants and bookkeepers</a></li>
+        <li><a href="/industries/law-firms/">Law firms</a></li>
+        <li><a href="/industries/recruitment/">Recruitment agencies</a></li>
+        <li><a href="/industries/ecommerce/">Ecommerce</a></li>
+        <li><a href="/industries/dental-practices/">Dental practices</a></li>
       </ul>
     </div>
     <div class="foot-col">

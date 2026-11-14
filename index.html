@@ -772,7 +772,7 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .hero-link:hover{border-bottom-color:#fff}
 
 /* footer, multi column */
-.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:clamp(24px,4vw,56px);
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:clamp(24px,4vw,56px);
   padding-block:clamp(40px,5vw,64px);align-items:start}
 @media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;gap:28px}}
 @media(max-width:540px){.foot-grid{grid-template-columns:1fr}}
@@ -1137,6 +1137,12 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .ind-grid a.feature{grid-column:span 2;grid-row:span 2;display:flex;flex-direction:column}
 .ind-grid a.feature em{margin-top:auto;padding-top:14px}
 @media(max-width:900px){.ind-grid a.feature{grid-column:span 2;grid-row:span 1}}
+.alsolinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.alsolinks a{display:inline-flex;align-items:center;min-height:38px;padding:8px 16px;
+  border:1px solid var(--line-strong);border-radius:999px;text-decoration:none;
+  font-size:15px;font-weight:600;color:var(--navy);background:#fff}
+.alsolinks a:hover{border-color:var(--blue-text);color:var(--blue-text)}
+.ind-more-h{margin:28px 0 0;font-size:16px;font-weight:600;color:var(--navy)}
 .ind-ic{width:30px;height:30px;color:var(--blue-text);display:block;margin-bottom:12px}
 .ind-grid a.feature .ind-ic{width:38px;height:38px;margin-bottom:14px}
 .ind-grid a.feature b{font-size:21px}
@@ -1177,6 +1183,10 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
 .tier-from{display:block;font-size:14px;font-weight:600;color:var(--slate);margin-bottom:2px}
 
 
+
+/* Header nav: keep links on one line between the phone menu and wide screens */
+.top nav a{white-space:nowrap}
+@media (min-width:901px) and (max-width:1180px){.top nav{gap:16px}.top nav a{font-size:14px}}
 </style>
 <link rel="stylesheet" href="/assets/desk.css">
 <link rel="stylesheet" href="/assets/enquiry.css?v=2">
@@ -1229,12 +1239,12 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
     <div class="bar">
       <a class="logo" href="/" aria-label="Beyondesk home"><img src="/assets/img/logo.webp" width="800" height="157" alt="Beyondesk"></a>
       <nav aria-label="Main">
-        <a href="/trades/">Trades</a><a href="/property-managers/">Property managers</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a>
+        <a href="/trades/">Trades</a><a href="/property-managers/">Property managers</a><a href="/industries/">Industries</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a>
         <a class="btn btn-blue" href="#enquire">Get my cost</a>
         <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       </nav>
     </div>
-    <nav class="mnav" id="mnav" aria-label="Mobile"><a href="/trades/">Trades</a><a href="/property-managers/">Property managers</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="#enquire">Get my cost</a></nav>
+    <nav class="mnav" id="mnav" aria-label="Mobile"><a href="/trades/">Trades</a><a href="/property-managers/">Property managers</a><a href="/industries/">Industries</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a><a href="#enquire">Get my cost</a></nav>
   </div>
 </header>
 
@@ -1657,6 +1667,8 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       <a class="plain" href="/trades/fire-security/"><svg class="ind-ic" aria-hidden="true"><use href="#i-shield"></use></svg><b>Fire and security</b><span>Testing schedules, asset registers, remedial tracking and compliance evidence.</span><span class="ind-paper">BS 5839 alarm tests &middot; BS 5266 emergency lighting &middot; BS 5306 extinguishers</span><em>See the role &rarr;</em></a>
       <a class="plain" href="/property-managers/"><svg class="ind-ic" aria-hidden="true"><use href="#i-building"></use></svg><b>Property and lettings</b><span>Maintenance coordination, compliance certificates, contractor chasing and landlord reporting.</span><span class="ind-paper">Gas safety and EICR expiry &middot; deposit deadlines &middot; licensing renewals</span><em>See the role &rarr;</em></a>
     </div>
+    <p class="ind-more-h">Also trained for offices beyond the trades:</p>
+    <div class="alsolinks"><a href="/industries/accountants/">Accountants and bookkeepers</a><a href="/industries/law-firms/">Law firms</a><a href="/industries/recruitment/">Recruitment agencies</a><a href="/industries/ecommerce/">Ecommerce</a><a href="/industries/dental-practices/">Dental practices</a><a href="/industries/">All industries</a></div>
   </div>
 </section>
 
@@ -2029,6 +2041,16 @@ section,footer,.commitments,.trust-band{position:relative;z-index:1}
       <ul>
         <li><a href="/property-managers/">Letting agents and property managers</a></li>
         <li><a href="/property-managers/#block">Block and leasehold management</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h2>Industries</h2>
+      <ul>
+        <li><a href="/industries/accountants/">Accountants and bookkeepers</a></li>
+        <li><a href="/industries/law-firms/">Law firms</a></li>
+        <li><a href="/industries/recruitment/">Recruitment agencies</a></li>
+        <li><a href="/industries/ecommerce/">Ecommerce</a></li>
+        <li><a href="/industries/dental-practices/">Dental practices</a></li>
       </ul>
     </div>
     <div class="foot-col">
